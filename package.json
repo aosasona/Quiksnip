@@ -1,0 +1,26 @@
+{
+  "name": "quiksnip",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "npx tailwindcss -i ./assets/css/styles.css -o ./assets/css/output.css -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aosasona/Quiksnip.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aosasona/Quiksnip/issues"
+  },
+  "homepage": "https://github.com/aosasona/Quiksnip#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.18",
+    "postcss-loader": "^7.0.1",
+    "tailwindcss": "^3.2.1"
+  }
+}

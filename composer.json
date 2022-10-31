@@ -1,7 +1,7 @@
 {
-  "name": "trulyao/php-starter",
-  "description": "A PHP starter project",
-  "type": "template",
+  "name": "quiksnip/quiksnip",
+  "description": "Share editable code snippets with other developers",
+  "type": "project",
   "require": {
     "trulyao/php-router": "^2.0",
     "vlucas/phpdotenv": "^5.4",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Trulyao\\PhpStarter\\": "src/"
+      "Quiksnip\\Quiksnip\\": "src/"
     }
   },
   "authors": [

@@ -4,7 +4,7 @@ USER root
 
 COPY web.conf /etc/apache2/sites-available/web.conf
 
-COPY start-web /usr/local/bin
+COPY start /usr/local/bin
 
 RUN a2enmod rewrite
 
@@ -15,14 +15,6 @@ RUN chown -R www-data:www-data /var/www
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update && apt-get install -y libpq-dev \
-    && apt-get install -y git \
-    && composer install --no-dev
+    && apt-get install -y git
 
-
-#RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
-#    a2enmod rewrite && \
-#    a2dissite 000-default && \
-#    a2ensite web && \
-#    service apache2 restart  ---- this is to get rid of the Apache2 domain name-related error in dev
-
-CMD ["start-web"]
+ENTRYPOINT ["start"]

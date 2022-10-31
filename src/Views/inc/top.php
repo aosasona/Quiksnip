@@ -5,11 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hello World!</title>
+    <link rel="stylesheet" href="/assets/css/output.css">
+    <title>
+        <?php
+        echo $title;
+        ?>
+    </title>
 </head>
 <body>
-<h1>Hello World!</h1>
-<p>If you can see this, the server is working correctly.</p>
-Today's date: <b>@data(time)</b>
-</body>
-</html>

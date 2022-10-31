@@ -6,12 +6,12 @@ volumes:
     driver: local
 
 services:
-  api:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8085:80"
+      - "22000:80"
     depends_on:
       - mysql
     volumes:
@@ -30,22 +30,11 @@ services:
     volumes:
       - mysql:/var/lib/mysql
     restart: always
+    env_file:
+      - ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "api"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
     tty: true
-    stdin_open: true
-
-
-  phpmyadmin:
-    container_name: phpmyadmin
-    image: arm64v8/phpmyadmin
-    ports:
-      - "2083:80"
-    restart: always
-    environment:
-      PMA_HOST: mysql
-    depends_on:
-      - mysql
