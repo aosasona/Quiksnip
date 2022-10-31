@@ -1,23 +1,23 @@
 @import url('http://fonts.cdnfonts.com/css/satoshi');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  font-family: 'Satoshi', sans-serif;
-  line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -ms-overflow-style: scrollbar;
-  -webkit-tap-highlight-color: transparent;
+    font-family: 'Satoshi', sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color: transparent;
 }
 
-body, html{
+body, html {
     background-color: #000000;
     color: #f5f5f5 !important;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

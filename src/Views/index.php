@@ -6,7 +6,9 @@ Loader::startLayout("Quiksnip");
 ?>
 
 <div class="container">
-    hell
+    <h1 class="text-6xl font-bold text-center">
+        Share, edit, and collaborate on code snippets.
+    </h1>
 </div>
 
 <?php
