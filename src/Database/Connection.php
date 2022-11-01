@@ -25,4 +25,35 @@ abstract class Connection
     {
     }
 
+    public function insert(string $sql, array $params = [])
+    {
+    }
+
+    public function update(string $sql, array $params = [])
+    {
+    }
+
+    public function delete(string $sql, array $params = [])
+    {
+    }
+
+    public function beginTransaction()
+    {
+    }
+
+    public function commit()
+    {
+    }
+
+    public function rollBack()
+    {
+    }
+
+    public function lastInsertId()
+    {
+    }
+
+    public function migrate()
+    {
+    }
 }

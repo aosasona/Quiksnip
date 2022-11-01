@@ -89,4 +89,24 @@ class MysqlConnection extends Connection
         $stmt = $this->query($sql, $params);
         return $stmt->fetchAll();
     }
+
+    /**
+     * @throws QueryException
+     */
+    public function migrate()
+    {
+        $dir = __DIR__ . "/migrations";
+        $files = scandir($dir);
+        $files = array_diff($files, ['.', '..']);
+        foreach ($files as $file) {
+            $file_name = explode('.', $file)[0];
+            $has_run = $this->select("SELECT * FROM `migrations` WHERE `name` = ?", [$file_name]);
+            if (count($has_run) > 0) {
+                continue;
+            }
+            $sql = file_get_contents($dir . "/" . $file);
+            $this->query($sql);
+            $this->query("INSERT INTO `migrations` (`name`) VALUES (?)", [$file_name]);
+        }
+    }
 }

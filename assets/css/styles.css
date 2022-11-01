@@ -1,4 +1,6 @@
 @import url('http://fonts.cdnfonts.com/css/satoshi');
+@import url('https://fonts.cdnfonts.com/css/clash-display');
+
 
 @tailwind base;
 @tailwind components;
@@ -9,7 +11,7 @@
 }
 
 html {
-    font-family: 'Satoshi', sans-serif;
+    font-family: "Clash Display", "Satoshi", Roboto, sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -39,11 +41,15 @@ a.link:hover {
 }
 
 .feature-card {
-    @apply flex flex-col items-center gap-2 px-4 lg:px-10 py-8 lg:py-12 rounded text-center hover:bg-neutral-900 hover:bg-opacity-50 hover:backdrop-blur-lg transition-all duration-300 rounded-lg cursor-pointer;
+    @apply flex flex-col items-start gap-3 px-6 lg:px-10 py-6 lg:py-12 rounded text-left bg-neutral-900 bg-opacity-50 backdrop-blur-sm transition-all duration-300 rounded-lg cursor-pointer;
 }
 
 .feature-card h3 {
-    @apply text-base font-bold text-neutral-200;
+    @apply text-base font-bold text-neutral-300 my-0;
+}
+
+.feature-card p {
+    @apply text-neutral-600 text-[13px] leading-5 -mt-1;
 }
 
 .feature-card .feature-card-icon {
@@ -52,10 +58,6 @@ a.link:hover {
 
 .feature-card .feature-card-icon i, .feature-card .feature-card-icon svg {
     @apply aspect-square text-neutral-900;
-}
-
-.feature-card p {
-    @apply text-neutral-600 text-[13px] leading-5;
 }
 
 .fade {
@@ -69,4 +71,8 @@ a.link:hover {
     background-size: 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    @apply w-full px-4 py-2 text-neutral-900 placeholder-neutral-500 border border-neutral-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
 }
