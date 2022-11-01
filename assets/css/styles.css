@@ -1,5 +1,9 @@
 @import url('http://fonts.cdnfonts.com/css/satoshi');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
     box-sizing: border-box;
 }
@@ -26,6 +30,43 @@ body, html {
     -webkit-text-fill-color: transparent;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+a.link {
+    @apply text-neutral-200;
+}
+
+a.link:hover {
+    @apply text-neutral-100 underline underline-offset-2;
+}
+
+.feature-card {
+    @apply flex flex-col items-center gap-2 px-4 lg:px-10 py-8 lg:py-12 rounded text-center hover:bg-neutral-900 hover:bg-opacity-50 hover:backdrop-blur-lg transition-all duration-300 rounded-lg cursor-pointer;
+}
+
+.feature-card h3 {
+    @apply text-base font-bold text-neutral-200;
+}
+
+.feature-card .feature-card-icon {
+    @apply block text-lg text-neutral-200 bg-green-400 rounded-lg px-4 py-3;
+}
+
+.feature-card .feature-card-icon i, .feature-card .feature-card-icon svg {
+    @apply aspect-square text-neutral-900;
+}
+
+.feature-card p {
+    @apply text-neutral-600 text-[13px] leading-5;
+}
+
+.fade {
+    @apply opacity-0;
+    animation: fade 0.5s ease-in-out forwards;
+}
+
+.icon {
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 0.8141850490196079) 0%, rgba(148, 187, 233, 0.7721682422969187) 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
