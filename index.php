@@ -1,4 +1,5 @@
 <?php
+
 ini_set("display_errors", 0);
 ini_set("display_startup_errors", 0);
 ini_set("error_reporting", 0);
@@ -42,16 +43,19 @@ $router->get("/", function (Request $request, Response $response) {
  * Auth Routes
  */
 
-$router->get("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn", fn(Request $request, Response $response) => $response->render("Views/auth.php"));
+$router->get("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
+	fn(Request $request, Response $response) => $response->render("Views/auth.php")
+);
 
-$router->post("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn", function (Request $request, Response $response) {
-	try {
-		(new AuthController())->initiateGithubAuth();
-	} catch (Exception $e) {
-		$request->append("error", "An error occurred! Please try again.");
-	}
-	return $response->render("Views/auth.php", $request);
-});
+$router->post("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
+	function (Request $request, Response $response) {
+		try {
+			(new AuthController())->initiateGithubAuth();
+		} catch (Exception $e) {
+			$request->append("error", "An error occurred! Please try again.");
+		}
+		return $response->render("Views/auth.php", $request);
+	});
 
 $router->get("/auth/callback/github", function (Request $request, Response $response) {
 	try {
@@ -78,6 +82,8 @@ $router->get("/auth/logout", function (Request $request, Response $response) {
  * Explore Routes
  */
 
-$router->get("/explore", "\Quiksnip\Web\Middleware\AuthMiddleware::protect", function (Request $request, Response $response) { });
+$router->get("/explore", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
+	fn(Request $request, Response $response) => $response->render("Views/explore.php")
+);
 
 $router->serve();

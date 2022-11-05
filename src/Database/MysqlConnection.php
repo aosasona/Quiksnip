@@ -20,7 +20,7 @@ class MysqlConnection extends Connection
 	{
 		extract($_ENV);
 		$host = $MYSQL_HOST;
-		$port = $MYSQL_PORT;
+		$port = $MYSQL_PORT ?? "";
 		$user = $MYSQL_USER;
 		$pass = $MYSQL_PASSWORD;
 		$db = $MYSQL_DATABASE;

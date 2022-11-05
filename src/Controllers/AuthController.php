@@ -91,5 +91,6 @@ class AuthController
 			"profile_image" => "",
 			"github_url" => "",
 		];
+		$_SESSION["is_guest"] = true;
 	}
 }

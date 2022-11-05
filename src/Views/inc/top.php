@@ -9,6 +9,7 @@
     <link rel="icon"
           href="/assets/images/favicon.jpg"
           type="image/x-icon">
+    <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://kit.fontawesome.com/56783586cd.js"
             crossorigin="anonymous"></script>
     <link rel="stylesheet"
