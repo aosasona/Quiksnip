@@ -1,12 +1,11 @@
 <?php
 
-namespace Quiksnip\Quiksnip\Controllers;
+namespace Quiksnip\Web\Controllers;
 
-use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\Github;
-use Quiksnip\Quiksnip\Models\User;
+use Quiksnip\Web\Utils\UUID;
 
 class AuthController
 {
@@ -40,9 +39,9 @@ class AuthController
 	/**
 	 * @throws IdentityProviderException
 	 */
-	public function completeGithubAuth(): bool
+	public function completeGithubAuth(): void
 	{
-		if (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+		if (empty($_GET['state']) || ($_GET['state'] !== ($_SESSION['oauth2state'] ?? null))) {
 			unset($_SESSION['oauth2state']);
 			header('Location: /auth');
 			exit;
@@ -52,35 +51,45 @@ class AuthController
 			'code' => $_GET['code']
 		]);
 
-//		$userData = $this->github_provider->getResourceOwner($token);
 
-		try {
+		$userData = $this->github_provider->getResourceOwner($token)->toArray();
 
-			// We got an access token, let's now get the user's details
-			$userData = $this->github_provider->getResourceOwner($token);
-			var_dump(json_encode($userData->toArray()));
-			exit;
-		} catch (Exception $e) {
-			exit('Oh dear...');
-		}
+		$user = new \Quiksnip\Web\Models\User();
+		$email = $userData["email"];
+		$db_user = $user->select("SELECT `id` FROM `users` WHERE `email` = :email", [":email" => $email]);
 
-		$user = new User();
-		$email = $userData->getEmail();
-		$user_id = $user->select("SELECT `id` FROM `users` WHERE `email` = :email", [":email" => $email]);
+		$last_login = date("Y-m-d H:i:s");
 
-		if (count($user_id) > 0) {
-			$user = $user->findOne($user_id[0]["id"]);
-			$_SESSION["user"] = $user;
-			return true;
+		if (count($db_user) > 0) {
+			$user->query("UPDATE `users` SET `last_login` = :last_login WHERE `email` = :email", [":last_login" => $last_login, ":email" => $email]);
+			$user = $user->findOne($db_user[0]["id"]);
 		} else {
-			$user->username = $userData->getNickname();
-			$user->email = $userData->getEmail();
-			$user->profile_image = $userData->getAvatarUrl();
+			$user->name = $userData["name"] ?? "";
+			$user->bio = $userData["bio"] ?? "";
+			$user->username = $userData["login"];
+			$user->email = $email;
+			$user->profile_image = $userData["avatar_url"];
+			$user->github_url = $userData["html_url"];
 			$user->auth_source = "github";
+			$user->last_login = $last_login;
 			$user->save();
-			$_SESSION["user"] = $user;
-			return true;
 		}
+		$_SESSION["auth_token"] = $token->getToken();
+		$_SESSION["user"] = $user;
 	}
 
+
+	public function continueAsGuest(): void
+	{
+		$_SESSION["auth_token"] = UUID::generate();
+		$_SESSION["user"] = [
+			"id" => 0,
+			"name" => "Guest",
+			"bio" => "",
+			"username" => "guest",
+			"email" => "",
+			"profile_image" => "",
+			"github_url" => "",
+		];
+	}
 }

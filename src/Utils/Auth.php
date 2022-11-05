@@ -1,6 +1,6 @@
 <?php
 
-namespace Quiksnip\Quiksnip\Utils;
+namespace Quiksnip\Web\Utils;
 
 
 class Auth
@@ -17,12 +17,12 @@ class Auth
 
 	public static function isLoggedIn(): bool
 	{
-		return isset($_SESSION["user"]);
+		return isset($_SESSION["user"]) || isset($_SESSION["auth_token"]);
 	}
 
 
 	public static function logout(): void
 	{
-		unset($_SESSION["user"]);
+		unset($_SESSION["user"], $_SESSION["auth_token"]);
 	}
 }

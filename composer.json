@@ -1,5 +1,5 @@
 {
-  "name": "quiksnip/quiksnip",
+  "name": "quiksnip/web",
   "description": "Share editable code snippets with other developers",
   "type": "project",
   "require": {
@@ -11,7 +11,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Quiksnip\\Quiksnip\\": "src/"
+      "Quiksnip\\Web\\": "src/"
     }
   },
   "authors": [

@@ -1,11 +1,6 @@
 <?php
 
-use Quiksnip\Quiksnip\Utils\Loader;
-
-if (isset($_SESSION["user"])) {
-	header("Location: /explore");
-	exit;
-}
+use Quiksnip\Web\Utils\Loader;
 
 $error = $data["error"] ?? null;
 
@@ -38,11 +33,9 @@ Loader::startLayout("Authentication");
             <div class="w-1/5 border-b border-neutral-800"></div>
         </div>
 
-        <a href="/explore"
+        <a href="/auth/guest"
            class="w-full flex items-center justify-center gap-2 bg-neutral-900 hover:-translate-y-1 text-white text-xs lg:text-sm font-medium py-3 px-4 rounded transition-all">
-            Continue
-            as
-            guest
+            Continue as guest
         </a>
     </div>
 </main>

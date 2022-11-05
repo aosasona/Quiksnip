@@ -1,6 +1,6 @@
 <?php
 
-use Quiksnip\Quiksnip\Utils\Loader;
+use Quiksnip\Web\Utils\Loader;
 
 Loader::startLayout("Quiksnip");
 ?>

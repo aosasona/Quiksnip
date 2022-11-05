@@ -8,12 +8,13 @@ ini_set("ignore_repeated_errors", 1);
 ini_set("ignore_repeated_source", 1);
 
 
-require("vendor/autoload.php");
+require_once __DIR__ . "/vendor/autoload.php";
 
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
 
+use Quiksnip\Web\Controllers\AuthController;
 use Trulyao\PhpRouter\HTTP\Request as Request;
 use Trulyao\PhpRouter\HTTP\Response as Response;
 use Trulyao\PhpRouter\Router as Router;
@@ -22,7 +23,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
 try {
-	$db = new Quiksnip\Quiksnip\Database\Database();
+	$db = new Quiksnip\Web\Database\Database();
 	$db->migrate();
 } catch (Exception $e) {
 	print($e);
@@ -36,25 +37,47 @@ $router->get("/", function (Request $request, Response $response) {
 	return $response->render("Views/index.php");
 });
 
-$router->get("/auth", fn(Request $request, Response $response) => $response->render("Views/auth.php"));
 
-$router->post("/auth", function (Request $request, Response $response) {
+/**
+ * Auth Routes
+ */
+
+$router->get("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn", fn(Request $request, Response $response) => $response->render("Views/auth.php"));
+
+$router->post("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn", function (Request $request, Response $response) {
 	try {
-		(new Quiksnip\Quiksnip\Controllers\AuthController())->initiateGithubAuth();
+		(new AuthController())->initiateGithubAuth();
 	} catch (Exception $e) {
-		$request->append("error", $e->getMessage());
+		$request->append("error", "An error occurred! Please try again.");
 	}
 	return $response->render("Views/auth.php", $request);
 });
 
 $router->get("/auth/callback/github", function (Request $request, Response $response) {
 	try {
-		(new Quiksnip\Quiksnip\Controllers\AuthController())->completeGithubAuth();
+		(new AuthController())->completeGithubAuth();
 		return $response->redirect("/explore");
 	} catch (Exception $e) {
-		$request->append("error", $e->getMessage());
+		$request->append("error", "An error occurred! Please try again.");
 		return $response->render("Views/auth.php", $request);
 	}
 });
+
+$router->get("/auth/guest", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn", function (Request $request, Response $response) {
+	(new AuthController())->continueAsGuest();
+	return $response->redirect("/explore");
+});
+
+$router->get("/auth/logout", function (Request $request, Response $response) {
+	\Quiksnip\Web\Utils\Auth::logout();
+	return $response->redirect("/");
+});
+
+
+/**
+ * Explore Routes
+ */
+
+$router->get("/explore", "\Quiksnip\Web\Middleware\AuthMiddleware::protect", function (Request $request, Response $response) { });
 
 $router->serve();

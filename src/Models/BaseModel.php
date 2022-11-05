@@ -1,19 +1,21 @@
 <?php
 
-namespace Quiksnip\Quiksnip\Models;
+namespace Quiksnip\Web\Models;
 
-use Quiksnip\Quiksnip\Database\Database;
+use Quiksnip\Web\Database\Database;
 
 abstract class BaseModel
 {
 	protected Database $db;
 	protected string $table;
 
+
 	public function __construct()
 	{
 		$this->db = new Database();
 		$this->table = $this->getTableName();
 	}
+
 
 	public function getTableName(): string
 	{
@@ -22,20 +24,24 @@ abstract class BaseModel
 		return strtolower($model_name);
 	}
 
+
 	public function __get($name)
 	{
 		return $this->{$name};
 	}
+
 
 	public function __set($name, $value)
 	{
 		$this->{$name} = $value;
 	}
 
+
 	public function select(string $query, array $params = []): array
 	{
 		return $this->db->select($query, $params);
 	}
+
 
 	public function findOne($id)
 	{
@@ -50,13 +56,15 @@ abstract class BaseModel
 			return $result->fetch();
 		}
 
-		return NULL;
+		return null;
 	}
+
 
 	public function query(string $query, array $params = []): bool | \PDOStatement
 	{
 		return $this->db->query($query, $params);
 	}
+
 
 	public function find(): bool | array | null
 	{
@@ -69,8 +77,9 @@ abstract class BaseModel
 			return $result->fetchAll();
 		}
 
-		return NULL;
+		return null;
 	}
+
 
 	public function delete(): ?bool
 	{
@@ -82,11 +91,12 @@ abstract class BaseModel
 		$result = $this->db->query($query, $params);
 
 		if ($result->rowCount() > 0) {
-			return TRUE;
+			return true;
 		}
 
-		return NULL;
+		return null;
 	}
+
 
 	public function save(): bool | string | null
 	{
@@ -96,6 +106,7 @@ abstract class BaseModel
 
 		return $this->create();
 	}
+
 
 	public function update(): ?bool
 	{
@@ -117,11 +128,12 @@ abstract class BaseModel
 		$result = $this->db->query($query, $params);
 
 		if ($result->rowCount() > 0) {
-			return TRUE;
+			return true;
 		}
 
-		return NULL;
+		return null;
 	}
+
 
 	public function create(): bool | string | null
 	{
@@ -153,18 +165,21 @@ abstract class BaseModel
 			return $this->db->getConnection()->lastInsertId();
 		}
 
-		return NULL;
+		return null;
 	}
+
 
 	public function beginTransaction(): bool
 	{
 		return $this->db->getConnection()->beginTransaction();
 	}
 
+
 	public function commit(): bool
 	{
 		return $this->db->getConnection()->commit();
 	}
+
 
 	public function rollBack(): bool
 	{

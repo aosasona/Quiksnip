@@ -1,23 +1,26 @@
 <?php
 
-namespace Quiksnip\Quiksnip\Database;
+namespace Quiksnip\Web\Database;
 
 // Extend this class to create a new database connection class using any database driver of your choice
 
 abstract class Connection
 {
 
-    private string $dsn;
+	private string $dsn;
 
-    public function getConnection()
-    {
-    }
 
-    private function buildDSN(array $data)
-    {
-    }
+	public function getConnection()
+	{
+	}
 
-    public function migrate()
-    {
-    }
+
+	private function buildDSN(array $data)
+	{
+	}
+
+
+	public function migrate()
+	{
+	}
 }
