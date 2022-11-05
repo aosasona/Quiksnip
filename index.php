@@ -10,31 +10,39 @@ ini_set("ignore_repeated_source", 1);
 
 require("vendor/autoload.php");
 
-use Trulyao\PhpRouter\Router as Router;
-use Trulyao\PhpRouter\HTTP\Response as Response;
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
+
 use Trulyao\PhpRouter\HTTP\Request as Request;
+use Trulyao\PhpRouter\HTTP\Response as Response;
+use Trulyao\PhpRouter\Router as Router;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
 try {
-    $db = new Quiksnip\Quiksnip\Database\Database();
-    $db->migrate();
+	$db = new Quiksnip\Quiksnip\Database\Database();
+	$db->migrate();
 } catch (Exception $e) {
-    print($e);
-    exit;
+	print($e);
+	exit;
 }
 
 
 $router = new Router(__DIR__ . "/src", "");
 
 $router->get("/", function (Request $request, Response $response) {
-    return $response->render("Views/index.php");
+	return $response->render("Views/index.php");
 });
 
-$router->get("/auth", function (Request $request, Response $response) {
-    return $response->render("Views/auth.php");
-});
+$router->route("/auth")
+	->get(function (Request $request, Response $response) {
+		return $response->render("Views/auth.php");
+	})
+	->post(function (Request $request, Response $response) {
+		return $response->render("Views/auth.php");
+	});
 
 
 $router->serve();

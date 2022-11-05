@@ -6,169 +6,169 @@ use Quiksnip\Quiksnip\Database\Database;
 
 abstract class BaseModel
 {
-    protected Database $db;
-    protected string $table;
+	protected Database $db;
+	protected string $table;
 
-    public function __construct()
-    {
-        $this->db = new Database();
-        $this->table = $this->getTableName();
-    }
+	public function __construct()
+	{
+		$this->db = new Database();
+		$this->table = $this->getTableName();
+	}
 
-    public function __get($name)
-    {
-        return $this->{$name};
-    }
+	public function getTableName(): string
+	{
+		$class_name = (new \ReflectionClass($this))->getShortName();
+		$model_name = "{$class_name}s";
+		return strtolower($model_name);
+	}
 
-    public function __set($name, $value)
-    {
-        $this->{$name} = $value;
-    }
+	public function __get($name)
+	{
+		return $this->{$name};
+	}
 
-    public function query(string $query, array $params = []): bool|\PDOStatement
-    {
-        return $this->db->query($query, $params);
-    }
+	public function __set($name, $value)
+	{
+		$this->{$name} = $value;
+	}
 
-    public function select(string $query, array $params = []): array
-    {
-        return $this->db->select($query, $params);
-    }
+	public function select(string $query, array $params = []): array
+	{
+		return $this->db->select($query, $params);
+	}
 
-    public function getTableName(): string
-    {
-        $class_name = (new \ReflectionClass($this))->getShortName();
-        $model_name = str_replace("Model", "s", $class_name);
-        return strtolower($model_name);
-    }
+	public function findOne($id)
+	{
+		$query = "SELECT * FROM {$this->table} WHERE `id` = :id LIMIT 1";
+		$params = [
+			":id" => $id
+		];
 
-    public function findOne($id)
-    {
-        $query = "SELECT * FROM {$this->table} WHERE `id` = :id LIMIT 1";
-        $params = [
-            ":id" => $id
-        ];
+		$result = $this->db->query($query, $params);
 
-        $result = $this->db->query($query, $params);
+		if ($result->rowCount() > 0) {
+			return $result->fetch();
+		}
 
-        if ($result->rowCount() > 0) {
-            return $result->fetch();
-        }
+		return NULL;
+	}
 
-        return null;
-    }
+	public function query(string $query, array $params = []): bool | \PDOStatement
+	{
+		return $this->db->query($query, $params);
+	}
 
-    public function find(): bool|array|null
-    {
-        $query = "SELECT * FROM {$this->table}";
-        $params = [];
+	public function find(): bool | array | null
+	{
+		$query = "SELECT * FROM {$this->table}";
+		$params = [];
 
-        $result = $this->db->query($query, $params);
+		$result = $this->db->query($query, $params);
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll();
-        }
+		if ($result->rowCount() > 0) {
+			return $result->fetchAll();
+		}
 
-        return null;
-    }
+		return NULL;
+	}
 
-    public function create(): bool|string|null
-    {
-        $query = "INSERT INTO {$this->table} (";
-        $params = [];
+	public function delete(): ?bool
+	{
+		$query = "DELETE FROM {$this->table} WHERE `id` = :id";
+		$params = [
+			":id" => $this->id
+		];
 
-        foreach ($this as $key => $value) {
-            if ($key === "db" || $key === "table") {
-                continue;
-            }
+		$result = $this->db->query($query, $params);
 
-            $query .= "`{$key}`, ";
-            $params[":{$key}"] = $value;
-        }
+		if ($result->rowCount() > 0) {
+			return TRUE;
+		}
 
-        $query = rtrim($query, ", ");
-        $query .= ") VALUES (";
+		return NULL;
+	}
 
-        foreach ($params as $key => $value) {
-            $query .= "{$key}, ";
-        }
+	public function save(): bool | string | null
+	{
+		if (isset($this->id)) {
+			return $this->update();
+		}
 
-        $query = rtrim($query, ", ");
-        $query .= ")";
+		return $this->create();
+	}
 
-        $result = $this->db->query($query, $params);
+	public function update(): ?bool
+	{
+		$query = "UPDATE {$this->table} SET ";
+		$params = [];
 
-        if ($result->rowCount() > 0) {
-            return $this->db->getConnection()->lastInsertId();
-        }
+		foreach ($this as $key => $value) {
+			if ($key === "db" || $key === "table") {
+				continue;
+			}
 
-        return null;
-    }
+			$query .= "`{$key}` = :{$key}, ";
+			$params[":{$key}"] = $value;
+		}
 
-    public function update(): ?bool
-    {
-        $query = "UPDATE {$this->table} SET ";
-        $params = [];
+		$query = rtrim($query, ", ");
+		$query .= " WHERE `id` = :id";
 
-        foreach ($this as $key => $value) {
-            if ($key === "db" || $key === "table") {
-                continue;
-            }
+		$result = $this->db->query($query, $params);
 
-            $query .= "`{$key}` = :{$key}, ";
-            $params[":{$key}"] = $value;
-        }
+		if ($result->rowCount() > 0) {
+			return TRUE;
+		}
 
-        $query = rtrim($query, ", ");
-        $query .= " WHERE `id` = :id";
+		return NULL;
+	}
 
-        $result = $this->db->query($query, $params);
+	public function create(): bool | string | null
+	{
+		$query = "INSERT INTO {$this->table} (";
+		$params = [];
 
-        if ($result->rowCount() > 0) {
-            return true;
-        }
+		foreach ($this as $key => $value) {
+			if ($key === "db" || $key === "table") {
+				continue;
+			}
 
-        return null;
-    }
+			$query .= "`{$key}`, ";
+			$params[":{$key}"] = $value;
+		}
 
-    public function delete(): ?bool
-    {
-        $query = "DELETE FROM {$this->table} WHERE `id` = :id";
-        $params = [
-            ":id" => $this->id
-        ];
+		$query = rtrim($query, ", ");
+		$query .= ") VALUES (";
 
-        $result = $this->db->query($query, $params);
+		foreach ($params as $key => $value) {
+			$query .= "{$key}, ";
+		}
 
-        if ($result->rowCount() > 0) {
-            return true;
-        }
+		$query = rtrim($query, ", ");
+		$query .= ")";
 
-        return null;
-    }
+		$result = $this->db->query($query, $params);
 
-    public function save(): bool|string|null
-    {
-        if (isset($this->id)) {
-            return $this->update();
-        }
+		if ($result->rowCount() > 0) {
+			return $this->db->getConnection()->lastInsertId();
+		}
 
-        return $this->create();
-    }
+		return NULL;
+	}
 
-    public function beginTransaction(): bool
-    {
-        return $this->db->getConnection()->beginTransaction();
-    }
+	public function beginTransaction(): bool
+	{
+		return $this->db->getConnection()->beginTransaction();
+	}
 
-    public function commit(): bool
-    {
-        return $this->db->getConnection()->commit();
-    }
+	public function commit(): bool
+	{
+		return $this->db->getConnection()->commit();
+	}
 
-    public function rollBack(): bool
-    {
-        return $this->db->getConnection()->rollBack();
-    }
+	public function rollBack(): bool
+	{
+		return $this->db->getConnection()->rollBack();
+	}
 
 }
