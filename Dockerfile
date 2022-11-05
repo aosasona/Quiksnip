@@ -14,6 +14,8 @@ RUN chown -R www-data:www-data /var/www
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+RUN docker-php-ext-install pdo pdo_mysql
+
 RUN apt-get update && apt-get install -y libpq-dev \
     && apt-get install -y git
 

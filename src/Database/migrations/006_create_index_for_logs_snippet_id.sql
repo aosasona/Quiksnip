@@ -1,0 +1,1 @@
+CREATE INDEX snippet_id_idx ON logs (snippet_id);

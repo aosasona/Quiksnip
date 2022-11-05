@@ -17,6 +17,15 @@ use Trulyao\PhpRouter\HTTP\Request as Request;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
+try {
+    $db = new Quiksnip\Quiksnip\Database\Database();
+    $db->migrate();
+} catch (Exception $e) {
+    print($e);
+    exit;
+}
+
+
 $router = new Router(__DIR__ . "/src", "");
 
 $router->get("/", function (Request $request, Response $response) {

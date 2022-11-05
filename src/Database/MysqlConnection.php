@@ -1,11 +1,11 @@
 <?php
 
-namespace Trulyao\PhpStarter\Database;
+namespace Quiksnip\Quiksnip\Database;
 
 use PDO;
 use PDOException;
 use PDOStatement;
-use Trulyao\PhpStarter\Exceptions\{ConnectionException, QueryException};
+use Quiksnip\Quiksnip\Exceptions\{ConnectionException, QueryException};
 
 class MysqlConnection extends Connection
 {
@@ -22,7 +22,7 @@ class MysqlConnection extends Connection
         $host = $MYSQL_HOST;
         $port = $MYSQL_PORT;
         $user = $MYSQL_USER;
-        $pass = $MYSQL_PASS;
+        $pass = $MYSQL_PASSWORD;
         $db = $MYSQL_DATABASE;
 
         $database_config = [
@@ -41,21 +41,21 @@ class MysqlConnection extends Connection
             PDO::ATTR_EMULATE_PREPARES => false,
         ];
 
-        $this->pdo = $this->connect();
+        $this->pdo = $this->connect($user, $pass);
     }
 
     private function buildDSN(array $data): string
     {
-        return "mysql:host={$data['host']};port={$data['port']};dbname={$data['database']}";
+        return "mysql:host={$data['host']};port={$data['port']};dbname={$data['db']}";
     }
 
     /**
      * @throws ConnectionException
      */
-    private function connect(): PDO
+    private function connect(string $username, string $password): PDO
     {
         try {
-            $this->pdo = new PDO($this->dsn, $this->options);
+            $this->pdo = new PDO($this->dsn, $username, $password, $this->options);
             return $this->pdo;
         } catch (PDOException $e) {
             throw new ConnectionException($e->getMessage(), $e->getCode(), $e);
@@ -67,46 +67,4 @@ class MysqlConnection extends Connection
         return $this->pdo;
     }
 
-    /**
-     * @throws QueryException
-     */
-    public function query(string $sql, array $params = []): PDOStatement
-    {
-        try {
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($params);
-            return $stmt;
-        } catch (PDOException $e) {
-            throw new QueryException($e->getMessage(), $e->getCode(), $e);
-        }
-    }
-
-    /**
-     * @throws QueryException
-     */
-    public function select(string $sql, array $params = []): array
-    {
-        $stmt = $this->query($sql, $params);
-        return $stmt->fetchAll();
-    }
-
-    /**
-     * @throws QueryException
-     */
-    public function migrate()
-    {
-        $dir = __DIR__ . "/migrations";
-        $files = scandir($dir);
-        $files = array_diff($files, ['.', '..']);
-        foreach ($files as $file) {
-            $file_name = explode('.', $file)[0];
-            $has_run = $this->select("SELECT * FROM `migrations` WHERE `name` = ?", [$file_name]);
-            if (count($has_run) > 0) {
-                continue;
-            }
-            $sql = file_get_contents($dir . "/" . $file);
-            $this->query($sql);
-            $this->query("INSERT INTO `migrations` (`name`) VALUES (?)", [$file_name]);
-        }
-    }
 }

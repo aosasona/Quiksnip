@@ -1,0 +1,1 @@
+CREATE INDEX user_id_idx ON logs (user_id);

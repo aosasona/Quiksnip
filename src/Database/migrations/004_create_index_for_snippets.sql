@@ -1,0 +1,1 @@
+CREATE INDEX snippet_owner_id_idx ON snippets (owner_id);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Trulyao\PhpStarter\Exceptions;
+namespace Quiksnip\Quiksnip\Exceptions;
 
 class HTTPException extends \Exception
 {

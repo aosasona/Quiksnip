@@ -594,6 +594,10 @@ video {
   display: flex;
 }
 
+.table{
+  display: table;
+}
+
 .grid{
   display: grid;
 }
@@ -811,6 +815,31 @@ video {
 .text-2xl{
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-5xl{
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.text-\[5rem\]{
+  font-size: 5rem;
+}
+
+.text-\[3rem\]{
+  font-size: 3rem;
+}
+
+.text-\[2\.7rem\]{
+  font-size: 2.7rem;
+}
+
+.text-\[2\.5rem\]{
+  font-size: 2.5rem;
+}
+
+.text-\[2\.8rem\]{
+  font-size: 2.8rem;
 }
 
 .font-bold{
@@ -1100,6 +1129,14 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     margin-top: 22vh;
   }
 
+  .lg\:mt-\[20vh\]{
+    margin-top: 20vh;
+  }
+
+  .lg\:mt-\[21vh\]{
+    margin-top: 21vh;
+  }
+
   .lg\:w-2\/5{
     width: 40%;
   }
@@ -1142,6 +1179,10 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 
   .lg\:gap-6{
     gap: 1.5rem;
+  }
+
+  .lg\:gap-14{
+    gap: 3.5rem;
   }
 
   .lg\:text-sm{
