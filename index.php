@@ -36,13 +36,25 @@ $router->get("/", function (Request $request, Response $response) {
 	return $response->render("Views/index.php");
 });
 
-$router->route("/auth")
-	->get(function (Request $request, Response $response) {
-		return $response->render("Views/auth.php");
-	})
-	->post(function (Request $request, Response $response) {
-		return $response->render("Views/auth.php");
-	});
+$router->get("/auth", fn(Request $request, Response $response) => $response->render("Views/auth.php"));
 
+$router->post("/auth", function (Request $request, Response $response) {
+	try {
+		(new Quiksnip\Quiksnip\Controllers\AuthController())->initiateGithubAuth();
+	} catch (Exception $e) {
+		$request->append("error", $e->getMessage());
+	}
+	return $response->render("Views/auth.php", $request);
+});
+
+$router->get("/auth/callback/github", function (Request $request, Response $response) {
+	try {
+		(new Quiksnip\Quiksnip\Controllers\AuthController())->completeGithubAuth();
+		return $response->redirect("/explore");
+	} catch (Exception $e) {
+		$request->append("error", $e->getMessage());
+		return $response->render("Views/auth.php", $request);
+	}
+});
 
 $router->serve();
