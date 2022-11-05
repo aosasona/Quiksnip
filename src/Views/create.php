@@ -12,19 +12,15 @@ if (!$is_guest) {
 
 $snippets = SnippetsController::getSnippets();
 
-Loader::startLayout("Explore");
+Loader::startLayout("Create Snippet");
 ?>
-<main class="container w-full flex flex-col lg:flex-row-reverse gap-6 mx-auto mt-[12vh] lg:mt-[14vh]">
-    <section class="block w-full lg:w-[30%] h-auto self-start" x-data="{ open: true }">
-		<?php include_once __DIR__ . "/components/profile_card.php"; ?>
+<main class="container w-full flex flex-col-reverse lg:flex-row gap-6 mx-auto mt-[11vh] lg:mt-[14vh]">
+    <section class="w-full lg:w-[65%] lg:h-[80vh]">
     </section>
 
-
-    <section class="w-full lg:w-[65%] lg:h-[80vh]">
-		<?php include_once __DIR__ . "/components/explore_snippets.php"; ?>
+    <section class="block w-full lg:w-[30%] h-auto self-start" x-data="{ open: true }">
     </section>
 </main>
-
 <?php
 Loader::endLayout();
 ?>

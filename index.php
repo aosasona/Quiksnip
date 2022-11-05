@@ -79,11 +79,16 @@ $router->get("/auth/logout", function (Request $request, Response $response) {
 
 
 /**
- * Explore Routes
+ * Protected Routes
  */
 
 $router->get("/explore", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
 	fn(Request $request, Response $response) => $response->render("Views/explore.php")
 );
+
+$router->get("/create", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
+	fn(Request $request, Response $response) => $response->render("Views/create.php")
+);
+
 
 $router->serve();

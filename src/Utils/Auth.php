@@ -23,6 +23,6 @@ class Auth
 
 	public static function logout(): void
 	{
-		unset($_SESSION["user"], $_SESSION["auth_token"]);
+		unset($_SESSION["user"], $_SESSION["auth_token"], $_SESSION["is_guest"]);
 	}
 }

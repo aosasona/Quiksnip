@@ -43,6 +43,13 @@ abstract class BaseModel
 	}
 
 
+	public function count(): int
+	{
+		$count = $this->db->select("SELECT COUNT(*) AS `count` FROM {$this->table}");
+		return $count[0]["count"];
+	}
+
+
 	public function findOne($id)
 	{
 		$query = "SELECT * FROM {$this->table} WHERE `id` = :id LIMIT 1";
