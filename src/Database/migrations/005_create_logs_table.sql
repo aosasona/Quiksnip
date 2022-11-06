@@ -5,4 +5,5 @@ CREATE TABLE IF NOT EXISTS logs
     user_id    INT       DEFAULT NULL REFERENCES users (id),
     snippet_id INT       DEFAULT NULL REFERENCES snippets (id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

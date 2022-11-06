@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS `sessions`
+(
+    `id`          SERIAL      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `session_key` VARCHAR(64) NOT NULL,
+    `data`        TEXT,
+    `ttl`         INT(11)     NOT NULL,
+    `snippet_id`  INT,
+    `created_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;

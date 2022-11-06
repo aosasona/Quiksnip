@@ -8,6 +8,7 @@
 
 * {
     box-sizing: border-box;
+    -webkit-appearance: none !important;
 }
 
 html {
@@ -73,6 +74,28 @@ a.link:hover {
     -webkit-text-fill-color: transparent;
 }
 
+label.check-label {
+    @apply w-full bg-neutral-900 text-xs text-center text-neutral-200 py-4 px-5 rounded-lg cursor-pointer my-0 mx-0;
+}
+
+/* check for checked */
+label.checked {
+    @apply bg-green-400 font-medium text-neutral-900;
+}
+
+
+label {
+    @apply block text-neutral-500 text-xs px-1 mb-2;
+}
+
 input[type="text"], input[type="email"], input[type="password"] {
-    @apply w-full px-4 py-2 text-neutral-900 placeholder-neutral-500 border border-neutral-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
+    @apply w-full px-4 py-3 bg-neutral-900 text-sm text-neutral-200 placeholder-neutral-500 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
+}
+
+input.has-error {
+    @apply border-2 border-red-500;
+}
+
+select {
+    @apply w-full px-4 py-3 bg-neutral-900 text-sm text-neutral-200 placeholder-neutral-500 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
 }
