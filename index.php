@@ -85,8 +85,13 @@ $router->get("/explore", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
 	fn(Request $request, Response $response) => $response->render("Views/explore.php")
 );
 
-$router->get("/create", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
+$router->get("/new", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
 	fn(Request $request, Response $response) => $response->render("Views/create.php")
+);
+
+$router->post("/new",
+	"\Quiksnip\Web\Middleware\AuthMiddleware::protect",
+	"\Quiksnip\Web\Controllers\SnippetsController::createSnippet"
 );
 
 

@@ -54,7 +54,7 @@ a.link:hover {
 }
 
 .feature-card .feature-card-icon {
-    @apply block text-lg text-neutral-200 bg-green-400 rounded-lg px-4 py-3;
+    @apply block text-lg text-neutral-200 bg-green-400 rounded-lg px-4 py-4;
 }
 
 .feature-card .feature-card-icon i, .feature-card .feature-card-icon svg {
@@ -74,6 +74,20 @@ a.link:hover {
     -webkit-text-fill-color: transparent;
 }
 
+.btn-primary {
+    @apply inline-block bg-green-400 text-xs font-medium text-neutral-900 px-8 py-4 rounded-lg hover:-translate-y-2 transition-all;
+}
+
+.CodeMirror {
+    @apply bg-neutral-900 text-neutral-200 cursor-text rounded-lg !important;
+}
+
+
+.CodeMirror-gutters {
+    @apply bg-neutral-900 border-none px-0 !important;
+}
+
+
 label.check-label {
     @apply w-full bg-neutral-900 text-xs text-center text-neutral-200 py-4 px-5 rounded-lg cursor-pointer my-0 mx-0;
 }
@@ -89,7 +103,7 @@ label {
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
-    @apply w-full px-4 py-3 bg-neutral-900 text-sm text-neutral-200 placeholder-neutral-500 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
+    @apply w-full px-4 py-4 bg-neutral-900 text-sm text-neutral-200 placeholder-neutral-500 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
 }
 
 input.has-error {
@@ -97,5 +111,5 @@ input.has-error {
 }
 
 select {
-    @apply w-full px-4 py-3 bg-neutral-900 text-sm text-neutral-200 placeholder-neutral-500 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
+    @apply w-full px-4 py-4 bg-neutral-900 text-sm text-neutral-200 placeholder-neutral-500 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
 }

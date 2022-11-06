@@ -23,6 +23,7 @@
 
     <!--  Codemirror  -->
     <link rel=stylesheet href="/assets/js/codemirror/lib/codemirror.css">
+    <link rel=stylesheet href="/assets/js/codemirror/theme/material-darker.css">
     <script src="/assets/js/codemirror/lib/codemirror.js"></script>
 
     <script src="/assets/js/codemirror/addon/edit/matchbrackets.js"></script>
@@ -51,4 +52,4 @@
         </a>
     </div>
 </nav>
-<main class="container w-full flex flex-col lg:flex-row gap-6 mx-auto mt-[12vh] lg:mt-[14vh]">
+<main class="container w-full flex flex-col lg:flex-row gap-6 mx-auto mt-[13vh] lg:mt-[14vh]">

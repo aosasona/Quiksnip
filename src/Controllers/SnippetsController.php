@@ -17,6 +17,12 @@ class SnippetsController
 	}
 
 
+	public static function createSnippet(): void
+	{
+
+	}
+
+
 	public static function getSnippets(int $page = 1, int $page_size = 25): array
 	{
 		$snippets = new Snippet();
