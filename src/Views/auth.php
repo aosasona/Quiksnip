@@ -11,9 +11,8 @@ Loader::startLayout("Authentication");
 
     <div class="w-full md:w-3/5 lg:w-2/5 2xl:w-2/6 border border-neutral-800 px-5 py-6 rounded-lg">
 		<?php if (isset($error)): ?>
-            <div class="text-xs bg-red-500 bg-opacity-20 text-red-600 px-4 py-3 rounded relative mb-4"
-                 role="alert">
-                <span class=""><?= $error ?></span>
+            <div class="error mb-4" role="alert">
+                <span><?= $error ?></span>
             </div>
 		<?php endif; ?>
 

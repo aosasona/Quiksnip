@@ -54,11 +54,11 @@ a.link:hover {
 }
 
 .feature-card .feature-card-icon {
-    @apply block text-lg text-neutral-200 bg-green-400 rounded-lg px-4 py-4;
+    @apply block text-lg text-neutral-200 bg-green-400 rounded-lg p-3.5;
 }
 
 .feature-card .feature-card-icon i, .feature-card .feature-card-icon svg {
-    @apply aspect-square text-neutral-900;
+    @apply block text-base aspect-square text-neutral-900;
 }
 
 .fade {
@@ -74,6 +74,10 @@ a.link:hover {
     -webkit-text-fill-color: transparent;
 }
 
+.error {
+    @apply text-xs bg-red-500 bg-opacity-20 text-red-600 px-4 py-3 rounded relative;
+}
+
 .btn-primary {
     @apply inline-block bg-green-400 text-xs font-medium text-neutral-900 px-8 py-4 rounded-lg hover:-translate-y-2 transition-all;
 }
@@ -87,12 +91,30 @@ a.link:hover {
     @apply bg-neutral-900 border-none px-0 !important;
 }
 
+.snippet-card {
+    @apply flex flex-col gap-4 font-mono border border-neutral-900 rounded-lg px-4 lg:px-5 py-3 lg:py-4;
+}
+
+.snippet-card a {
+    @apply block text-neutral-200 text-sm lg:text-base font-medium hover:underline hover:underline-offset-2 transition-all !important;
+}
+
+.snippet-ratings {
+    @apply flex items-center gap-2;
+}
+
+.snippet-ratings p {
+    @apply text-sm text-neutral-600;
+}
+
+.snippet-ratings p span {
+    @apply ml-1;
+}
 
 label.check-label {
     @apply w-full bg-neutral-900 text-xs text-center text-neutral-200 py-4 px-5 rounded-lg cursor-pointer my-0 mx-0;
 }
 
-/* check for checked */
 label.checked {
     @apply bg-green-400 font-medium text-neutral-900;
 }

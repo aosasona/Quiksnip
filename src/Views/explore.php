@@ -15,12 +15,12 @@ $snippets = SnippetsController::getSnippets();
 Loader::startLayout("Explore");
 ?>
 <main class="container w-full flex flex-col lg:flex-row-reverse gap-6 mx-auto mt-[12vh] lg:mt-[14vh]">
-    <section class="block w-full lg:w-[30%] h-auto self-start" x-data="{ open: true }">
+    <section class="hidden lg:block w-full lg:w-[30%] h-auto self-start" x-data="{ open: true }">
 		<?php include_once __DIR__ . "/components/profile_card.php"; ?>
     </section>
 
 
-    <section class="w-full lg:w-[65%] lg:h-[80vh]">
+    <section class="w-full lg:w-[65%] lg:h-[80vh] lg:overflow-y-scroll">
 		<?php include_once __DIR__ . "/components/explore_snippets.php"; ?>
     </section>
 </main>

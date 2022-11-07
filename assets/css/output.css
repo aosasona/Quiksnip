@@ -839,11 +839,6 @@ video {
   border-bottom-color: rgb(38 38 38 / var(--tw-border-opacity));
 }
 
-.bg-red-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -867,10 +862,6 @@ video {
 .bg-black{
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-opacity-20{
-  --tw-bg-opacity: 0.2;
 }
 
 .bg-opacity-80{
@@ -909,14 +900,14 @@ video {
   padding-bottom: 1.5rem;
 }
 
-.px-4{
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
 .py-3{
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.px-4{
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .px-1{
@@ -934,14 +925,24 @@ video {
   padding-bottom: 1rem;
 }
 
-.py-8{
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
 .px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.py-1\.5{
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
+
+.py-1{
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.py-8{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .py-5{
@@ -971,23 +972,22 @@ video {
   font-size: 11px;
 }
 
-.text-sm{
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.text-5xl{
-  font-size: 3rem;
-  line-height: 1;
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-\[10px\]{
   font-size: 10px;
 }
 
-.text-4xl{
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-\[9px\]{
+  font-size: 9px;
 }
 
 .text-2xl{
@@ -1012,8 +1012,20 @@ video {
   font-weight: 900;
 }
 
+.font-semibold{
+  font-weight: 600;
+}
+
+.capitalize{
+  text-transform: capitalize;
+}
+
 .tracking-wide{
   letter-spacing: 0.025em;
+}
+
+.tracking-wider{
+  letter-spacing: 0.05em;
 }
 
 .text-neutral-600{
@@ -1024,11 +1036,6 @@ video {
 .text-green-400{
   --tw-text-opacity: 1;
   color: rgb(74 222 128 / var(--tw-text-opacity));
-}
-
-.text-red-600{
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .text-neutral-900{
@@ -1061,9 +1068,19 @@ video {
   color: rgb(229 229 229 / var(--tw-text-opacity));
 }
 
+.text-neutral-700{
+  --tw-text-opacity: 1;
+  color: rgb(64 64 64 / var(--tw-text-opacity));
+}
+
 .text-red-400{
   --tw-text-opacity: 1;
   color: rgb(248 113 113 / var(--tw-text-opacity));
+}
+
+.text-red-600{
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .text-neutral-300{
@@ -1181,10 +1198,7 @@ a.link:hover{
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 0.875rem;
   font-size: 1.125rem;
   line-height: 1.75rem;
   --tw-text-opacity: 1;
@@ -1192,7 +1206,10 @@ a.link:hover{
 }
 
 .feature-card .feature-card-icon i, .feature-card .feature-card-icon svg{
+  display: block;
   aspect-ratio: 1 / 1;
+  font-size: 1rem;
+  line-height: 1.5rem;
   --tw-text-opacity: 1;
   color: rgb(23 23 23 / var(--tw-text-opacity));
 }
@@ -1208,6 +1225,21 @@ a.link:hover{
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.error{
+  position: relative;
+  border-radius: 0.25rem;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.2;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .btn-primary{
@@ -1251,6 +1283,71 @@ a.link:hover{
   padding-right: 0px !important;
 }
 
+.snippet-card{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(23 23 23 / var(--tw-border-opacity));
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@media (min-width: 1024px){
+  .snippet-card{
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+.snippet-card a{
+  display: block !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 500 !important;
+  --tw-text-opacity: 1 !important;
+  color: rgb(229 229 229 / var(--tw-text-opacity)) !important;
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 150ms !important;
+}
+
+.snippet-card a:hover{
+  text-decoration-line: underline !important;
+  text-underline-offset: 2px !important;
+}
+
+@media (min-width: 1024px){
+  .snippet-card a{
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+  }
+}
+
+.snippet-ratings{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.snippet-ratings p{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(82 82 82 / var(--tw-text-opacity));
+}
+
+.snippet-ratings p span{
+  margin-left: 0.25rem;
+}
+
 label.check-label{
   margin-top: 0px;
   margin-bottom: 0px;
@@ -1271,8 +1368,6 @@ label.check-label{
   --tw-text-opacity: 1;
   color: rgb(229 229 229 / var(--tw-text-opacity));
 }
-
-/* check for checked */
 
 label.checked{
   --tw-bg-opacity: 1;
@@ -1452,8 +1547,8 @@ select:focus{
     width: 40%;
   }
 
-  .lg\:w-\[65\%\]{
-    width: 65%;
+  .lg\:w-4\/5{
+    width: 80%;
   }
 
   .lg\:w-max{
@@ -1465,6 +1560,10 @@ select:focus{
     width: 30%;
   }
 
+  .lg\:w-\[65\%\]{
+    width: 65%;
+  }
+
   .lg\:w-screen{
     width: 100vw;
   }
@@ -1473,16 +1572,8 @@ select:focus{
     width: 83.333333%;
   }
 
-  .lg\:w-4\/5{
-    width: 80%;
-  }
-
   .lg\:w-10{
     width: 2.5rem;
-  }
-
-  .lg\:w-3\/5{
-    width: 60%;
   }
 
   .lg\:grid-cols-9{
@@ -1525,6 +1616,10 @@ select:focus{
     gap: 1.5rem;
   }
 
+  .lg\:overflow-y-scroll{
+    overflow-y: scroll;
+  }
+
   .lg\:px-5{
     padding-left: 1.25rem;
     padding-right: 1.25rem;
@@ -1540,8 +1635,9 @@ select:focus{
     padding-right: 1.5rem;
   }
 
-  .lg\:text-right{
-    text-align: right;
+  .lg\:px-3{
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 
   .lg\:text-sm{

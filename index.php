@@ -76,11 +76,6 @@ $router->get("/auth/logout", function (Request $request, Response $response) {
 	return $response->redirect("/");
 });
 
-
-/**
- * Protected Routes
- */
-
 $router->get("/explore", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
 	fn(Request $request, Response $response) => $response->render("Views/explore.php")
 );
@@ -94,5 +89,7 @@ $router->post("/new",
 	"\Quiksnip\Web\Controllers\SnippetsController::createSnippet"
 );
 
-
+$router->get("/snippets/:slug", "\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet",
+	fn(Request $request, Response $response) => $response->render("Views/snippet.php")
+);
 $router->serve();

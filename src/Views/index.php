@@ -6,7 +6,7 @@ Loader::startLayout("Quiksnip");
 ?>
 <main class="container w-[92%] lg:w-screen mx-auto">
     <section class="flex flex-col gap-8 lg:gap-14 items-center lg:justify-center mx-auto mt-[15vh] lg:mt-[22vh]">
-        <h1 class="hero-text lg:w-5/6 2xl:w-3/5 text-5xl lg:text-7xl font-black text-center tracking-wide transition-all" id="hero-text">
+        <h1 class="hero-text lg:w-5/6 2xl:w-3/5 text-4xl lg:text-7xl font-black text-center tracking-wide transition-all" id="hero-text">
             Share, fix &amp; collaborate on code snippets.
         </h1>
 

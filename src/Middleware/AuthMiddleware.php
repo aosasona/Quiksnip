@@ -31,11 +31,11 @@ class AuthMiddleware
 			$_SESSION["auth_token"] = $_GET["session_key"];
 			$_SESSION["user"] = [
 				"id" => 0,
-				"name" => "Guest",
-				"bio" => "Guest",
-				"username" => "Guest",
-				"email" => "Guest",
-				"profile_image" => "https://avatars.githubusercontent.com/u/47056243?v=4",
+				"name" => "guest",
+				"bio" => "guest",
+				"username" => "guest",
+				"email" => "guest",
+				"profile_image" => "",
 				"github_url" => ""
 			];
 		}
