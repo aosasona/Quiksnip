@@ -37,16 +37,22 @@ abstract class BaseModel
 	}
 
 
-	public function select(string $query, array $params = []): array
+	public function selectOne(string $query, array $params = []): array
 	{
-		return $this->db->select($query, $params);
+		return $this->db->selectOne($query, $params);
+	}
+
+
+	public function selectMany(string $query, array $params = []): array
+	{
+		return $this->db->selectMany($query, $params);
 	}
 
 
 	public function count(): int
 	{
-		$count = $this->db->select("SELECT COUNT(*) AS `count` FROM {$this->table}");
-		return $count[0]["count"];
+		$count = $this->db->selectOne("SELECT COUNT(*) AS `count` FROM {$this->table}");
+		return (int)$count["count"];
 	}
 
 

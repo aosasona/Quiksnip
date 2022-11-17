@@ -1,3 +1,6 @@
+<?php
+$is_logged_in = \Quiksnip\Web\Utils\Auth::isLoggedIn();
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,7 +38,7 @@
 </head>
 <body>
 <nav class="fixed top-0 flex items-center justify-between w-screen bg-black bg-opacity-50 backdrop-blur-lg border-b border-b-neutral-800 px-5 py-6 z-[999]">
-    <a href="/"
+    <a href="<?= $is_logged_in ? '/explore' : '/' ?>"
        class="flex items-center gap-2 text-green-400 text-xl">
         <img src="/assets/images/Logo.svg"
              alt="logo"
@@ -44,12 +47,18 @@
             QuikSnip
         </h2>
     </a>
-    <div class="flex items-center gap-5 lg:gap-6 px-2">
+    <div class="flex items-center gap-5 lg:gap-8 px-2">
         <a href="/explore"
            target="_blank"
            class="text-neutral-300 text-xs lg:text-sm font-medium block">
-            <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            <i class="fa-solid fa-magnifying-glass text-lg lg:text-xl"></i>
         </a>
+		<?php if ($is_logged_in): ?>
+            <a href="/profile"
+               class="text-neutral-300 text-xs lg:text-sm font-medium block">
+                <i class="fa-regular fa-circle-user text-xl lg:text-2xl"></i>
+            </a>
+		<?php endif; ?>
     </div>
 </nav>
 <main class="container w-full flex flex-col lg:flex-row gap-6 mx-auto mt-[13vh] lg:mt-[14vh]">

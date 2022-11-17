@@ -9,6 +9,7 @@ checkboxes.forEach(checkbox => {
 
 /* CODEMIRROR */
 const codeDiv = document.getElementById("editor")
+const lang = document.getElementById('language')
 let editor = CodeMirror.fromTextArea(codeDiv, {
     lineNumbers: true,
     mode: document.getElementById('language').value,
@@ -19,6 +20,9 @@ let editor = CodeMirror.fromTextArea(codeDiv, {
     indentUnit: 4,
 });
 
+lang.addEventListener('change', () => {
+    editor.setOption('mode', lang.value)
+})
 
 // const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 //     lineNumbers: true,

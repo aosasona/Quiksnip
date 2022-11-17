@@ -76,6 +76,10 @@ $router->get("/auth/logout", function (Request $request, Response $response) {
 	return $response->redirect("/");
 });
 
+$router->get("/profile", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
+	fn(Request $request, Response $response) => $response->render("Views/profile.php")
+);
+
 $router->get("/explore", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
 	fn(Request $request, Response $response) => $response->render("Views/explore.php")
 );

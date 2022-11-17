@@ -66,7 +66,7 @@ class SnippetsController
 		}
 
 		if ($snippets_count > 0) {
-			$data = $snippets->select("SELECT * FROM `snippets` ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}");
+			$data = $snippets->selectMany("SELECT * FROM `snippets` ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}");
 		} else {
 			$data = [];
 		}
@@ -86,11 +86,11 @@ class SnippetsController
 			$snippets = new Snippet();
 			$owner_id = self::getOwnerId();
 
-			$stats["snippets"] = (int)$snippets->select("SELECT COUNT(*) AS `count` FROM `snippets` WHERE `owner_id` = ?", [$owner_id])[0]["count"];
+			$stats["snippets"] = (int)$snippets->selectOne("SELECT COUNT(*) AS `count` FROM `snippets` WHERE `owner_id` = ?", [$owner_id])["count"];
 
-			$stats["up_votes"] = (int)$snippets->select("SELECT SUM(`up_votes`) as `up_votes` FROM `snippets` WHERE `owner_id` = ?", [$owner_id])[0]["up_votes"];
+			$stats["up_votes"] = (int)$snippets->selectOne("SELECT SUM(`up_votes`) as `up_votes` FROM `snippets` WHERE `owner_id` = ?", [$owner_id])["up_votes"];
 
-			$stats["down_votes"] = (int)$snippets->select("SELECT SUM(`down_votes`) as `down_votes` FROM `snippets` WHERE `owner_id` = ?", [$owner_id])[0]["down_votes"];
+			$stats["down_votes"] = (int)$snippets->selectOne("SELECT SUM(`down_votes`) as `down_votes` FROM `snippets` WHERE `owner_id` = ?", [$owner_id])["down_votes"];
 
 			return $stats;
 		} catch (\Exception $e) {

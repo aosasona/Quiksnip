@@ -56,13 +56,13 @@ class AuthController
 
 		$user = new \Quiksnip\Web\Models\User();
 		$email = $userData["email"];
-		$db_user = $user->select("SELECT `id` FROM `users` WHERE `email` = :email", [":email" => $email]);
+		$db_user = $user->selectOne("SELECT `id` FROM `users` WHERE `email` = :email", [":email" => $email]);
 
 		$last_login = date("Y-m-d H:i:s");
 
 		if (count($db_user) > 0) {
 			$user->query("UPDATE `users` SET `last_login` = :last_login WHERE `email` = :email", [":last_login" => $last_login, ":email" => $email]);
-			$user = $user->findOne($db_user[0]["id"]);
+			$user = $user->findOne($db_user["id"]);
 		} else {
 			$user->name = $userData["name"] ?? "";
 			$user->bio = $userData["bio"] ?? "";

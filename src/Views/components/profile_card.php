@@ -1,8 +1,3 @@
-<div class="w-full flex justify-end">
-    <button @click="open = !open" class="w-max bg-neutral-900 text-neutral-400 bg-opacity-80 lg:hidden text-xs px-5 py-3 rounded-lg mb-2 hover:opacity-50">
-        <span x-text="open ? 'Hide highlight' : 'Show highlight'"></span>
-    </button>
-</div>
 <div class="bg-neutral-900 bg-opacity-80 rounded-lg" x-show="open" x-data="{ showModal: false }">
     <div class="w-full flex justify-end border-b border-b-neutral-800 py-3 px-4">
         <button class="text-neutral-400 hover:text-green-400 p-1" @click="showModal = !showModal">
@@ -31,7 +26,7 @@
             <div>
                 <img src="<?= $user['profile_image'] ?>" class="w-3/6 mx-auto" alt="profile image"/>
                 <h3 class="text-center text-neutral-200 text-2xl font-medium my-5"><?= $user["name"] ?></h3>
-                <p class="bg-neutral-800 bg-opacity-50 text-neutral-500 text-xs text-center rounded-lg py-3 px-2"><?= $user["bio"] ?></p>
+                <p class="bg-neutral-800 bg-opacity-50 text-neutral-500 text-xs font-mono text-center rounded-lg py-3 px-2"><?= $user["bio"] ?></p>
                 <div class="grid grid-cols-3 gap-3 py-5 my-2">
                     <div class="col-span-1 space-y-2">
                         <h3 class="text-center text-neutral-200 text-2xl font-medium"><?= $stats["snippets"] ?></h3>

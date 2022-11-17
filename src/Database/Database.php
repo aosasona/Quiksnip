@@ -29,7 +29,14 @@ class Database
 	}
 
 
-	public function select(string $query, array $params = []): array
+	public function selectOne(string $query, array $params = []): array
+	{
+		$statement = $this->query($query, $params);
+		return $statement->fetch(PDO::FETCH_ASSOC);
+	}
+
+
+	public function selectMany(string $query, array $params = []): array
 	{
 		$statement = $this->query($query, $params);
 		return $statement->fetchAll();
@@ -52,7 +59,7 @@ class Database
                         `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
                         ENGINE=INNODB;");
 
-		$all_migrations = $this->select("SELECT * FROM `migrations`");
+		$all_migrations = $this->selectOne("SELECT * FROM `migrations`");
 		$count = count($all_migrations);
 		if ($count === count($files)) {
 			return;
@@ -60,7 +67,7 @@ class Database
 
 		foreach ($files as $file) {
 			$file_name = explode('.', $file)[0];
-			$has_run = $this->select("SELECT * FROM `migrations` WHERE `name` = ?", [$file_name]);
+			$has_run = $this->selectOne("SELECT * FROM `migrations` WHERE `name` = ?", [$file_name]);
 			if (count($has_run) > 0) {
 				continue;
 			}

@@ -1,12 +1,12 @@
 <?php require_once __DIR__ . "/../../Utils/constants.php" ?>
     <div>
         <div class="flex justify-between items-center">
-            <h1 class="text-4xl lg:text-3xl font-semibold text-neutral-200">Explore</h1>
+            <h1 class="text-3xl lg:text-3xl font-semibold text-neutral-200 tracking-wide">Explore</h1>
             <a href="/new" class="block bg-green-400 text-[10px] lg:text-xs text-neutral-900 font-medium hover:-translate-y-2 cursor-pointer rounded px-4 py-2 lg:px-3 transition-all">
                 <i class="fa-solid fa-plus"></i> <span class="ml-1">New</span>
             </a>
         </div>
-        <p class="text-neutral-700 text-sm lg:text-base mt-2">
+        <p class="text-neutral-700 text-sm tracking-wide mt-2">
             Discover latest snippets from the community
         </p>
     </div>
@@ -28,7 +28,7 @@
                             <i class="fa-solid fa-circle-down"></i> <span><?= $snippet['down_votes'] ?></span>
                         </p>
                     </div>
-                    <p class="w-max text-[9px] font-medium bg-opacity-80 rounded px-2 py-1.5"
+                    <p class="w-max text-[8px] lg:text-[10px] font-medium bg-opacity-80 rounded px-1.5 py-1"
                        style="background-color: <?= $languages[strtolower($snippet['lang'])]["bg"] ?>;
                                color: <?= $languages[strtolower($snippet['lang'])]["text"] ?>"
                     >
