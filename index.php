@@ -94,6 +94,6 @@ $router->post("/new",
 );
 
 $router->get("/snippets/:slug", "\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet",
-	fn(Request $request, Response $response) => $response->render("Views/snippet.php")
+	fn(Request $request, Response $response) => $response->render("Views/snippet.php", $request)
 );
 $router->serve();
