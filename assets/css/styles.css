@@ -14,6 +14,7 @@
 html {
     font-family: "Clash Display", "Satoshi", Roboto, sans-serif;
     line-height: 1.15;
+    letter-spacing: 0.02em;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -ms-overflow-style: scrollbar;
@@ -23,6 +24,10 @@ html {
 body, html {
     background-color: #000000;
     color: #f5f5f5 !important;
+}
+
+h1 {
+    letter-spacing: 0.03em;
 }
 
 .hero-text {
@@ -83,7 +88,7 @@ a.link:hover {
 }
 
 .CodeMirror {
-    @apply bg-neutral-900 text-neutral-200 cursor-text rounded-lg !important;
+    @apply bg-neutral-900 text-neutral-200 cursor-text rounded-lg leading-6 !important;
 }
 
 
@@ -138,4 +143,31 @@ select {
 
 .tab-button {
     @apply text-xs px-4 py-2 rounded transition-all;
+}
+
+.alert-box {
+    @apply fixed bottom-2 left-2 w-max z-[9999] text-xs font-semibold font-mono flex items-center justify-center pointer-events-none px-4 py-2 rounded;
+}
+
+.success {
+    @apply bg-green-400 text-neutral-900;
+}
+
+.error {
+    @apply bg-red-400 text-neutral-900;
+}
+
+.show {
+    animation: show 0.3s ease-in-out forwards;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+        transform: translateY(25px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }

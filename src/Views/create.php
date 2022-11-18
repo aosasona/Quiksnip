@@ -2,21 +2,11 @@
 
 use Quiksnip\Web\Utils\Loader;
 
-$user = \Quiksnip\Web\Utils\Auth::getSessionUser();
-$is_guest = isset($_SESSION["is_guest"]) && $_SESSION["is_guest"] === true;
-
-
-/**
- * @var array $languages
- */
-
-require __DIR__ . "/../Utils/constants.php";
-
 Loader::startEditorLayout("Create Snippet");
 
-foreach (array_keys($languages) as $lang) {
-	echo "<script src=\"/assets/js/codemirror/mode/{$lang}/{$lang}.js\"></script>";
-}
+$languages = $GLOBALS["languages"];
+$is_guest = $GLOBALS["is_guest"];
+$user = $GLOBALS["user"];
 
 ?>
 <section class="w-full lg:w-4/5 mx-auto">
@@ -81,7 +71,6 @@ foreach (array_keys($languages) as $lang) {
     </form>
 </section>
 
-<script src="/assets/js/form.js"></script>
 <?php
 Loader::endEditorLayout();
 ?>

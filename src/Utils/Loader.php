@@ -18,10 +18,11 @@ class Loader
 	}
 
 
-	public static function startEditorLayout($title): void
+	public static function startEditorLayout($title, $desc = "Share edit and collaborate on code snippets easily!"): void
 	{
 		$dir = dirname(__DIR__, 2);
-		require_once($dir . "/src/Views/layouts/top-editor.php");
+
+		require($dir . "/src/Views/layouts/top-editor.php");
 	}
 
 

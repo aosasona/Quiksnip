@@ -12,17 +12,31 @@ const codeDiv = document.getElementById("editor")
 const lang = document.getElementById('language')
 let editor = CodeMirror.fromTextArea(codeDiv, {
     lineNumbers: true,
-    mode: document.getElementById('language').value,
+    mode: lang?.value || lang?.innerText,
     lineWrapping: true,
     theme: 'material-darker',
     showCursorWhenSelecting: true,
     spellcheck: true,
     indentUnit: 4,
+    readOnly: codeDiv?.dataset?.readonly === 'true' ? "nocursor" : false,
 });
 
 lang.addEventListener('change', () => {
     editor.setOption('mode', lang.value)
 })
+
+const copyEditorContent = () => {
+    const code = editor.getValue()
+    navigator.clipboard.writeText(code).then(() => {
+        showAlertBox('Copied to clipboard', 'success')
+    })
+}
+
+const copyText = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+        showAlertBox('Copied to clipboard', 'success')
+    })
+}
 
 // const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 //     lineNumbers: true,

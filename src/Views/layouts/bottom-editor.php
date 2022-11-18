@@ -6,5 +6,7 @@
 	?>
     Built by <a class="link" href="https://twitter.com/trulyao">Ayodeji</a>
 </footer>
+<script src="/assets/js/general.js"></script>
+<script src="/assets/js/form.js"></script>
 </body>
 </html>

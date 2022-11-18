@@ -12,8 +12,8 @@ Loader::startLayout("Quiksnip");
 
         <div>
             <a href="/auth"
-               class="bg-white block font-bold text-xs lg:text-sm text-black px-10 py-4 rounded-lg hover:opacity-90 hover:-translate-y-2 transition-all">
-                Try it now <i class="fa-solid fa-arrow-right ml-1"></i>
+               class="bg-white block font-bold text-xs lg:text-sm text-black px-6 lg:px-10 py-3 lg:py-4 rounded-lg hover:opacity-90 hover:-translate-y-2 transition-all">
+                Try it now <i class="fa-solid fa-arrow-right ml-1.5"></i>
             </a>
             <p class="text-[10px] text-center text-neutral-500 mt-3">Don't worry, it's free :)</p>
         </div>
