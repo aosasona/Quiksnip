@@ -3,12 +3,14 @@
 use Quiksnip\Web\Controllers\SnippetsController;
 use Quiksnip\Web\Utils\Loader;
 
+
 $user = \Quiksnip\Web\Utils\Auth::getSessionUser();
 $is_guest = isset($_SESSION["is_guest"]) && $_SESSION["is_guest"] === true;
 
 if (!$is_guest) {
 	$stats = SnippetsController::collectStats($user["email"]);
 }
+
 
 $page = $_GET["page"] ?? 1;
 $data = SnippetsController::getSnippets($page);
@@ -18,10 +20,10 @@ $current_page = $data["current_page"];
 
 Loader::startLayout("Explore");
 ?>
-<main class="container w-full lg:max-w-3xl mx-auto mt-[12.5vh] lg:mt-[14vh]">
-    <section class="mb-12">
+<section class="container w-full lg:max-w-3xl mx-auto mt-[12.5vh] lg:mt-[14vh]">
+    <div class="mb-12">
 		<?php include_once __DIR__ . "/components/explore_snippets.php"; ?>
-    </section>
+    </div>
 	<?php if ($total_pages > 1): ?>
         <div class="w-full grid grid-cols-3 text-center justify-center mx-auto">
             <div class="self-center text-left">
@@ -48,7 +50,7 @@ Loader::startLayout("Explore");
             </div>
         </div>
 	<?php endif; ?>
-</main>
+</section>
 
 <?php
 Loader::endLayout();

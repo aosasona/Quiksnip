@@ -1,13 +1,14 @@
 <?php
 
-//ini_set("display_errors", 0);
-//ini_set("display_startup_errors", 0);
-//ini_set("error_reporting", 0);
-//ini_set("log_errors", 1);
-//ini_set("error_log", "/var/log/apache2/error.log");
+ini_set("display_errors", 0);
+ini_set("display_startup_errors", 0);
+ini_set("error_reporting", 0);
+ini_set("log_errors", 1);
+ini_set("error_log", "/var/log/apache2/error.log");
 
 
 require_once __DIR__ . "/vendor/autoload.php";
+
 
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
@@ -18,6 +19,7 @@ use Quiksnip\Web\Controllers\AuthController;
 use Trulyao\PhpRouter\HTTP\Request as Request;
 use Trulyao\PhpRouter\HTTP\Response as Response;
 use Trulyao\PhpRouter\Router as Router;
+
 
 try {
 
@@ -38,11 +40,6 @@ try {
 	$router->get("/", function (Request $request, Response $response) {
 		return $response->render("Views/index.php");
 	});
-
-
-	/**
-	 * Auth Routes
-	 */
 
 	$router->get("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
 		fn(Request $request, Response $response) => $response->render("Views/auth.php")
@@ -78,30 +75,23 @@ try {
 		return $response->redirect("/");
 	});
 
-	$router->get("/profile", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
-		fn(Request $request, Response $response) => $response->render("Views/profile.php")
-	);
+	$protect = "\Quiksnip\Web\Middleware\AuthMiddleware::protect";
 
-	$router->get("/explore", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
-		fn(Request $request, Response $response) => $response->render("Views/explore.php")
-	);
+	$router->get("/profile", $protect, fn(Request $request, Response $response) => $response->render("Views/profile.php"));
 
-	$router->get("/new", "\Quiksnip\Web\Middleware\AuthMiddleware::protect",
-		fn(Request $request, Response $response) => $response->render("Views/create.php")
-	);
+	$router->get("/explore", $protect, fn(Request $request, Response $response) => $response->render("Views/explore.php"));
 
-	$router->post("/new",
-		"\Quiksnip\Web\Middleware\AuthMiddleware::protect",
-		"\Quiksnip\Web\Controllers\SnippetsController::createSnippet"
-	);
+	$router->get("/new", $protect, fn(Request $request, Response $response) => $response->render("Views/create.php"));
+
+	$router->post("/new", $protect, "\Quiksnip\Web\Controllers\SnippetsController::createSnippet");
 
 	$router->get("/snippets/:slug", "\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet",
 		fn(Request $request, Response $response) => $response->render("Views/snippet.php", $request)
 	);
 
 	$router->serve();
-} catch (Exception $e) {
-	print($e);
-//	require_once __DIR__ . "/src/500.php";
+
+} catch (Throwable $e) {
+	require_once __DIR__ . "/src/500.php";
 	exit;
 }
