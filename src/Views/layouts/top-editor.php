@@ -6,6 +6,10 @@ $is_guest = $GLOBALS["is_guest"] = isset($_SESSION["is_guest"]) && $_SESSION["is
  * @var string $title
  * @var string $desc
  */
+
+$slug = $GLOBALS["slug"] ?? "";
+$meta_image = '//www.quiksnip.dev/meta/' . $slug;
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -17,13 +21,13 @@ $is_guest = $GLOBALS["is_guest"] = isset($_SESSION["is_guest"]) && $_SESSION["is
     <meta name="keywords" content="quiksnip, ayodeji, osasona, share, code, snippet, javascript, typescript, python, php, rust">
     <meta name="og:title" content="<?= $title ?>">
     <meta name="og:description" content="<?= $desc ?>">
-    <meta name="og:image" content="/assets/images/default-meta.jpg">
+    <meta name="og:image" content="<?= $meta_image ?>">
     <meta name="og:url" content="https://www.quiksnip.dev">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="https://www.quiksnip.dev">
     <meta name="twitter:title" content="<?= $title ?>">
     <meta name="twitter:description" content="<?= $desc ?>">
-    <meta name="twitter:image" content="/assets/images/default-meta.jpg">
+    <meta name="twitter:image" content="<?= $meta_image ?>">
     <meta name="twitter:creator" content="@trulyao">
     <link rel="icon" href="/assets/images/favicon.jpg" type="image/x-icon">
     <script src="//unpkg.com/alpinejs" defer></script>

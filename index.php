@@ -75,6 +75,10 @@ try {
 		return $response->redirect("/");
 	});
 
+	$router->get("/meta/:slug", "\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet", function (Request $request, Response $response) {
+		return $response->render("Views/meta.php", $request);
+	});
+
 	$protect = "\Quiksnip\Web\Middleware\AuthMiddleware::protect";
 
 	$router->get("/profile", $protect, fn(Request $request, Response $response) => $response->render("Views/profile.php"));

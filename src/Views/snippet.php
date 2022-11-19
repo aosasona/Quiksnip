@@ -10,6 +10,8 @@ $s_data = $data["snip_data"];
 $s_logs = $data["snip_logs"];
 $s_comments = $data["snip_comments"];
 
+$GLOBALS["slug"] = $s_data["slug"];
+
 $desc = "View `" . $s_data["title"] . "` snippet by " . $s_data["u_username"] . " on Quiksnip";
 Loader::startEditorLayout(strtoupper($s_data["lang"]) . " - " . $s_data["title"], $desc);
 
