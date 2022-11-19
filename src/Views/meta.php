@@ -2,8 +2,6 @@
 <?php
 
 $s_data = $data["snip_data"];
-$s_logs = $data["snip_logs"];
-$s_comments = $data["snip_comments"];
 
 
 if (!$s_data) {
@@ -43,18 +41,5 @@ $meta = str_replace("{{lang}}", strtoupper($s_data["lang"]), $meta);
 $meta = str_replace("{{username}}", $s_data["u_username"], $meta);
 $meta = str_replace("{{slug}}", $s_data["slug"], $meta);
 
-header("Content-Type: image/png");
-header("Content-Length: " . strlen($meta));
-header("Content-Disposition: inline; filename=\"{$s_data["slug"]}.png\"");
-header("Content-Transfer-Encoding: binary");
-header("Cache-Control: no-cache, no-store, must-revalidate");
-header("Pragma: no-cache");
-header("Expires: 0");
-header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: DENY");
-header("X-XSS-Protection: 1; mode=block");
-header("Referrer-Policy: no-referrer");
-header("Feature-Policy: none");
-header("Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';");
+header("Content-Type: image/svg+xml");
 echo $meta;
-
