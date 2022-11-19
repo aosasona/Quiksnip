@@ -11,13 +11,13 @@ $is_logged_in = \Quiksnip\Web\Utils\Auth::isLoggedIn();
     <meta name="keywords" content="quiksnip, ayodeji, osasona, share, code, snippet, javascript, typescript, python, php, rust">
     <meta name="og:title" content="<?= $title ?>">
     <meta name="og:description" content="Share, edit and collaborate on code snippets.">
-    <meta name="og:image" content="/assets/images/favicon.jpg">
+    <meta name="og:image" content="/assets/images/default-meta.jpg">
     <meta name="og:url" content="https://www.quiksnip.dev">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="https://www.quiksnip.dev">
     <meta name="twitter:title" content="<?= $title ?>">
     <meta name="twitter:description" content="Share, edit and collaborate on code snippets.">
-    <meta name="twitter:image" content="/assets/images/favicon.jpg">
+    <meta name="twitter:image" content="/assets/images/default-meta.jpg">
     <meta name="twitter:creator" content="@trulyao">
     <link rel="icon" href="/assets/images/favicon.jpg" type="image/x-icon">
     <script src="//unpkg.com/alpinejs" defer></script>
