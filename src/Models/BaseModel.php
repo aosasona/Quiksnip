@@ -37,7 +37,7 @@ abstract class BaseModel
 	}
 
 
-	public function selectOne(string $query, array $params = []): array
+	public function selectOne(string $query, array $params = []): array | bool
 	{
 		return $this->db->selectOne($query, $params);
 	}

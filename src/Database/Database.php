@@ -29,7 +29,7 @@ class Database
 	}
 
 
-	public function selectOne(string $query, array $params = []): array
+	public function selectOne(string $query, array $params = []): array | bool
 	{
 		$statement = $this->query($query, $params);
 		return $statement->fetch(PDO::FETCH_ASSOC);

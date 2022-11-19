@@ -63,16 +63,15 @@ class SnippetsController
 		} catch (\Exception $e) {
 			$_SESSION["temp_snippet"] = $req->body();
 			$_SESSION["error"] = "Something went wrong. Please try again later.";
-			var_dump($e);
-			exit;
 			$res->redirect("/new");
 		}
 	}
 
 
-	public static function getSnippets(int $page = 1, int $page_size = 25): array
+	public static function getSnippets(int $page = 1): array
 	{
 		$snippets = new Snippet();
+		$page_size = 50;
 		$offset = ($page - 1) * $page_size;
 		$snippets_count = $snippets->count();
 		if ($offset > $snippets_count) {
@@ -81,6 +80,12 @@ class SnippetsController
 
 		if ($snippets_count > 0) {
 			$data = $snippets->selectMany("SELECT * FROM `snippets` ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}");
+			$total_pages = ceil($snippets_count / $page_size);
+			$data = [
+				"snippets" => $data,
+				"total_pages" => $total_pages,
+				"current_page" => $page,
+			];
 		} else {
 			$data = [];
 		}
