@@ -4,6 +4,7 @@ namespace Quiksnip\Web\Controllers;
 
 use Quiksnip\Web\Exceptions\HTTPException;
 use Quiksnip\Web\Models\Snippet;
+use Quiksnip\Web\Utils\Misc;
 use Quiksnip\Web\Utils\Slugify;
 use Quiksnip\Web\Utils\Validator;
 use Trulyao\PhpRouter\HTTP\Request;
@@ -42,6 +43,17 @@ class SnippetsController
 			$snippet->owner_id = self::getOwnerId();
 			$snippet->save();
 
+			$snippet->id = $snippet->getLastInsertId();
+
+			$data = json_encode([
+				"id" => $snippet->id,
+				"slug" => $snippet->slug,
+				"logged_in" => (bool)$_SESSION["user"]["id"],
+				"created_at" => Misc::formatDateTime(),
+			]);
+
+			Misc::log($snippet->id, Misc::CREATED, $data);
+
 			$uri = "/snippets/" . $snippet->slug;
 			$res->redirect($uri);
 		} catch (HTTPException $e) {
@@ -51,6 +63,8 @@ class SnippetsController
 		} catch (\Exception $e) {
 			$_SESSION["temp_snippet"] = $req->body();
 			$_SESSION["error"] = "Something went wrong. Please try again later.";
+			var_dump($e);
+			exit;
 			$res->redirect("/new");
 		}
 	}

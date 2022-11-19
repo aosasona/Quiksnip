@@ -10,10 +10,10 @@ abstract class BaseModel
 	protected string $table;
 
 
-	public function __construct()
+	public function __construct($table_name = null)
 	{
 		$this->db = new Database();
-		$this->table = $this->getTableName();
+		$this->table = $table_name ?? $this->getTableName();
 	}
 
 
@@ -46,6 +46,12 @@ abstract class BaseModel
 	public function selectMany(string $query, array $params = []): array
 	{
 		return $this->db->selectMany($query, $params);
+	}
+
+
+	public function getLastInsertId(): int
+	{
+		return $this->db->getLastInsertId();
 	}
 
 

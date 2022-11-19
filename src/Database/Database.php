@@ -43,6 +43,12 @@ class Database
 	}
 
 
+	public function getLastInsertId(): int
+	{
+		return $this->connection->lastInsertId();
+	}
+
+
 	public function migrate(): void
 	{
 		$dir = __DIR__ . "/migrations";

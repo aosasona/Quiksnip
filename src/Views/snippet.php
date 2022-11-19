@@ -16,8 +16,7 @@ Loader::startEditorLayout(strtoupper($s_data["lang"]) . " - " . $s_data["title"]
 /**
  * @var array $languages
  */
-
-$allow_edit = $s_data["allow_edit"] === 1 || $s_data["owner_id"] === $user["id"];
+$allow_edit = (bool)$s_data["allow_edit"] || (!$is_guest && ($s_data["owner_id"] === ($user["id"] ?? -1)));
 $url = "https://{$_SERVER["HTTP_HOST"]}/snippets/{$s_data["slug"]}";
 
 $languages = $GLOBALS["languages"];
@@ -45,14 +44,14 @@ $languages = $GLOBALS["languages"];
 					<?php else: ?>
                         <p class="text-sm text-neutral-200">Guest</p>
 					<?php endif; ?>
-                    <p class="text-[10px] text-neutral-600"><?= (new DateTime($s_data["created_at"] ?? "now"))->format("d M Y H:i") ?></p>
+                    <p class="text-[10px] text-neutral-600"><?= \Quiksnip\Web\Utils\Misc::formatDateTime($s_data["created_at"]) ?></p>
                 </div>
             </div>
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-medium my-0"><?= ucfirst($s_data["title"]) ?></h1>
                 <div class="flex items-center">
                     <button title="Copy URL" type="button" class="text-xs text-green-400 hover:opacity-50 transition-all" onclick="copyText('<?= $url ?>')">
-                        <i class="fa-solid fa-copy text-lg"></i>
+                        <i class="fa-solid fa-copy text-sm"></i>
                     </button>
                 </div>
             </div>

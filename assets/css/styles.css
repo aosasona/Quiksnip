@@ -146,7 +146,7 @@ select {
 }
 
 .alert-box {
-    @apply fixed bottom-2 left-2 w-max z-[9999] text-xs font-semibold font-mono flex items-center justify-center pointer-events-none px-4 py-2 rounded;
+    @apply fixed bottom-4 left-4 w-max z-[9999] text-xs font-semibold font-mono flex items-center justify-center pointer-events-none px-4 py-2 rounded;
 }
 
 .success {

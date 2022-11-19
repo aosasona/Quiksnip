@@ -1,27 +1,27 @@
-import { Display } from "../display/Display.js"
-import { onFocus, onBlur } from "../display/focus.js"
-import { maybeUpdateLineNumberWidth } from "../display/line_numbers.js"
-import { endOperation, operation, startOperation } from "../display/operations.js"
-import { initScrollbars } from "../display/scrollbars.js"
-import { onScrollWheel } from "../display/scroll_events.js"
-import { setScrollLeft, updateScrollTop } from "../display/scrolling.js"
-import { clipPos, Pos } from "../line/pos.js"
-import { posFromMouse } from "../measurement/position_measurement.js"
-import { eventInWidget } from "../measurement/widgets.js"
+import {Display} from "../display/Display.js"
+import {onBlur, onFocus} from "../display/focus.js"
+import {maybeUpdateLineNumberWidth} from "../display/line_numbers.js"
+import {endOperation, operation, startOperation} from "../display/operations.js"
+import {initScrollbars} from "../display/scrollbars.js"
+import {onScrollWheel} from "../display/scroll_events.js"
+import {setScrollLeft, updateScrollTop} from "../display/scrolling.js"
+import {clipPos, Pos} from "../line/pos.js"
+import {posFromMouse} from "../measurement/position_measurement.js"
+import {eventInWidget} from "../measurement/widgets.js"
 import Doc from "../model/Doc.js"
-import { attachDoc } from "../model/document_data.js"
-import { Range } from "../model/selection.js"
-import { extendSelection } from "../model/selection_updates.js"
-import { ie, ie_version, mobile, webkit } from "../util/browser.js"
-import { e_preventDefault, e_stop, on, signal, signalDOMEvent } from "../util/event.js"
-import { copyObj, Delayed } from "../util/misc.js"
+import {attachDoc} from "../model/document_data.js"
+import {Range} from "../model/selection.js"
+import {extendSelection} from "../model/selection_updates.js"
+import {ie, ie_version, mobile, webkit} from "../util/browser.js"
+import {e_preventDefault, e_stop, on, signal, signalDOMEvent} from "../util/event.js"
+import {copyObj, Delayed} from "../util/misc.js"
 
-import { clearDragCursor, onDragOver, onDragStart, onDrop } from "./drop_events.js"
-import { ensureGlobalHandlers } from "./global_events.js"
-import { onKeyDown, onKeyPress, onKeyUp } from "./key_events.js"
-import { clickInGutter, onContextMenu, onMouseDown } from "./mouse_events.js"
-import { themeChanged } from "./utils.js"
-import { defaults, optionHandlers, Init } from "./options.js"
+import {clearDragCursor, onDragOver, onDragStart, onDrop} from "./drop_events.js"
+import {ensureGlobalHandlers} from "./global_events.js"
+import {onKeyDown, onKeyPress, onKeyUp} from "./key_events.js"
+import {clickInGutter, onContextMenu, onMouseDown} from "./mouse_events.js"
+import {themeChanged} from "./utils.js"
+import {defaults, Init, optionHandlers} from "./options.js"
 
 // A CodeMirror instance represents an editor. This is the object
 // that user code is usually dealing with.
@@ -91,13 +91,13 @@ export function CodeMirror(place, options) {
   // Suppress optimizelegibility in Webkit, since it breaks text
   // measuring on line wrapping boundaries.
   if (webkit && options.lineWrapping &&
-      getComputedStyle(display.lineDiv).textRendering == "optimizelegibility")
+    getComputedStyle(display.lineDiv).textRendering == "optimizelegibility")
     display.lineDiv.style.textRendering = "auto"
 }
 
 // The default configuration options.
 CodeMirror.defaults = defaults
-// Functions to run when options are changed.
+// Misc to run when options are changed.
 CodeMirror.optionHandlers = optionHandlers
 
 export default CodeMirror
@@ -128,6 +128,7 @@ function registerEventHandlers(cm) {
 
   // Used to suppress mouse event handling when a touch happens
   let touchFinished, prevTouch = {end: 0}
+
   function finishTouch() {
     if (d.activeTouch) {
       touchFinished = setTimeout(() => d.activeTouch = null, 1000)
@@ -135,23 +136,28 @@ function registerEventHandlers(cm) {
       prevTouch.end = +new Date
     }
   }
+
   function isMouseLikeTouchEvent(e) {
     if (e.touches.length != 1) return false
     let touch = e.touches[0]
     return touch.radiusX <= 1 && touch.radiusY <= 1
   }
+
   function farAway(touch, other) {
     if (other.left == null) return true
     let dx = other.left - touch.left, dy = other.top - touch.top
     return dx * dx + dy * dy > 20 * 20
   }
+
   on(d.scroller, "touchstart", e => {
     if (!signalDOMEvent(cm, e) && !isMouseLikeTouchEvent(e) && !clickInGutter(cm, e)) {
       d.input.ensurePolled()
       clearTimeout(touchFinished)
       let now = +new Date
-      d.activeTouch = {start: now, moved: false,
-                       prev: now - prevTouch.end <= 300 ? prevTouch : null}
+      d.activeTouch = {
+        start: now, moved: false,
+        prev: now - prevTouch.end <= 300 ? prevTouch : null
+      }
       if (e.touches.length == 1) {
         d.activeTouch.left = e.touches[0].pageX
         d.activeTouch.top = e.touches[0].pageY
@@ -164,7 +170,7 @@ function registerEventHandlers(cm) {
   on(d.scroller, "touchend", e => {
     let touch = d.activeTouch
     if (touch && !eventInWidget(d, e) && touch.left != null &&
-        !touch.moved && new Date - touch.start < 300) {
+      !touch.moved && new Date - touch.start < 300) {
       let pos = cm.coordsChar(d.activeTouch, "page"), range
       if (!touch.prev || farAway(touch, touch.prev)) // Single tap
         range = new Range(pos, pos)
@@ -198,11 +204,22 @@ function registerEventHandlers(cm) {
   on(d.wrapper, "scroll", () => d.wrapper.scrollTop = d.wrapper.scrollLeft = 0)
 
   d.dragFunctions = {
-    enter: e => {if (!signalDOMEvent(cm, e)) e_stop(e)},
-    over: e => {if (!signalDOMEvent(cm, e)) { onDragOver(cm, e); e_stop(e) }},
+    enter: e => {
+      if (!signalDOMEvent(cm, e)) e_stop(e)
+    },
+    over: e => {
+      if (!signalDOMEvent(cm, e)) {
+        onDragOver(cm, e);
+        e_stop(e)
+      }
+    },
     start: e => onDragStart(cm, e),
     drop: operation(cm, onDrop),
-    leave: e => {if (!signalDOMEvent(cm, e)) { clearDragCursor(cm) }}
+    leave: e => {
+      if (!signalDOMEvent(cm, e)) {
+        clearDragCursor(cm)
+      }
+    }
   }
 
   let inp = d.input.getField()
