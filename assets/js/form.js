@@ -26,7 +26,7 @@ let editor = CodeMirror.fromTextArea(codeDiv, {
     highlightSelectionMatches: true,
     smartIndent: true,
     spellcheck: true,
-    indentUnit: 4,
+    indentUnit: 2,
     readOnly: codeDiv?.dataset?.readonly === 'true' ? "nocursor" : false,
 });
 

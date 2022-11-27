@@ -12,8 +12,9 @@ $s_comments = $data["snip_comments"];
 
 $GLOBALS["slug"] = $s_data["slug"];
 
-$desc = "View `" . $s_data["title"] . "` snippet by " . $s_data["u_username"] . " on Quiksnip";
-Loader::startEditorLayout(strtoupper($s_data["lang"]) . " - " . $s_data["title"], $desc);
+$title = $s_data ? "[" . strtoupper($s_data["lang"]) . "] - " . $s_data["title"] : "[404] No snip here :(";
+$desc = "`" . strtolower($s_data["title"]) . "` snippet by " . $s_data["u_username"] . " on Quiksnip";
+Loader::startEditorLayout($title, $desc);
 
 /**
  * @var array $languages
@@ -49,17 +50,24 @@ $languages = $GLOBALS["languages"];
                     <p class="text-[10px] text-neutral-600"><?= \Quiksnip\Web\Utils\Misc::formatDateTime($s_data["created_at"]) ?></p>
                 </div>
             </div>
-            <div class="flex items-center justify-between">
-                <h1 class="text-xl font-medium my-0"><?= ucfirst($s_data["title"]) ?></h1>
-                <div class="flex items-center">
+
+            <div>
+                <div class="window-top">
+                    <div class="window-btn-container">
+                        <div class="window-btn red"></div>
+                        <div class="window-btn yellow"></div>
+                        <div class="window-btn green"></div>
+                    </div>
+                    <h4><?= $s_data["title"] ?></h4>
                     <button title="Copy URL" type="button" class="text-xs text-green-400 hover:opacity-50 transition-all" onclick="copyText('<?= $url ?>')">
                         <i class="fa-solid fa-copy text-sm"></i>
                     </button>
                 </div>
-            </div>
-
-            <div>
                 <textarea name="content" id="editor" data-readonly="<?= $allow_edit ? 'true' : 'false' ?>"><?= $s_data["content"]; ?></textarea>
+                <div class="window-bottom">
+                    <p class="date"><?= \Quiksnip\Web\Utils\Misc::timeAgo($s_data["created_at"]) ?></p>
+                    <p class="lang"><?= ucfirst($s_data["lang"]) ?></p>
+                </div>
             </div>
 
             <div class="lg:flex lg:justify-end">

@@ -4,13 +4,14 @@
 $s_data = $data["snip_data"];
 
 
-if (!$s_data) {
-	$filename = __DIR__ . "/../../assets/images/default-meta.jpg";
-	header("Content-Type: image/png");
-	header("Content-Length: " . filesize($filename));
-	readfile($filename);
-	exit;
-}
+//if (!$s_data) {
+// momentarily disabled
+$filename = __DIR__ . "/../../assets/images/default-meta.jpg";
+header("Content-Type: image/png");
+header("Content-Length: " . filesize($filename));
+readfile($filename);
+exit;
+//}
 
 ob_start();
 ?>
@@ -24,8 +25,8 @@ ob_start();
     </div>
     <div class="flex justify-between items-center mt-auto">
         <div class="flex gap-4 ">
-            <p class="text-sm font-mono text-green-400">{{up_votes}} <span class="text-xs text-neutral-500">up-votes</span></p>
-            <p class="text-sm font-mono text-green-400">{{down_votes}} <span class="text-xs text-neutral-500">down-votes</span></p>
+            <p class="text-sm font-mono text-green-400">{{up_votes}} <span class="text-xs text-neutral-500">upvotes</span></p>
+            <p class="text-sm font-mono text-green-400">{{down_votes}} <span class="text-xs text-neutral-500">downvotes</span></p>
         </div>
         <p class="text-[9px] font-mono bg-neutral-900 text-neutral-400 px-4 py-2 rounded">{{lang}}</p>
     </div>

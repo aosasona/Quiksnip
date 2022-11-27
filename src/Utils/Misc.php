@@ -23,6 +23,26 @@ class Misc
 	}
 
 
+	/**
+	 * @throws Exception
+	 */
+	public static function timeAgo(string $date): string
+	{
+		$dt = new \DateTime($date);
+		$dt = $dt->getTimestamp();
+		$now = time();
+		$diff = $now - $dt;
+		$diff = round($diff / 60);
+		if ($diff < 1) {
+			return "just now";
+		} else {
+			$diff = round($diff / 1440);
+			$noun = ($diff > 1 ? "days" : "day") . " ago";
+			return "Created " . $diff . " " . $noun;
+		}
+	}
+
+
 	public static function log(int $sid, string $event, string $data, string $subject = "web"): void
 	{
 		$user = Auth::getSessionUser() ?? null;

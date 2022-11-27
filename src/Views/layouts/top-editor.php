@@ -84,4 +84,4 @@ $meta_image = '//www.quiksnip.dev/meta/' . $slug;
 		<?php endif; ?>
     </div>
 </nav>
-<main class="container w-full flex flex-col lg:flex-row gap-6 mx-auto mt-[13vh] lg:mt-[14vh]">
+<main class="container w-full 2xl:max-w-7xl flex flex-col lg:flex-row gap-6 mx-auto mt-[13vh] lg:mt-[14vh]">

@@ -30,14 +30,6 @@ h1 {
     letter-spacing: 0.03em;
 }
 
-.hero-text {
-    background: rgb(238, 174, 202);
-    background: radial-gradient(circle, rgba(238, 174, 202, 0.8141850490196079) 0%, rgba(148, 187, 233, 0.7721682422969187) 100%);
-    background-size: 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 a.link {
     @apply text-neutral-200;
 }
@@ -46,6 +38,42 @@ a.link:hover {
     @apply text-neutral-100 underline underline-offset-2;
 }
 
+.hero-text {
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 0.8141850490196079) 0%, rgba(148, 187, 233, 0.7721682422969187) 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fade {
+    @apply opacity-0;
+    animation: fade 0.5s ease-in-out forwards;
+}
+
+/* Snippet List Cards */
+
+.snippet-card {
+    @apply flex flex-col gap-4 font-mono border border-neutral-900 rounded-lg px-4 lg:px-5 py-3 lg:py-4;
+}
+
+.snippet-card a {
+    @apply block text-neutral-200 text-sm lg:text-base font-medium hover:text-green-400 hover:underline hover:underline-offset-2 transition-all !important;
+}
+
+.snippet-ratings {
+    @apply flex items-center gap-2;
+}
+
+.snippet-ratings p {
+    @apply text-sm text-neutral-600;
+}
+
+.snippet-ratings p span {
+    @apply ml-1;
+}
+
+/* Feature cards */
 .feature-card {
     @apply flex flex-col items-start gap-3 px-6 lg:px-10 py-6 lg:py-12 rounded text-left bg-neutral-900 bg-opacity-50 backdrop-blur-sm transition-all duration-300 rounded-lg cursor-pointer;
 }
@@ -66,11 +94,6 @@ a.link:hover {
     @apply block text-base aspect-square text-neutral-900;
 }
 
-.fade {
-    @apply opacity-0;
-    animation: fade 0.5s ease-in-out forwards;
-}
-
 .icon {
     background: rgb(238, 174, 202);
     background: radial-gradient(circle, rgba(238, 174, 202, 0.8141850490196079) 0%, rgba(148, 187, 233, 0.7721682422969187) 100%);
@@ -79,41 +102,14 @@ a.link:hover {
     -webkit-text-fill-color: transparent;
 }
 
+/* Forms */
+
 .error {
     @apply text-xs bg-red-500 bg-opacity-20 text-red-600 px-4 py-3 rounded relative;
 }
 
 .btn-primary {
     @apply inline-block bg-green-400 text-xs font-medium text-neutral-900 px-8 py-4 rounded-lg hover:-translate-y-2 transition-all;
-}
-
-.CodeMirror {
-    @apply bg-neutral-900 text-neutral-200 cursor-text rounded-lg leading-6 !important;
-}
-
-
-.CodeMirror-gutters {
-    @apply bg-neutral-900 border-none px-0 !important;
-}
-
-.snippet-card {
-    @apply flex flex-col gap-4 font-mono border border-neutral-900 rounded-lg px-4 lg:px-5 py-3 lg:py-4;
-}
-
-.snippet-card a {
-    @apply block text-neutral-200 text-sm lg:text-base font-medium hover:text-green-400 hover:underline hover:underline-offset-2 transition-all !important;
-}
-
-.snippet-ratings {
-    @apply flex items-center gap-2;
-}
-
-.snippet-ratings p {
-    @apply text-sm text-neutral-600;
-}
-
-.snippet-ratings p span {
-    @apply ml-1;
 }
 
 label.check-label {
@@ -145,6 +141,8 @@ select {
     @apply text-xs px-4 py-2 rounded transition-all;
 }
 
+/* Alert/Toast */
+
 .alert-box {
     @apply fixed bottom-4 left-4 w-max z-[9999] text-xs font-semibold font-mono flex items-center justify-center pointer-events-none px-4 py-2 rounded;
 }
@@ -160,6 +158,60 @@ select {
 .show {
     animation: show 0.3s ease-in-out forwards;
 }
+
+
+/* Editor -  */
+.CodeMirror {
+    @apply bg-neutral-900 bg-opacity-80 text-neutral-200 cursor-text leading-6 !important;
+}
+
+.CodeMirror-gutters {
+    @apply bg-inherit border-none px-0 !important;
+}
+
+/* Window */
+.window-btn-container {
+    @apply flex items-center gap-1.5 select-none cursor-pointer justify-self-start;
+}
+
+.window-btn {
+    @apply w-2.5 rounded-full aspect-square;
+}
+
+.window-btn.green {
+    @apply bg-green-500;
+}
+
+.window-btn.red {
+    @apply bg-red-500;
+}
+
+.window-btn.yellow {
+    @apply bg-yellow-400;
+}
+
+.window-top {
+    @apply w-full bg-neutral-900 bg-opacity-80 text-xs font-mono flex items-center justify-between gap-4 lg:gap-6 px-4 py-3 rounded-t-lg;
+}
+
+.window-top h4 {
+    @apply w-max text-neutral-100 font-medium text-[11px] text-left whitespace-nowrap overflow-hidden overflow-ellipsis;
+}
+
+.window-bottom {
+    @apply w-full bg-neutral-900 bg-opacity-80 text-xs font-mono flex items-center justify-between gap-4 lg:gap-6 px-4 py-3 rounded-b-lg;
+}
+
+.window-bottom .lang {
+    @apply bg-green-400 text-neutral-900 text-[10px] font-mono uppercase font-medium px-1 py-0.5 rounded;
+}
+
+.window-bottom .date {
+    @apply text-[10px] text-neutral-500;
+}
+
+
+/* Animations */
 
 @keyframes show {
     0% {
