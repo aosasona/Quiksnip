@@ -7,7 +7,7 @@ use Trulyao\PhpRouter\HTTP\{Request, Response};
 
 class SnippetMiddleware
 {
-	public static function fetchSnippet(Request $request, Response $response,)
+	public static function fetchSnippet(Request $request, Response $response,): void
 	{
 		$slug = $request->params("slug");
 		$snippet = new Snippet();

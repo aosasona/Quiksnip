@@ -2,11 +2,11 @@
     <div>
         <div class="flex justify-between items-center">
             <h1 class="text-3xl lg:text-3xl font-medium text-neutral-200 tracking-wide">Explore</h1>
-            <a href="/new" class="block bg-green-400 text-[10px] lg:text-xs text-neutral-900 font-medium hover:-translate-y-2 cursor-pointer rounded px-4 py-2 lg:px-3 transition-all">
-                <i class="fa-solid fa-plus"></i> <span class="ml-1">New</span>
+            <a href="/new" class="fixed lg:relative bottom-6 right-6 lg:block bg-green-400 text-[10px] text-neutral-900 font-medium hover:-translate-y-2 cursor-pointer rounded-md lg:rounded p-5 lg:p-0 lg:py-1.5 lg:px-3 transition-all">
+                <i class="fa-solid fa-plus text-xl lg:text-xs"></i>
             </a>
         </div>
-        <p class="text-neutral-700 text-xs tracking-wide mt-2">
+        <p class="text-neutral-500 text-xs tracking-wide mt-2">
             Discover latest snippets from the community
         </p>
     </div>

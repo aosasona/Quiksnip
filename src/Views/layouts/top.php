@@ -20,6 +20,7 @@ $is_logged_in = \Quiksnip\Web\Utils\Auth::isLoggedIn();
     <meta name="twitter:image" content="/assets/images/default-meta.jpg">
     <meta name="twitter:creator" content="@trulyao">
     <link rel="icon" href="/assets/images/favicon.jpg" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="https://kit.fontawesome.com/56783586cd.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/assets/css/output.css">

@@ -8,7 +8,7 @@ module.exports = {
         container: {
             center: true,
             screens: {
-                sm: "88vw",
+                sm: "90vw",
             }
         },
         extend: {},

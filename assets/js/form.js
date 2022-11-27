@@ -46,9 +46,3 @@ const copyText = (text) => {
         showAlertBox('Copied to clipboard', 'success')
     })
 }
-
-// const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-//     lineNumbers: true,
-//     mode: language,
-//     matchBrackets: true,
-// });

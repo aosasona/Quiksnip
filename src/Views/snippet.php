@@ -54,7 +54,7 @@ $languages = $GLOBALS["languages"];
             <div>
                 <div class="window-top">
                     <div class="window-btn-container">
-                        <div class="window-btn red"></div>
+                        <div class="window-btn red" id="close"></div>
                         <div class="window-btn yellow"></div>
                         <div class="window-btn green"></div>
                     </div>

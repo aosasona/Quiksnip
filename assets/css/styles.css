@@ -137,6 +137,10 @@ select {
     @apply w-full px-4 py-4 bg-neutral-900 text-sm text-neutral-200 placeholder-neutral-500 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent;
 }
 
+textarea[name="whitelist"] {
+    @apply w-full bg-neutral-900 bg-opacity-80 text-sm resize-none placeholder-neutral-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent rounded-lg p-3;
+}
+
 .tab-button {
     @apply text-xs px-4 py-2 rounded transition-all;
 }
@@ -203,11 +207,11 @@ select {
 }
 
 .window-bottom .lang {
-    @apply bg-green-400 text-neutral-900 text-[10px] font-mono uppercase font-medium px-1 py-0.5 rounded;
+    @apply bg-green-400 text-neutral-900 text-[9px] font-mono uppercase font-medium px-1.5 py-0.5 rounded select-none;
 }
 
 .window-bottom .date {
-    @apply text-[10px] text-neutral-500;
+    @apply text-[10px] text-neutral-500 select-none;
 }
 
 

@@ -25,4 +25,10 @@ class Auth
 	{
 		unset($_SESSION["user"], $_SESSION["auth_token"], $_SESSION["is_guest"]);
 	}
+
+
+	public static function isGuest(): bool
+	{
+		return isset($_SESSION["is_guest"]);
+	}
 }
