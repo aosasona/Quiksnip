@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/assets/css/output.css">
 <?php
 
-$s_data = $data["snip_data"];
+//$s_data = $data["snip_data"];
 
 
 //if (!$s_data) {

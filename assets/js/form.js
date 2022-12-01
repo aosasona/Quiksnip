@@ -1,9 +1,14 @@
-const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const checkboxes = $("input[type='checkbox']");
 
-checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
-        const checkboxLabel = checkbox.nextElementSibling;
-        checkboxLabel.classList.toggle('checked');
+checkboxes.each(function () {
+    const isChecked = Boolean($(this).data("checked") ?? false);
+    if (isChecked) {
+        $(this).next().addClass('checked');
+        $(this).prop('checked', true);
+    }
+    $(this).on('change', function () {
+        const checkboxLabel = $(this).next();
+        checkboxLabel.toggleClass('checked');
     });
 })
 

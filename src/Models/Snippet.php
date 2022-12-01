@@ -15,6 +15,7 @@ class Snippet extends BaseModel
 	public int $allow_edit;
 	public int $up_votes;
 	public int $down_votes;
+	public int $whitelist;
 	public int $owner_id;
 
 

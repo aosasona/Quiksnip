@@ -10,10 +10,15 @@ $s_data = $data["snip_data"];
 $s_logs = $data["snip_logs"];
 $s_comments = $data["snip_comments"];
 
+if (!$s_data) {
+	require(__DIR__ . "/../404.php");
+	exit;
+}
+
 $GLOBALS["slug"] = $s_data["slug"];
 
-$title = $s_data ? "[" . strtoupper($s_data["lang"]) . "] - " . $s_data["title"] : "[404] No snip here :(";
-$desc = "`" . strtolower($s_data["title"]) . "` snippet by " . $s_data["u_username"] . " on Quiksnip";
+$title = "[" . strtoupper($s_data["lang"]) . "] - " . $s_data["title"];
+$desc = "`" . strtolower($s_data["title"]) . "` code snippet by " . strtolower($s_data["u_username"]) . " on Quiksnip";
 Loader::startEditorLayout($title, $desc);
 
 /**
@@ -33,11 +38,6 @@ $languages = $GLOBALS["languages"];
             </a>
         </div>
         <form class="flex flex-col mt-4 gap-6" action="/update" method="POST">
-			<?php if (isset($_SESSION["error"])): ?>
-                <div class="error" role="alert">
-                    <span><?= $_SESSION["error"] ?></span>
-                </div>
-			<?php endif; ?>
             <p id="language" class="hidden"><?= $s_data["lang"] ?></p>
             <div class="flex items-center gap-3">
                 <img src="<?= $s_data["u_image"] ?? "/assets/images/Logo.svg" ?>" alt="<?= $s_data["u_username"] ?>" class="w-10 h-10 rounded-full">
@@ -54,7 +54,7 @@ $languages = $GLOBALS["languages"];
             <div>
                 <div class="window-top">
                     <div class="window-btn-container">
-                        <div class="window-btn red" id="close"></div>
+                        <div class="window-btn red" id="close-btn"></div>
                         <div class="window-btn yellow"></div>
                         <div class="window-btn green"></div>
                     </div>

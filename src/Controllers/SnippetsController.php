@@ -4,6 +4,7 @@ namespace Quiksnip\Web\Controllers;
 
 use Quiksnip\Web\Exceptions\HTTPException;
 use Quiksnip\Web\Models\Snippet;
+use Quiksnip\Web\Utils\Auth;
 use Quiksnip\Web\Utils\Misc;
 use Quiksnip\Web\Utils\Slugify;
 use Quiksnip\Web\Utils\Validator;
@@ -27,17 +28,20 @@ class SnippetsController
 	{
 		try {
 			unset($_SESSION["error"], $_SESSION["temp_snippet"]);
+			$is_guest = Auth::isGuest();
 
 			Validator::checkNullFields($req->body(), ["title", "lang", "content"]);
+			Validator::validateMinLength($req->body()["title"], "Title", 4);
+			Validator::validateMinLength($req->body()["content"], "Snippet", 10);
 
 			$snippet = new Snippet();
 			$snippet->title = $req->body("title");
 			$snippet->lang = $req->body("lang");
 			$snippet->slug = Slugify::create($req->body("title"));
 			$snippet->content = $req->body("content");
-			$snippet->is_public = (int)$req->body("is_public");;
-			$snippet->allow_comments = (int)$req->body("allow_comments");;
-			$snippet->allow_edit = (int)$req->body("allow_edit");;
+			$snippet->is_public = $is_guest ? 1 : (int)$req->body("is_public");;
+			$snippet->allow_comments = $is_guest ? 1 : (int)$req->body("allow_comments");;
+			$snippet->allow_edit = $is_guest ? 0 : (int)$req->body("allow_edit");;
 			$snippet->up_votes = 0;
 			$snippet->down_votes = 0;
 			$snippet->owner_id = self::getOwnerId();
@@ -54,15 +58,19 @@ class SnippetsController
 
 			Misc::log($snippet->id, Misc::CREATED, $data);
 
-			$uri = "/snippets/" . $snippet->slug;
+			$uri = "/s/" . $snippet->slug;
 			$res->redirect($uri);
 		} catch (HTTPException $e) {
-			$_SESSION["temp_snippet"] = $req->body();
-			$_SESSION["error"] = $e->getMessage();
+			$_SESSION["temp_snippet"] = $req->body() + [
+					"temp_time" => Misc::generateTimestampMilliseconds(),
+					"error" => $e->getMessage(),
+				];
 			$res->redirect("/new");
 		} catch (\Exception $e) {
-			$_SESSION["temp_snippet"] = $req->body();
-			$_SESSION["error"] = "Something went wrong. Please try again later.";
+			$_SESSION["temp_snippet"] = $req->body() + [
+					"temp_time" => Misc::generateTimestampMilliseconds(),
+					"error" => "Something went wrong. Please try again later.",
+				];
 			$res->redirect("/new");
 		}
 	}
@@ -79,7 +87,7 @@ class SnippetsController
 		}
 
 		if ($snippets_count > 0) {
-			$data = $snippets->selectMany("SELECT * FROM `snippets` ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}");
+			$data = $snippets->selectMany("SELECT * FROM `snippets` WHERE `is_public` = 1 ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}");
 			$total_pages = ceil($snippets_count / $page_size);
 			$data = [
 				"snippets" => $data,

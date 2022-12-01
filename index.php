@@ -89,7 +89,7 @@ try {
 
 	$router->post("/new", $protect, "\Quiksnip\Web\Controllers\SnippetsController::createSnippet");
 
-	$router->get("/snippets/:slug", "\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet",
+	$router->get("/s/:slug", "\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet",
 		fn(Request $request, Response $response) => $response->render("Views/snippet.php", $request)
 	);
 

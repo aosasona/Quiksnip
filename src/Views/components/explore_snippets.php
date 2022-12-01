@@ -1,22 +1,27 @@
 <?php require_once __DIR__ . "/../../Utils/constants.php" ?>
-    <div>
-        <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center px-1">
+        <div class="flex flex-col gap-1.5">
             <h1 class="text-3xl lg:text-3xl font-medium text-neutral-200 tracking-wide">Explore</h1>
-            <a href="/new" class="fixed lg:relative bottom-6 right-6 lg:block bg-green-400 text-[10px] text-neutral-900 font-medium hover:-translate-y-2 cursor-pointer rounded-md lg:rounded p-5 lg:p-0 lg:py-1.5 lg:px-3 transition-all">
-                <i class="fa-solid fa-plus text-xl lg:text-xs"></i>
-            </a>
+            <p class="text-neutral-600 text-xs font-mono tracking-wide">
+                Discover latest snippets from the community
+            </p>
         </div>
-        <p class="text-neutral-500 text-xs tracking-wide mt-2">
-            Discover latest snippets from the community
-        </p>
+        <a href="/new"
+           class="fixed lg:relative bottom-6 right-6 lg:bottom-0 lg:right-0 lg:block bg-green-400 text-[10px] text-neutral-900 font-medium hover:-translate-y-2 cursor-pointer rounded-md lg:rounded p-5 lg:p-0 lg:py-1.5 lg:px-3 my-0 transition-all">
+            <i class="fa-solid fa-plus text-xl lg:text-xs"></i>
+        </a>
     </div>
 
 
-<?php if (count($snippets) > 0): ?>
+<?php
+/** @var $snippets
+ * @var $languages
+ */
+if (count($snippets) > 0): ?>
     <div class="grid grid-cols-1 gap-3 mt-5">
 		<?php foreach ($snippets as $snippet): ?>
             <div class="snippet-card">
-                <a href="/snippets/<?= $snippet['slug'] ?>">
+                <a href="/s/<?= $snippet['slug'] ?>">
 					<?= ucfirst($snippet['title']) ?>
                 </a>
                 <div class="flex justify-between items-center">
@@ -29,10 +34,10 @@
                         </p>
                     </div>
                     <p class="w-max text-[8px] lg:text-[10px] font-medium bg-opacity-80 rounded px-1.5 py-1"
-                       style="background-color: <?= $languages[strtolower($snippet['lang'])]["bg"] ?>;
-                               color: <?= $languages[strtolower($snippet['lang'])]["text"] ?>"
+                       style="background-color: <?= $languages[strtolower($snippet["lang"])]["bg"] ?>;
+                               color: <?= $languages[strtolower($snippet["lang"])]["text"] ?>"
                     >
-                        <span class="tracking-wider capitalize"><?= $snippet['lang'] ?></span>
+                        <span class="tracking-wider uppercase"><?= $snippet['lang'] ?></span>
                     </p>
                 </div>
             </div>

@@ -19,4 +19,17 @@ class Validator
 			}
 		}
 	}
+
+
+	/**
+	 * @throws HTTPException
+	 */
+	public static function validateMinLength(string $str, string $field_name, int $min): bool
+	{
+		if (strlen($str) > $min) {
+			return true;
+		} else {
+			throw new HTTPException("{$field_name} must be at least {$min} characters long!", 400);
+		}
+	}
 }

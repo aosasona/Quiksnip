@@ -41,6 +41,12 @@ class Misc
 			return "Created " . $diff . " " . $noun;
 		}
 	}
+	
+
+	public static function generateTimestampMilliseconds(): float
+	{
+		return round(microtime(true) * 1000);
+	}
 
 
 	public static function log(int $sid, string $event, string $data, string $subject = "web"): void
