@@ -25,7 +25,7 @@ Loader::startEditorLayout($title, $desc);
  * @var array $languages
  */
 $allow_edit = (bool)$s_data["allow_edit"] || (!$is_guest && ($s_data["owner_id"] === ($user["id"] ?? -1)));
-$url = "https://{$_SERVER["HTTP_HOST"]}/snippets/{$s_data["slug"]}";
+$url = "https://{$_SERVER["HTTP_HOST"]}/s/{$s_data["slug"]}";
 
 $languages = $GLOBALS["languages"];
 ?>
@@ -60,7 +60,8 @@ $languages = $GLOBALS["languages"];
                     </div>
                     <h4><?= $s_data["title"] ?></h4>
                     <button title="Copy URL" type="button" class="text-xs text-green-400 hover:opacity-50 transition-all" onclick="copyText('<?= $url ?>')">
-                        <i class="fa-solid fa-copy text-sm"></i>
+                        <!-- <i class="fa-solid fa-copy text-sm"></i> -->
+												Copy link
                     </button>
                 </div>
                 <textarea name="content" id="editor" data-readonly="<?= $allow_edit ? 'true' : 'false' ?>"><?= $s_data["content"]; ?></textarea>
