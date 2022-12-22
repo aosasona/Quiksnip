@@ -2,14 +2,13 @@
 
 namespace Quiksnip\Web\Controllers;
 
-use JetBrains\PhpStorm\NoReturn;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use League\OAuth2\Client\Provider\Github;
+use League\OAuth2\Client\Provider\Github as GitHub;
 use Quiksnip\Web\Utils\UUID;
 
 class AuthController
 {
-	private Github $github_provider;
+	private GitHub $github_provider;
 
 
 	public function __construct()
@@ -22,7 +21,7 @@ class AuthController
 	}
 
 
-	#[NoReturn] public function initiateGithubAuth(): void
+	public function initiateGithubAuth(): void
 	{
 		// TODO: require repo access to ve able to import code snippets from github
 		$options = [

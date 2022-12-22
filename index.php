@@ -41,11 +41,15 @@ try {
 		return $response->render("Views/index.php");
 	});
 
-	$router->get("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
-		fn(Request $request, Response $response) => $response->render("Views/auth.php")
+	$router->get(
+		"/auth",
+		"\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
+		fn (Request $request, Response $response) => $response->render("Views/auth.php")
 	);
 
-	$router->post("/auth", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
+	$router->post(
+		"/auth",
+		"\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
 		function (Request $request, Response $response) {
 			try {
 				(new AuthController())->initiateGithubAuth();
@@ -53,7 +57,8 @@ try {
 				$request->append("error", "An error occurred! Please try again.");
 			}
 			return $response->render("Views/auth.php", $request);
-		});
+		}
+	);
 
 	$router->get("/auth/callback/github", function (Request $request, Response $response) {
 		try {
@@ -81,20 +86,21 @@ try {
 
 	$protect = "\Quiksnip\Web\Middleware\AuthMiddleware::protect";
 
-	$router->get("/profile", $protect, fn(Request $request, Response $response) => $response->render("Views/profile.php"));
+	$router->get("/profile", $protect, fn (Request $request, Response $response) => $response->render("Views/profile.php"));
 
-	$router->get("/explore", $protect, fn(Request $request, Response $response) => $response->render("Views/explore.php"));
+	$router->get("/explore", $protect, fn (Request $request, Response $response) => $response->render("Views/explore.php"));
 
-	$router->get("/new", $protect, fn(Request $request, Response $response) => $response->render("Views/create.php"));
+	$router->get("/new", $protect, fn (Request $request, Response $response) => $response->render("Views/create.php"));
 
 	$router->post("/new", $protect, "\Quiksnip\Web\Controllers\SnippetsController::createSnippet");
 
-	$router->get("/s/:slug", "\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet",
-		fn(Request $request, Response $response) => $response->render("Views/snippet.php", $request)
+	$router->get(
+		"/s/:slug",
+		"\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet",
+		fn (Request $request, Response $response) => $response->render("Views/snippet.php", $request)
 	);
 
 	$router->serve();
-
 } catch (Throwable $e) {
 	require_once __DIR__ . "/src/500.php";
 	exit;

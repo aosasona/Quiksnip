@@ -5,6 +5,7 @@ namespace Quiksnip\Web\Controllers;
 use Quiksnip\Web\Exceptions\HTTPException;
 use Quiksnip\Web\Models\Snippet;
 use Quiksnip\Web\Utils\Auth;
+use Quiksnip\Web\Utils\Logger;
 use Quiksnip\Web\Utils\Misc;
 use Quiksnip\Web\Utils\Slugify;
 use Quiksnip\Web\Utils\Validator;
@@ -56,21 +57,21 @@ class SnippetsController
 				"created_at" => Misc::formatDateTime(),
 			]);
 
-			Misc::log($snippet->id, Misc::CREATED, $data);
+			Logger::logEvent($snippet->id, Logger::CREATED, $data);
 
 			$uri = "/s/" . $snippet->slug;
 			$res->redirect($uri);
 		} catch (HTTPException $e) {
 			$_SESSION["temp_snippet"] = $req->body() + [
-					"temp_time" => Misc::generateTimestampMilliseconds(),
-					"error" => $e->getMessage(),
-				];
+				"temp_time" => Misc::generateTimestampMilliseconds(),
+				"error" => $e->getMessage(),
+			];
 			$res->redirect("/new");
 		} catch (\Exception $e) {
 			$_SESSION["temp_snippet"] = $req->body() + [
-					"temp_time" => Misc::generateTimestampMilliseconds(),
-					"error" => "Something went wrong. Please try again later.",
-				];
+				"temp_time" => Misc::generateTimestampMilliseconds(),
+				"error" => "Something went wrong. Please try again later.",
+			];
 			$res->redirect("/new");
 		}
 	}
@@ -124,5 +125,5 @@ class SnippetsController
 			return null;
 		}
 	}
-
 }
+

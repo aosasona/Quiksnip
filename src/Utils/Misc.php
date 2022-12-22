@@ -3,7 +3,7 @@
 namespace Quiksnip\Web\Utils;
 
 use Exception;
-use Quiksnip\Web\Models\Logs;
+
 
 class Misc
 {
@@ -33,33 +33,19 @@ class Misc
 		$now = time();
 		$diff = $now - $dt;
 		$diff = round($diff / 60);
-		if ($diff < 1) {
-			return "just now";
+		$diff = round($diff / 1440);
+		if ($diff <= 1) {
+			return "Just now";
 		} else {
-			$diff = round($diff / 1440);
 			$noun = ($diff > 1 ? "days" : "day") . " ago";
 			return "Created " . $diff . " " . $noun;
 		}
 	}
-	
+
 
 	public static function generateTimestampMilliseconds(): float
 	{
 		return round(microtime(true) * 1000);
-	}
-
-
-	public static function log(int $sid, string $event, string $data, string $subject = "web"): void
-	{
-		$user = Auth::getSessionUser() ?? null;
-		if (!$user) return;
-		$log = new Logs();
-		$log->event = $event;
-		$log->subject = $subject;
-		$log->data = $data;
-		$log->user_id = $user["id"] ?? 0;
-		$log->snippet_id = $sid;
-		$log->save();
 	}
 
 
