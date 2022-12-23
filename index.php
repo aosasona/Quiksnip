@@ -16,6 +16,10 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
 use Quiksnip\Web\Controllers\AuthController;
+use Quiksnip\Web\Controllers\SnippetsController;
+use Quiksnip\Web\Middleware\AuthMiddleware;
+use Quiksnip\Web\Middleware\SnippetMiddleware;
+use Quiksnip\Web\Utils\Auth;
 use Trulyao\PhpRouter\HTTP\Request as Request;
 use Trulyao\PhpRouter\HTTP\Response as Response;
 use Trulyao\PhpRouter\Router as Router;
@@ -37,67 +41,71 @@ try {
 
 	$router = new Router(__DIR__ . "/src", "");
 
-	$router->get("/", function (Request $request, Response $response) {
-		return $response->render("Views/index.php");
-	});
+	$router->get(
+		"/",
+		fn (Request $req, Response $res) => $res->render("Views/index.php")
+	);
 
 	$router->get(
 		"/auth",
-		"\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
-		fn (Request $request, Response $response) => $response->render("Views/auth.php")
+		fn (Request $req, Response $res) => AuthMiddleware::redirectIfLoggedIn($req, $res),
+		fn (Request $req, Response $res) => $res->render("Views/auth.php")
 	);
 
 	$router->post(
 		"/auth",
-		"\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn",
-		function (Request $request, Response $response) {
+		fn (Request $req, Response $res) => AuthMiddleware::redirectIfLoggedIn($req, $res),
+		function (Request $req, Response $res) {
 			try {
 				(new AuthController())->initiateGithubAuth();
 			} catch (Exception $e) {
-				$request->append("error", "An error occurred! Please try again.");
+				$req->append("error", "An error occurred! Please try again.");
 			}
-			return $response->render("Views/auth.php", $request);
+			return $res->render("Views/auth.php", $req);
 		}
 	);
 
-	$router->get("/auth/callback/github", function (Request $request, Response $response) {
+	$router->get("/auth/callback/github", function (Request $req, Response $res) {
 		try {
 			(new AuthController())->completeGithubAuth();
-			return $response->redirect("/explore");
+			return $res->redirect("/explore");
 		} catch (Exception $e) {
-			$request->append("error", "An error occurred! Please try again.");
-			return $response->render("Views/auth.php", $request);
+			$req->append("error", "An error occurred! Please try again.");
+			return $res->render("Views/auth.php", $req);
 		}
 	});
 
-	$router->get("/auth/guest", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn", function (Request $request, Response $response) {
+	$router->get("/auth/guest", "\Quiksnip\Web\Middleware\AuthMiddleware::redirectIfLoggedIn", function (Request $req, Response $res) {
 		(new AuthController())->continueAsGuest();
-		return $response->redirect("/explore");
+		return $res->redirect("/explore");
 	});
 
-	$router->get("/auth/logout", function (Request $request, Response $response) {
-		\Quiksnip\Web\Utils\Auth::logout();
-		return $response->redirect("/");
+	$router->get("/auth/logout", function (Request $req, Response $res) {
+		Auth::logout();
+		return $res->redirect("/");
 	});
 
-	$router->get("/meta/:slug", "\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet", function (Request $request, Response $response) {
-		return $response->render("Views/meta.php", $request);
-	});
+	$router->get(
+		"/meta/:slug",
+		fn (Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
+		fn (Request $req, Response $res) => $res->render("Views/meta.php", $req)
+	);
 
-	$protect = "\Quiksnip\Web\Middleware\AuthMiddleware::protect";
+	$protect = fn (Request $req, Response $res) => AuthMiddleware::protect($req, $res);
 
-	$router->get("/profile", $protect, fn (Request $request, Response $response) => $response->render("Views/profile.php"));
+	$router->get("/profile", $protect, fn (Request $req, Response $res) => $res->render("Views/profile.php"));
 
-	$router->get("/explore", $protect, fn (Request $request, Response $response) => $response->render("Views/explore.php"));
+	$router->get("/explore", $protect, fn (Request $req, Response $res) => $res->render("Views/explore.php"));
 
-	$router->get("/new", $protect, fn (Request $request, Response $response) => $response->render("Views/create.php"));
+	$router->get("/new", $protect, fn (Request $req, Response $res) => $res->render("Views/create.php"));
 
-	$router->post("/new", $protect, "\Quiksnip\Web\Controllers\SnippetsController::createSnippet");
+	$router->post("/new", $protect, fn (Request $req, Response $res) => SnippetsController::createSnippet($req, $res));
 
 	$router->get(
 		"/s/:slug",
-		"\Quiksnip\Web\Middleware\SnippetMiddleware::fetchSnippet",
-		fn (Request $request, Response $response) => $response->render("Views/snippet.php", $request)
+		fn (Request $req, Response $res) => AuthMiddleware::validateSnippetAccess($req, $res),
+		fn (Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
+		fn (Request $req, Response $res) => $res->render("Views/snippet.php", $req)
 	);
 
 	$router->serve();

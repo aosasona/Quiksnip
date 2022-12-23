@@ -77,6 +77,9 @@ class SnippetsController
 	}
 
 
+	/*
+ 	 * @return array
+ 	 */
 	public static function getSnippets(int $page = 1): array
 	{
 		$snippets = new Snippet();

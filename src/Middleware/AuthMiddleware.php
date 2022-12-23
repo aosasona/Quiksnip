@@ -2,6 +2,7 @@
 
 namespace Quiksnip\Web\Middleware;
 
+use Quiksnip\Web\Models\Snippet;
 use Quiksnip\Web\Utils\Auth;
 use Trulyao\PhpRouter\HTTP\Request;
 use Trulyao\PhpRouter\HTTP\Response;
@@ -53,4 +54,15 @@ class AuthMiddleware
 		}
 	}
 
+	public static function validateSnippetAccess(Request $request, Response $response): void
+	{
+		$session_key = $request->query("_key");
+		$slug = $request->params("slug");
+
+		$snippet = new Snippet();
+		$snippet_data = $snippet->selectOne("SELECT owner_id, is_public FROM snippets WHERE slug = ? LIMIT 1", [$slug]);
+
+		// if(self::isLoggedIn() && ) return;
+	}
 }
+

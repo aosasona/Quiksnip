@@ -3,6 +3,8 @@
 namespace Quiksnip\Web\Middleware;
 
 use Quiksnip\Web\Models\Snippet;
+use Quiksnip\Web\Utils\Logger;
+use Quiksnip\Web\Utils\Misc;
 use Trulyao\PhpRouter\HTTP\{Request, Response};
 
 class SnippetMiddleware
@@ -17,5 +19,15 @@ class SnippetMiddleware
 		$request->append("snip_data", $snippet_data);
 		$request->append("snip_logs", $snipped_log_data);
 		$request->append("snip_comments", $snippet_comments);
+		$data = json_encode([
+			"id" => $snippet_data["id"],
+			"slug" => $snippet_data["slug"],
+			"user" => $_SESSION["user"]["id"] ?? $request->query("_key") ?? "",
+			"logged_in" => (bool)$_SESSION["user"]["id"],
+			"created_at" => Misc::formatDateTime(),
+		]);
+
+		Logger::logEvent($snippet_data["id"], Logger::VIEWED, $data);
 	}
 }
+
