@@ -31,4 +31,10 @@ class Auth
 	{
 		return isset($_SESSION["is_guest"]);
 	}
+
+	public static function generateSessionKey(int $length = 16)
+	{
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		$chars_array = explode("", $chars);
+	}
 }

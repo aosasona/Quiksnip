@@ -58,11 +58,15 @@ class AuthMiddleware
 	{
 		$session_key = $request->query("_key");
 		$slug = $request->params("slug");
-
+		$user = Auth::getSessionUser();
 		$snippet = new Snippet();
-		$snippet_data = $snippet->selectOne("SELECT owner_id, is_public FROM snippets WHERE slug = ? LIMIT 1", [$slug]);
+		$snippet_data = $snippet->selectOne("SELECT owner_id, whitelist, is_public FROM snippets WHERE slug = ? LIMIT 1", [$slug]);
 
-		// if(self::isLoggedIn() && ) return;
+		if (self::isLoggedIn() && $snippet_data["owner_id"] == $user["id"]) return;
+		if (self::isLoggedIn() && in_array(strtolower($user["email"] ?? "---"), explode(",", $snippet_data["whitelist"] ?? ""))) return;
+		if ($session_key) {
+		}
+		require __DIR__ . "/../404.php";
+		exit;
 	}
 }
-
