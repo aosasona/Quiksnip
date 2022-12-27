@@ -108,8 +108,19 @@ try {
 		fn (Request $req, Response $res) => $res->render("Views/snippet.php", $req)
 	);
 
+	$router->post(
+		"/s/:slug",
+		fn (Request $req, Response $res) => AuthMiddleware::validateSnippetAccess($req, $res),
+		fn (Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
+		fn (Request $req, Response $res) => $res->render("Views/snippet.php", $req)
+	);
+
 	$router->serve();
 } catch (Throwable $e) {
+	if ($_ENV["ENV"] == "development") {
+		var_dump($e);
+		exit;
+	}
 	require_once __DIR__ . "/src/500.php";
 	exit;
 }

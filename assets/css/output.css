@@ -1,6 +1,6 @@
-@import url('http://fonts.cdnfonts.com/css/satoshi');
+@import url("http://fonts.cdnfonts.com/css/inter");
 
-@import url('https://fonts.cdnfonts.com/css/clash-display');
+@import url("https://fonts.cdnfonts.com/css/poppins");
 
 /*
 ! tailwindcss v3.2.1 | MIT License | https://tailwindcss.com
@@ -1226,7 +1226,7 @@ video {
 }
 
 html {
-  font-family: "Clash Display", "Satoshi", Roboto, sans-serif;
+  font-family: "Poppins", "Inter", Roboto, sans-serif;
   line-height: 1.15;
   letter-spacing: 0.02em;
   -webkit-text-size-adjust: 100%;
@@ -1235,7 +1235,8 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-body, html {
+body,
+html {
   background-color: #000000;
   color: #f5f5f5 !important;
 }
@@ -1258,7 +1259,11 @@ a.link:hover{
 
 .hero-text {
   background: rgb(238, 174, 202);
-  background: radial-gradient(circle, rgba(238, 174, 202, 0.8141850490196079) 0%, rgba(148, 187, 233, 0.7721682422969187) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 0.8141850490196079) 0%,
+    rgba(148, 187, 233, 0.7721682422969187) 100%
+  );
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1401,7 +1406,8 @@ a.link:hover{
   color: rgb(229 229 229 / var(--tw-text-opacity));
 }
 
-.feature-card .feature-card-icon i, .feature-card .feature-card-icon svg{
+.feature-card .feature-card-icon i,
+.feature-card .feature-card-icon svg{
   display: block;
   aspect-ratio: 1 / 1;
   font-size: 1rem;
@@ -1412,7 +1418,11 @@ a.link:hover{
 
 .icon {
   background: rgb(238, 174, 202);
-  background: radial-gradient(circle, rgba(238, 174, 202, 0.8141850490196079) 0%, rgba(148, 187, 233, 0.7721682422969187) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 0.8141850490196079) 0%,
+    rgba(148, 187, 233, 0.7721682422969187) 100%
+  );
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1503,7 +1513,9 @@ label{
   color: rgb(115 115 115 / var(--tw-text-opacity));
 }
 
-input[type="text"], input[type="email"], input[type="password"]{
+input[type="text"],
+input[type="email"],
+input[type="password"]{
   width: 100%;
   border-radius: 0.5rem;
   border-style: none;
@@ -1524,12 +1536,16 @@ input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, inp
   color: rgb(82 82 82 / var(--tw-placeholder-opacity));
 }
 
-input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder{
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder{
   --tw-placeholder-opacity: 1;
   color: rgb(82 82 82 / var(--tw-placeholder-opacity));
 }
 
-input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus{
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus{
   border-color: transparent;
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1666,12 +1682,20 @@ textarea[name="whitelist"]:focus{
 /* Editor -  */
 
 .CodeMirror{
+  height: auto !important;
+  min-height: 80vh !important;
   cursor: text !important;
   background-color: rgb(23 23 23 / var(--tw-bg-opacity)) !important;
   --tw-bg-opacity: 0.8 !important;
   line-height: 1.5rem !important;
   --tw-text-opacity: 1 !important;
   color: rgb(229 229 229 / var(--tw-text-opacity)) !important;
+}
+
+@media (min-width: 768px){
+  .CodeMirror{
+    min-height: 60vh !important;
+  }
 }
 
 .CodeMirror-gutters{

@@ -5,7 +5,7 @@ namespace Quiksnip\Web\Utils;
 
 class Auth
 {
-	public static function getSessionUser()
+	public static function getSessionUser(): array|null
 	{
 		if (self::isLoggedIn()) {
 			return $_SESSION["user"];
@@ -32,9 +32,13 @@ class Auth
 		return isset($_SESSION["is_guest"]);
 	}
 
-	public static function generateSessionKey(int $length = 16)
+	public static function generateSessionKey(int $length = 24): string
 	{
-		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-		$chars_array = explode("", $chars);
+		$chars = str_split("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 1);
+		$key = "";
+		for ($i = 0; $i < $length; $i++) {
+			$key .= $chars[array_rand($chars, 1)];
+		}
+		return $key;
 	}
 }
