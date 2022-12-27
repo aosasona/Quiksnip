@@ -112,6 +112,7 @@ try {
 		"/s/:slug",
 		fn (Request $req, Response $res) => AuthMiddleware::validateSnippetAccess($req, $res),
 		fn (Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
+		fn (Request $req, Response $res) => SnippetMiddleware::handlePostEvents($req, $res),
 		fn (Request $req, Response $res) => $res->render("Views/snippet.php", $req)
 	);
 

@@ -6,7 +6,7 @@ use Quiksnip\Web\Models\Session as SessionModel;
 
 class Session
 {
-  public static function createSession(int $sid, int $ttl = 43200, array $data = []): string
+  public static function createSession(int $sid, int $ttl = 720, array $data = []): string
   {
     $key = Auth::generateSessionKey();
     $session = new SessionModel();
@@ -33,5 +33,10 @@ class Session
       "data" => json_decode($session_data["data"]),
       "ttl" => $session_data["ttl"]
     ];
+  }
+
+  public static function generateSessionURL(string $slug, string $key): string
+  {
+    return Misc::getHost() . "/s/{$slug}?_key={$key}";
   }
 }

@@ -11,6 +11,12 @@ class Misc
 	public const CREATED = "created";
 
 
+	public static function getHost(): string
+	{
+		return "http://{$_SERVER['HTTP_HOST']}";
+	}
+
+
 	public static function formatDateTime(string $date = "now"): string
 	{
 		try {
@@ -49,7 +55,7 @@ class Misc
 	}
 
 
-	public static function rotateLog(string $file = "error.txt"): void
+	public static function rotateLog(string $file = "error.log"): void
 	{
 		$dt = new \DateTime();
 		$dt = $dt->format("d M Y, H:i");

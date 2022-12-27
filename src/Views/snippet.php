@@ -1,7 +1,9 @@
 <?php
 
+
 namespace Quiksnip\Web\Views;
 
+use Quiksnip\Web\Utils\Misc;
 use Quiksnip\Web\Utils\Loader;
 
 $user = \Quiksnip\Web\Utils\Auth::getSessionUser();
@@ -27,7 +29,7 @@ Loader::startEditorLayout($title, $desc);
  * @var array $languages
  */
 $allow_edit = (bool)$s_data["allow_edit"] || (!$is_guest && ($s_data["owner_id"] === ($user["id"] ?? -1)));
-$url = "https://{$_SERVER["HTTP_HOST"]}/s/{$s_data["slug"]}";
+$url = 	Misc::getHost() . "/s/{$s_data["slug"]}";
 
 $languages = $GLOBALS["languages"];
 ?>
@@ -79,7 +81,23 @@ $languages = $GLOBALS["languages"];
 		</form>
 	</section>
 
-	<section class="lg:col-span-2"></section>
+	<section class="lg:col-span-2">
+		<?php if ($user["id"] === $s_data["owner_id"] && $s_data["owner_id"] !== 0) : ?>
+			<form method="POST">
+				<div class="flex flex-col gap-2">
+					<h3 class="text-lg font-bold my-0">One-time URL</h3>
+					<p class="text-xs text-neutral-600 my-0">You can share this link with anyone to provide them full access to your snip for 12 hours.</p>
+					<div class="w-full h-max whitespace-nowrap relative">
+						<div class="w-full bg-neutral-900 text-neutral-500 text-center text-xs text-ellipsis whitespace-nowrap overflow-hidden rounded-lg px-4 py-4">
+							<?= $data["session_url"] ?? "No session URL"  ?>
+						</div>
+						<button type="button" class="absolute h-full aspect-square top-0 right-0 bg-neutral-900 hover:bg-green-400 hover:text-neutral-900 border border-neutral-800 rounded-r-lg p-2.5 transition-all" onclick="copyText('<?= $data["session_url"] ?? "" ?>')"><i class="fa fa-copy"></i></button>
+					</div>
+					<button name="create_session" type="submit" class="btn-primary mt-2">Generate new link</button>
+				</div>
+			</form>
+		<?php endif; ?>
+	</section>
 </main>
 
 

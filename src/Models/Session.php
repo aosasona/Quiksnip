@@ -8,7 +8,7 @@ class Session extends BaseModel
 	public int $id;
 	public string $session_key;
 	public mixed $data;
-	public int $ttl; // in seconds
+	public int $ttl; // in minutes
 	public int $snippet_id;
 
 
