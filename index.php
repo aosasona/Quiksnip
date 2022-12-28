@@ -25,6 +25,15 @@ use Trulyao\PhpRouter\HTTP\Request as Request;
 use Trulyao\PhpRouter\HTTP\Response as Response;
 use Trulyao\PhpRouter\Router as Router;
 
+var_dump($_SERVER["X_FORWARDED_FOR"]);
+var_dump($_SERVER["REMOTE_ADDR"]);
+var_dump($_SERVER["HTTP_X_FORWARDED_FOR"]);
+var_dump($_SERVER["HTTP_CLIENT_IP"]);
+var_dump($_SERVER["HTTP_X_REAL_IP"]);
+var_dump($_SERVER["HTTP_X_FORWARDED"]);
+var_dump($_SERVER["HTTP_X_CLUSTER_CLIENT_IP"]);
+var_dump($_SERVER["HTTP_FORWARDED_FOR"]);
+exit;
 
 try {
 
