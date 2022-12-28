@@ -4,9 +4,9 @@ namespace Quiksnip\Web\Middleware;
 
 use Quiksnip\Web\Models\Session;
 use Quiksnip\Web\Models\Snippet;
+use Quiksnip\Web\Services\Session as SessionService;
 use Quiksnip\Web\Utils\Logger;
 use Quiksnip\Web\Utils\Misc;
-use Quiksnip\Web\Utils\Session as SessionUtil;
 use Trulyao\PhpRouter\HTTP\{Request, Response};
 
 class SnippetMiddleware
@@ -31,14 +31,15 @@ class SnippetMiddleware
 		$session = new Session();
 		$last_session = $session->selectOne("SELECT s.* FROM sessions as s WHERE snippet_id = ? AND TIMESTAMPDIFF(minute, s.created_at, now()) < s.ttl ORDER BY created_at DESC LIMIT 1;", [$snippet_data["id"]]);
 		if (!$last_session) {
-			$session_key = SessionUtil::createSession($snippet_data["id"]);
+			$session_key = SessionService::createSession($snippet_data["id"]);
 		} else {
 			$session_key = $last_session["session_key"];
 		}
-		$req->append("session_url", SessionUtil::generateSessionURL($slug, $session_key));
+		$req->append("session_url", SessionService::generateSessionURL($slug, $session_key));
 
 		Logger::logEvent($snippet_data["id"], Logger::VIEWED, $data);
 	}
+
 
 	public static function handlePostEvents(Request $req, Response $res): void
 	{
@@ -50,8 +51,8 @@ class SnippetMiddleware
 				$req->append("error", "Oops! Something is wrong with this snippet");
 				return;
 			}
-			$session_key = SessionUtil::createSession($id);
-			$req->append("session_url", SessionUtil::generateSessionURL($slug, $session_key));
+			$session_key = SessionService::createSession($id);
+			$req->append("session_url", SessionService::generateSessionURL($slug, $session_key));
 
 			$data = json_encode([
 				"sid" => $id,

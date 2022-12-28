@@ -1,8 +1,9 @@
 <?php
-$is_logged_in = \Quiksnip\Web\Utils\Auth::isLoggedIn();
+$is_logged_in = \Quiksnip\Web\Services\Auth::isLoggedIn();
 ?>
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -28,26 +29,21 @@ $is_logged_in = \Quiksnip\Web\Utils\Auth::isLoggedIn();
 		<?php echo $title; ?>
     </title>
 </head>
+
 <body>
 <nav class="fixed top-0 flex items-center justify-between w-screen bg-black bg-opacity-50 backdrop-blur-lg border-b border-b-neutral-800 px-5 py-6 z-[999]">
-    <a href="<?= $is_logged_in ? '/explore' : '/' ?>"
-       class="flex items-center gap-2 text-green-400 text-xl">
-        <img src="/assets/images/Logo.svg"
-             alt="logo"
-             class="w-8 lg:w-10 aspect-square"/>
+    <a href="<?= $is_logged_in ? '/explore' : '/' ?>" class="flex items-center gap-2 text-green-400 text-xl">
+        <img src="/assets/images/Logo.svg" alt="logo" class="w-8 lg:w-10 aspect-square"/>
         <h2 class="font-bold tracking-wide">
             QuikSnip
         </h2>
     </a>
     <div class="flex items-center gap-5 lg:gap-8 px-2">
-        <a href="/explore"
-           target="_blank"
-           class="text-neutral-300 text-xs lg:text-sm font-medium block">
+        <a href="/explore" class="text-neutral-300 text-xs lg:text-sm font-medium block">
             <i class="fa-solid fa-magnifying-glass text-lg lg:text-xl"></i>
         </a>
-		<?php if ($is_logged_in): ?>
-            <a href="/profile"
-               class="text-neutral-300 text-xs lg:text-sm font-medium block">
+		<?php if ($is_logged_in) : ?>
+            <a href="/profile" class="text-neutral-300 text-xs lg:text-sm font-medium block">
                 <i class="fa-regular fa-circle-user text-xl lg:text-2xl"></i>
             </a>
 		<?php endif; ?>

@@ -3,7 +3,7 @@
 use Quiksnip\Web\Controllers\SnippetsController;
 use Quiksnip\Web\Utils\Loader;
 
-$user = \Quiksnip\Web\Utils\Auth::getSessionUser();
+$user = \Quiksnip\Web\Services\Auth::getSessionUser();
 $is_guest = isset($_SESSION["is_guest"]) && $_SESSION["is_guest"] === true;
 
 if (!$is_guest) {

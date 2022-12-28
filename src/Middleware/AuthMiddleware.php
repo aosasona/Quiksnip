@@ -3,8 +3,8 @@
 namespace Quiksnip\Web\Middleware;
 
 use Quiksnip\Web\Models\Snippet;
-use Quiksnip\Web\Utils\Auth;
-use Quiksnip\Web\Utils\Session;
+use Quiksnip\Web\Services\Auth;
+use Quiksnip\Web\Services\Session;
 use Trulyao\PhpRouter\HTTP\Request;
 use Trulyao\PhpRouter\HTTP\Response;
 
@@ -54,6 +54,7 @@ class AuthMiddleware
 			return;
 		}
 	}
+
 
 	public static function validateSnippetAccess(Request $request, Response $response): void
 	{

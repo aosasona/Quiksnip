@@ -4,7 +4,8 @@ namespace Quiksnip\Web\Controllers;
 
 use Quiksnip\Web\Exceptions\HTTPException;
 use Quiksnip\Web\Models\Snippet;
-use Quiksnip\Web\Utils\Auth;
+use Quiksnip\Web\Models\User;
+use Quiksnip\Web\Services\Auth;
 use Quiksnip\Web\Utils\Logger;
 use Quiksnip\Web\Utils\Misc;
 use Quiksnip\Web\Utils\Slugify;
@@ -63,15 +64,15 @@ class SnippetsController
 			$res->redirect($uri);
 		} catch (HTTPException $e) {
 			$_SESSION["temp_snippet"] = $req->body() + [
-				"temp_time" => Misc::generateTimestampMilliseconds(),
-				"error" => $e->getMessage(),
-			];
+					"temp_time" => Misc::generateTimestampMilliseconds(),
+					"error" => $e->getMessage(),
+				];
 			$res->redirect("/new");
 		} catch (\Exception $e) {
 			$_SESSION["temp_snippet"] = $req->body() + [
-				"temp_time" => Misc::generateTimestampMilliseconds(),
-				"error" => "Something went wrong. Please try again later.",
-			];
+					"temp_time" => Misc::generateTimestampMilliseconds(),
+					"error" => "Something went wrong. Please try again later.",
+				];
 			$res->redirect("/new");
 		}
 	}
@@ -80,7 +81,7 @@ class SnippetsController
 	/*
  	 * @return array
  	 */
-	public static function getSnippets(int $page = 1): array
+	public static function getSnippets(int $page = 1, string | null $lang = null, string | null $user = null, string | null $search_query = null): array
 	{
 		$snippets = new Snippet();
 		$page_size = 50;
@@ -90,8 +91,22 @@ class SnippetsController
 			$offset = 0;
 		}
 
+		$replacement_array = [];
+		$where_statement = "WHERE `is_public` = 1";
+
+		if ($lang) {
+			$where_statement .= " AND lang = :lang";
+			$replacement_array["lang"] = $lang;
+		}
+
+		if ($user) {
+			$where_statement .= " AND owner_id = :user";
+			$user_search = (new User())->selectOne("SELECT `id` FROM users WHERE username = :user LIMIT 1", ["user" => $user]);
+			$replacement_array["user"] = $user_search["id"] ?? -1;
+		}
+
 		if ($snippets_count > 0) {
-			$data = $snippets->selectMany("SELECT * FROM `snippets` WHERE `is_public` = 1 ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}");
+			$data = $snippets->selectMany("SELECT * FROM `snippets` ${where_statement} ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}", $replacement_array);
 			$total_pages = ceil($snippets_count / $page_size);
 			$data = [
 				"snippets" => $data,
@@ -129,4 +144,3 @@ class SnippetsController
 		}
 	}
 }
-

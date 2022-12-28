@@ -1,11 +1,10 @@
 <?php
 
-namespace Quiksnip\Web\Utils;
-
+namespace Quiksnip\Web\Services;
 
 class Auth
 {
-	public static function getSessionUser(): array|null
+	public static function getSessionUser(): array | null
 	{
 		if (self::isLoggedIn()) {
 			return $_SESSION["user"];
@@ -31,6 +30,7 @@ class Auth
 	{
 		return isset($_SESSION["is_guest"]);
 	}
+
 
 	public static function generateSessionKey(int $length = 24): string
 	{

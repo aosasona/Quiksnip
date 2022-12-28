@@ -542,6 +542,14 @@ video {
   position: relative;
 }
 
+.top-0{
+  top: 0px;
+}
+
+.right-0{
+  right: 0px;
+}
+
 .bottom-6{
   bottom: 1.5rem;
 }
@@ -556,18 +564,6 @@ video {
 
 .top-2{
   top: 0.5rem;
-}
-
-.top-0{
-  top: 0px;
-}
-
-.right-0{
-  right: 0px;
-}
-
-.bottom-0{
-  bottom: 0px;
 }
 
 .z-\[99\]{
@@ -681,6 +677,10 @@ video {
   margin-top: 12vh;
 }
 
+.mb-2{
+  margin-bottom: 0.5rem;
+}
+
 .mt-\[10vh\]{
   margin-top: 10vh;
 }
@@ -741,14 +741,6 @@ video {
   height: 2.5rem;
 }
 
-.h-\[35vh\]{
-  height: 35vh;
-}
-
-.h-\[10vh\]{
-  height: 10vh;
-}
-
 .h-max{
   height: -moz-max-content;
   height: max-content;
@@ -756,6 +748,14 @@ video {
 
 .h-full{
   height: 100%;
+}
+
+.h-\[35vh\]{
+  height: 35vh;
+}
+
+.h-\[10vh\]{
+  height: 10vh;
 }
 
 .w-screen{
@@ -985,20 +985,20 @@ video {
   padding: 0px;
 }
 
-.p-5{
-  padding: 1.25rem;
-}
-
-.p-1{
-  padding: 0.25rem;
+.p-2\.5{
+  padding: 0.625rem;
 }
 
 .p-2{
   padding: 0.5rem;
 }
 
-.p-2\.5{
-  padding: 0.625rem;
+.p-5{
+  padding: 1.25rem;
+}
+
+.p-1{
+  padding: 0.25rem;
 }
 
 .px-10{
@@ -1086,11 +1086,6 @@ video {
   padding-bottom: 1.25rem;
 }
 
-.py-0{
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
 .text-left{
   text-align: left;
 }
@@ -1126,18 +1121,13 @@ video {
   line-height: 2rem;
 }
 
-.text-5xl{
-  font-size: 3rem;
-  line-height: 1;
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-\[10px\]{
   font-size: 10px;
-}
-
-.text-4xl{
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 
 .text-sm{
@@ -1178,10 +1168,6 @@ video {
 
 .font-semibold{
   font-weight: 600;
-}
-
-.font-black{
-  font-weight: 900;
 }
 
 .uppercase{
@@ -1249,6 +1235,11 @@ video {
 .text-red-600{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.outline-none{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .drop-shadow-lg{
@@ -1348,7 +1339,7 @@ a.link:hover{
   }
 }
 
-.snippet-card a{
+.snippet-card a.title{
   display: block !important;
   font-size: 0.875rem !important;
   line-height: 1.25rem !important;
@@ -1360,7 +1351,7 @@ a.link:hover{
   transition-duration: 150ms !important;
 }
 
-.snippet-card a:hover{
+.snippet-card a.title:hover{
   --tw-text-opacity: 1 !important;
   color: rgb(74 222 128 / var(--tw-text-opacity)) !important;
   text-decoration-line: underline !important;
@@ -1368,7 +1359,7 @@ a.link:hover{
 }
 
 @media (min-width: 1024px){
-  .snippet-card a{
+  .snippet-card a.title{
     font-size: 1rem !important;
     line-height: 1.5rem !important;
   }
@@ -1902,11 +1893,6 @@ textarea[name="whitelist"]:focus{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.hover\:bg-green-500:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-green-400:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
@@ -1920,6 +1906,10 @@ textarea[name="whitelist"]:focus{
 .hover\:text-neutral-900:hover{
   --tw-text-opacity: 1;
   color: rgb(23 23 23 / var(--tw-text-opacity));
+}
+
+.hover\:no-underline:hover{
+  text-decoration-line: none;
 }
 
 .hover\:opacity-50:hover{
@@ -2055,12 +2045,12 @@ textarea[name="whitelist"]:focus{
     gap: 2.5rem;
   }
 
-  .lg\:gap-8{
-    gap: 2rem;
-  }
-
   .lg\:gap-6{
     gap: 1.5rem;
+  }
+
+  .lg\:gap-8{
+    gap: 2rem;
   }
 
   .lg\:rounded{
