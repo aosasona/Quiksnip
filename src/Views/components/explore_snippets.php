@@ -2,7 +2,7 @@
 <div class="flex justify-between items-center px-1">
     <div class="flex flex-col gap-1.5">
         <h1 class="text-3xl lg:text-3xl font-semibold text-neutral-200 tracking-wide mb-2">Explore</h1>
-		<?php if (!$q_lang && !$q_search && !$q_username && strtolower($q_username) !== "guest") : ?>
+		<?php if (!$q_lang && !$q_search && !$q_username && strtolower($q_username ?? "") !== "guest") : ?>
             <p class="text-neutral-600 text-xs font-mono tracking-wide">
                 Discover latest snippets from the community
             </p>
