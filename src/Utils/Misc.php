@@ -41,10 +41,10 @@ class Misc
 		$diff = round($diff / 60);
 		$diff = round($diff / 1440);
 		if ($diff <= 0) {
-			return "Created today";
+			return "Today";
 		} else {
 			$noun = ($diff > 1 ? "days" : "day") . " ago";
-			return "Created " . $diff . " " . $noun;
+			return $diff . " " . $noun;
 		}
 	}
 

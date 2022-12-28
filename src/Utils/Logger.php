@@ -13,7 +13,9 @@ class Logger
 	public const SHARED = "shared";
 	public const CREATED = "created";
 	public const VIEWED = "viewed";
-	public const GENERATED_SESSION_URL = "generated session url";
+	public const GENERATED_SESSION_URL = "generated_session_url";
+	public const UPVOTED = "upvoted";
+	public const DOWNVOTED = "downvoted";
 
 
 	public static function logEvent(int $sid, string $event, string $data, string $subject = "web"): void

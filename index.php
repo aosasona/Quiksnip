@@ -25,16 +25,6 @@ use Trulyao\PhpRouter\HTTP\Request as Request;
 use Trulyao\PhpRouter\HTTP\Response as Response;
 use Trulyao\PhpRouter\Router as Router;
 
-var_dump($_SERVER["X_FORWARDED_FOR"]);
-var_dump($_SERVER["REMOTE_ADDR"]);
-var_dump($_SERVER["HTTP_X_FORWARDED_FOR"]);
-var_dump($_SERVER["HTTP_CLIENT_IP"]);
-var_dump($_SERVER["HTTP_X_REAL_IP"]);
-var_dump($_SERVER["HTTP_X_FORWARDED"]);
-var_dump($_SERVER["HTTP_X_CLUSTER_CLIENT_IP"]);
-var_dump($_SERVER["HTTP_FORWARDED_FOR"]);
-exit;
-
 try {
 
 	$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -48,24 +38,25 @@ try {
 		exit;
 	}
 
-	RateLimiter::checkRateLimitAndThrow($_SERVER["REMOTE_ADDR"], 10, (int)$_ENV["MAX_REQUESTS"] ?? 250);
+	$ip_address = $_SERVER["X_FORWARDED_FOR"] ?? $_SERVER["HTTP_X_FORWARDED_FOR"] ?? $_SERVER["HTTP_CLIENT_IP"] ?? $_SERVER["HTTP_X_REAL_IP"] ?? $_SERVER["REMOTE_ADDR"];
+	RateLimiter::checkRateLimitAndThrow($ip_address, 10, (int)$_ENV["MAX_REQUESTS"] ?? 250);
 
 	$router = new Router(__DIR__ . "/src", "");
 
 	$router->get(
 		"/",
-		fn(Request $req, Response $res) => $res->render("Views/index.php")
+		fn (Request $req, Response $res) => $res->render("Views/index.php")
 	);
 
 	$router->get(
 		"/auth",
-		fn(Request $req, Response $res) => AuthMiddleware::redirectIfLoggedIn($req, $res),
-		fn(Request $req, Response $res) => $res->render("Views/auth.php")
+		fn (Request $req, Response $res) => AuthMiddleware::redirectIfLoggedIn($req, $res),
+		fn (Request $req, Response $res) => $res->render("Views/auth.php")
 	);
 
 	$router->post(
 		"/auth",
-		fn(Request $req, Response $res) => AuthMiddleware::redirectIfLoggedIn($req, $res),
+		fn (Request $req, Response $res) => AuthMiddleware::redirectIfLoggedIn($req, $res),
 		function (Request $req, Response $res) {
 			try {
 				(new AuthController())->initiateGithubAuth();
@@ -98,34 +89,38 @@ try {
 
 	$router->get(
 		"/meta/:slug",
-		fn(Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
-		fn(Request $req, Response $res) => $res->render("Views/meta.php", $req)
+		fn (Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
+		fn (Request $req, Response $res) => $res->render("Views/meta.php", $req)
 	);
 
-	$protect = fn(Request $req, Response $res) => AuthMiddleware::protect($req, $res);
+	$protect = fn (Request $req, Response $res) => AuthMiddleware::protect($req, $res);
 
-	$router->get("/profile", $protect, fn(Request $req, Response $res) => $res->render("Views/profile.php"));
+	$router->get("/profile", $protect, fn (Request $req, Response $res) => $res->render("Views/profile.php"));
 
-	$router->get("/explore", $protect, fn(Request $req, Response $res) => $res->render("Views/explore.php"));
+	$router->get("/explore", $protect, fn (Request $req, Response $res) => $res->render("Views/explore.php"));
 
-	$router->get("/new", $protect, fn(Request $req, Response $res) => $res->render("Views/create.php"));
+	$router->get("/new", $protect, fn (Request $req, Response $res) => $res->render("Views/create.php"));
 
-	$router->post("/new", $protect, fn(Request $req, Response $res) => SnippetsController::createSnippet($req, $res));
+	$router->post("/new", $protect, fn (Request $req, Response $res) => SnippetsController::createSnippet($req, $res));
 
 	$router->get(
 		"/s/:slug",
-		fn(Request $req, Response $res) => AuthMiddleware::validateSnippetAccess($req, $res),
-		fn(Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
-		fn(Request $req, Response $res) => $res->render("Views/snippet.php", $req)
+		fn (Request $req, Response $res) => AuthMiddleware::validateSnippetAccess($req, $res),
+		fn (Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
+		fn (Request $req, Response $res) => $res->render("Views/snippet.php", $req)
 	);
 
 	$router->post(
 		"/s/:slug",
-		fn(Request $req, Response $res) => AuthMiddleware::validateSnippetAccess($req, $res),
-		fn(Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
-		fn(Request $req, Response $res) => SnippetMiddleware::handlePostEvents($req, $res),
-		fn(Request $req, Response $res) => $res->render("Views/snippet.php", $req)
+		fn (Request $req, Response $res) => AuthMiddleware::validateSnippetAccess($req, $res),
+		fn (Request $req, Response $res) => SnippetMiddleware::fetchSnippet($req, $res),
+		fn (Request $req, Response $res) => SnippetMiddleware::handlePostEvents($req, $res),
+		fn (Request $req, Response $res) => $res->render("Views/snippet.php", $req)
 	);
+
+
+	/** Administrative */
+	$router->get("/admin/stats", $protect, fn (Request $req, Response $res) => $res->render("Views/admin/index.php"));
 
 	$router->serve();
 } catch (Throwable $e) {

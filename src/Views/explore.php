@@ -24,9 +24,9 @@ $page_title = "explore";
 Loader::startLayout("Explore");
 ?>
 <section class="container w-full lg:max-w-3xl mx-auto mt-[12.5vh] lg:mt-[14vh]">
-    <div class="mb-12">
+	<div class="mb-12">
 		<?php include_once __DIR__ . "/components/explore_snippets.php"; ?>
-    </div>
+	</div>
 </section>
 
 <?php

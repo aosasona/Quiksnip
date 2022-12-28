@@ -693,6 +693,18 @@ video {
   margin-top: 13vh;
 }
 
+.mt-3\.5{
+  margin-top: 0.875rem;
+}
+
+.mt-1{
+  margin-top: 0.25rem;
+}
+
+.ml-auto{
+  margin-left: auto;
+}
+
 .block{
   display: block;
 }
@@ -799,6 +811,18 @@ video {
   width: 2rem;
 }
 
+.w-16{
+  width: 4rem;
+}
+
+.w-14{
+  width: 3.5rem;
+}
+
+.max-w-md{
+  max-width: 28rem;
+}
+
 .cursor-pointer{
   cursor: pointer;
 }
@@ -879,8 +903,16 @@ video {
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
+.place-self-end{
+  place-self: end;
+}
+
 .self-start{
   align-self: flex-start;
+}
+
+.self-end{
+  align-self: flex-end;
 }
 
 .self-center{
@@ -1247,6 +1279,10 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.filter{
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .backdrop-blur-lg{
   --tw-backdrop-blur: blur(16px);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
@@ -1299,10 +1335,10 @@ a.link:hover{
 .hero-text {
   background: rgb(238, 174, 202);
   background: radial-gradient(
-            circle,
-            rgba(238, 174, 202, 0.8141850490196079) 0%,
-            rgba(148, 187, 233, 0.7721682422969187) 100%
-    );
+    circle,
+    rgba(238, 174, 202, 0.8141850490196079) 0%,
+    rgba(148, 187, 233, 0.7721682422969187) 100%
+  );
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1372,8 +1408,8 @@ a.link:hover{
 }
 
 .snippet-ratings p{
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
   --tw-text-opacity: 1;
   color: rgb(82 82 82 / var(--tw-text-opacity));
 }
@@ -1458,10 +1494,10 @@ a.link:hover{
 .icon {
   background: rgb(238, 174, 202);
   background: radial-gradient(
-            circle,
-            rgba(238, 174, 202, 0.8141850490196079) 0%,
-            rgba(148, 187, 233, 0.7721682422969187) 100%
-    );
+    circle,
+    rgba(238, 174, 202, 0.8141850490196079) 0%,
+    rgba(148, 187, 233, 0.7721682422969187) 100%
+  );
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1925,8 +1961,21 @@ textarea[name="whitelist"]:focus{
   color: rgb(23 23 23 / var(--tw-text-opacity));
 }
 
+.hover\:text-green-600:hover{
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+
+.hover\:underline:hover{
+  text-decoration-line: underline;
+}
+
 .hover\:no-underline:hover{
   text-decoration-line: none;
+}
+
+.hover\:underline-offset-2:hover{
+  text-underline-offset: 2px;
 }
 
 .hover\:opacity-50:hover{

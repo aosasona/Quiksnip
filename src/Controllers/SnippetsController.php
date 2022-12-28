@@ -64,15 +64,15 @@ class SnippetsController
 			$res->redirect($uri);
 		} catch (HTTPException $e) {
 			$_SESSION["temp_snippet"] = $req->body() + [
-					"temp_time" => Misc::generateTimestampMilliseconds(),
-					"error" => $e->getMessage(),
-				];
+				"temp_time" => Misc::generateTimestampMilliseconds(),
+				"error" => $e->getMessage(),
+			];
 			$res->redirect("/new");
 		} catch (\Exception $e) {
 			$_SESSION["temp_snippet"] = $req->body() + [
-					"temp_time" => Misc::generateTimestampMilliseconds(),
-					"error" => "Something went wrong. Please try again later.",
-				];
+				"temp_time" => Misc::generateTimestampMilliseconds(),
+				"error" => "Something went wrong. Please try again later.",
+			];
 			$res->redirect("/new");
 		}
 	}
