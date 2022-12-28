@@ -582,6 +582,10 @@ video {
   grid-column: span 1 / span 1;
 }
 
+.m-0{
+  margin: 0px;
+}
+
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
@@ -1080,6 +1084,11 @@ video {
 .py-5{
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+}
+
+.py-0{
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .text-left{
@@ -2048,6 +2057,10 @@ textarea[name="whitelist"]:focus{
 
   .lg\:gap-8{
     gap: 2rem;
+  }
+
+  .lg\:gap-6{
+    gap: 1.5rem;
   }
 
   .lg\:rounded{

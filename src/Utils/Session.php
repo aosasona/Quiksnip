@@ -6,6 +6,14 @@ use Quiksnip\Web\Models\Session as SessionModel;
 
 class Session
 {
+
+  public static function validateSession(string $session_key): bool
+  {
+    $session = new SessionModel();
+    $res = $session->selectOne("SELECT (TIMESTAMPDIFF(second, created_at, now()) < ttl) AS is_valid FROM sessions WHERE session_key = ? LIMIT 1", [$session_key]);
+    return (bool) $res["is_valid"];
+  }
+
   public static function createSession(int $sid, int $ttl = 720, array $data = []): string
   {
     $key = Auth::generateSessionKey();

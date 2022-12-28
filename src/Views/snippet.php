@@ -33,7 +33,7 @@ $url = 	Misc::getHost() . "/s/{$s_data["slug"]}";
 
 $languages = $GLOBALS["languages"];
 ?>
-<main class="w-full grid grid-cols-1 lg:grid-cols-6 gap-4">
+<main class="w-full grid grid-cols-1 lg:grid-cols-6 gap-4 lg:gap-6">
 	<section class="lg:col-span-4">
 		<div>
 			<a href="/explore" class="text-xs text-green-400 hover:opacity-50 transition-all">
@@ -41,7 +41,7 @@ $languages = $GLOBALS["languages"];
 				<span>Explore</span>
 			</a>
 		</div>
-		<form class="flex flex-col mt-4 gap-6" action="/update" method="POST">
+		<form class="flex flex-col mt-4 gap-6" action="/" method="POST">
 			<p id="language" class="hidden"><?= $s_data["lang"] ?></p>
 			<div class="flex items-center gap-3">
 				<img src="<?= $s_data["u_image"] ?? "/assets/images/Logo.svg" ?>" alt="<?= $s_data["u_username"] ?>" class="w-10 h-10 rounded-full">
@@ -85,8 +85,8 @@ $languages = $GLOBALS["languages"];
 		<?php if ($user["id"] === $s_data["owner_id"] && $s_data["owner_id"] !== 0) : ?>
 			<form method="POST">
 				<div class="flex flex-col gap-2">
-					<h3 class="text-lg font-bold my-0">One-time URL</h3>
-					<p class="text-xs text-neutral-600 my-0">You can share this link with anyone to provide them full access to your snip for 12 hours.</p>
+					<h3 class="text-lg font-bold m-0 p-0">One-time URL</h3>
+					<p class="text-xs text-neutral-600 m-0 p-0">You can share this link with anyone to provide them full access to your snip for 12 hours.</p>
 					<div class="w-full h-max whitespace-nowrap relative">
 						<div class="w-full bg-neutral-900 text-neutral-500 text-center text-xs text-ellipsis whitespace-nowrap overflow-hidden rounded-lg px-4 py-4">
 							<?= $data["session_url"] ?? "No session URL"  ?>

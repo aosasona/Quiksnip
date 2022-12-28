@@ -4,6 +4,7 @@ namespace Quiksnip\Web\Middleware;
 
 use Quiksnip\Web\Models\Snippet;
 use Quiksnip\Web\Utils\Auth;
+use Quiksnip\Web\Utils\Session;
 use Trulyao\PhpRouter\HTTP\Request;
 use Trulyao\PhpRouter\HTTP\Response;
 
@@ -62,11 +63,12 @@ class AuthMiddleware
 		$snippet = new Snippet();
 		$snippet_data = $snippet->selectOne("SELECT owner_id, whitelist, is_public FROM snippets WHERE slug = ? LIMIT 1", [$slug]);
 
+		if ($snippet_data["is_public"]) return;
 		if (self::isLoggedIn() && $snippet_data["owner_id"] == $user["id"]) return;
 		if (self::isLoggedIn() && in_array(strtolower($user["email"] ?? "---"), explode(",", $snippet_data["whitelist"] ?? ""))) return;
-		if ($session_key) {
-		}
-		require __DIR__ . "/../404.php";
+		if ($session_key && Session::validateSession($session_key)) return;
+
+		require __DIR__ . "/../401.php";
 		exit;
 	}
 }
