@@ -105,6 +105,11 @@ class SnippetsController
 			$replacement_array["user"] = $user_search["id"] ?? -1;
 		}
 
+		if ($search_query) {
+			$where_statement .= " AND title LIKE :search_query";
+			$replacement_array["search_query"] = "%$search_query%";
+		}
+
 		if ($snippets_count > 0) {
 			$data = $snippets->selectMany("SELECT * FROM `snippets` ${where_statement} ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}", $replacement_array);
 			$total_pages = ceil($snippets_count / $page_size);

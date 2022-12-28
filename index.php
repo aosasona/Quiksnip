@@ -1,10 +1,10 @@
 <?php
 
-ini_set("display_errors", 0);
-ini_set("display_startup_errors", 0);
-ini_set("error_reporting", 0);
-ini_set("log_errors", 1);
-ini_set("error_log", "/var/log/apache2/error.log");
+//ini_set("display_errors", 0);
+//ini_set("display_startup_errors", 0);
+//ini_set("error_reporting", 0);
+//ini_set("log_errors", 1);
+//ini_set("error_log", "/var/log/apache2/error.log");
 
 
 require_once __DIR__ . "/vendor/autoload.php";
@@ -20,7 +20,7 @@ use Quiksnip\Web\Controllers\SnippetsController;
 use Quiksnip\Web\Middleware\AuthMiddleware;
 use Quiksnip\Web\Middleware\SnippetMiddleware;
 use Quiksnip\Web\Services\Auth;
-use Quiksnip\Web\Utils\RateLimter;
+use Quiksnip\Web\Utils\RateLimiter;
 use Trulyao\PhpRouter\HTTP\Request as Request;
 use Trulyao\PhpRouter\HTTP\Response as Response;
 use Trulyao\PhpRouter\Router as Router;
@@ -39,7 +39,7 @@ try {
 		exit;
 	}
 
-	RateLimter::checkRateLimitAndThrow($_SERVER["REMOTE_ADDR"], 10, (int)$_ENV["MAX_REQUESTS"] ?? 250);
+	RateLimiter::checkRateLimitAndThrow($_SERVER["REMOTE_ADDR"], 10, (int)$_ENV["MAX_REQUESTS"] ?? 250);
 
 	$router = new Router(__DIR__ . "/src", "");
 

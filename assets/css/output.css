@@ -1299,10 +1299,10 @@ a.link:hover{
 .hero-text {
   background: rgb(238, 174, 202);
   background: radial-gradient(
-    circle,
-    rgba(238, 174, 202, 0.8141850490196079) 0%,
-    rgba(148, 187, 233, 0.7721682422969187) 100%
-  );
+            circle,
+            rgba(238, 174, 202, 0.8141850490196079) 0%,
+            rgba(148, 187, 233, 0.7721682422969187) 100%
+    );
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1458,10 +1458,10 @@ a.link:hover{
 .icon {
   background: rgb(238, 174, 202);
   background: radial-gradient(
-    circle,
-    rgba(238, 174, 202, 0.8141850490196079) 0%,
-    rgba(148, 187, 233, 0.7721682422969187) 100%
-  );
+            circle,
+            rgba(238, 174, 202, 0.8141850490196079) 0%,
+            rgba(148, 187, 233, 0.7721682422969187) 100%
+    );
   background-size: 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1554,6 +1554,7 @@ label{
 
 input[type="text"],
 input[type="email"],
+input[type="search"],
 input[type="password"]{
   width: 100%;
   border-radius: 0.5rem;
@@ -1570,13 +1571,14 @@ input[type="password"]{
   color: rgb(229 229 229 / var(--tw-text-opacity));
 }
 
-input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="password"]::-moz-placeholder{
+input[type="text"]::-moz-placeholder, input[type="email"]::-moz-placeholder, input[type="search"]::-moz-placeholder, input[type="password"]::-moz-placeholder{
   --tw-placeholder-opacity: 1;
   color: rgb(82 82 82 / var(--tw-placeholder-opacity));
 }
 
 input[type="text"]::placeholder,
 input[type="email"]::placeholder,
+input[type="search"]::placeholder,
 input[type="password"]::placeholder{
   --tw-placeholder-opacity: 1;
   color: rgb(82 82 82 / var(--tw-placeholder-opacity));
@@ -1584,6 +1586,7 @@ input[type="password"]::placeholder{
 
 input[type="text"]:focus,
 input[type="email"]:focus,
+input[type="search"]:focus,
 input[type="password"]:focus{
   border-color: transparent;
   outline: 2px solid transparent;
@@ -1722,6 +1725,7 @@ textarea[name="whitelist"]:focus{
 
 .CodeMirror{
   height: auto !important;
+  max-height: 90vh !important;
   min-height: 80vh !important;
   cursor: text !important;
   background-color: rgb(23 23 23 / var(--tw-bg-opacity)) !important;
@@ -1733,7 +1737,15 @@ textarea[name="whitelist"]:focus{
 
 @media (min-width: 768px){
   .CodeMirror{
+    max-height: 80vh !important;
     min-height: 60vh !important;
+  }
+}
+
+@media (min-width: 1280px){
+  .CodeMirror{
+    max-height: 80vh !important;
+    min-height: 50vh !important;
   }
 }
 
@@ -1896,6 +1908,11 @@ textarea[name="whitelist"]:focus{
 .hover\:bg-green-400:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-600:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
 
 .hover\:text-green-400:hover{

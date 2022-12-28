@@ -32,11 +32,14 @@ class Logger
 
 	public static function logRequest(string $ip_address): void
 	{
-		$request = new Request();
-		$request->ip_address = $ip_address;
-		$request->path = $_SERVER["REQUEST_URI"];
-		$request->_get = json_encode($_GET);
-		$request->_post = json_encode($_POST);
-		$request->save();
+		$path = $_SERVER["REQUEST_URI"];
+		if ($path !== null && $path !== "") {
+			$request = new Request();
+			$request->ip_address = $ip_address;
+			$request->path = $path;
+			$request->_get = json_encode($_GET);
+			$request->_post = json_encode($_POST);
+			$request->save();
+		}
 	}
 }
