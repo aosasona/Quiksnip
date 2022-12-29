@@ -1,12 +1,12 @@
 const checkboxes = $("input[type='checkbox']");
 
-checkboxes.each(function() {
+checkboxes.each(function () {
     const isChecked = Boolean($(this).data("checked") ?? false);
     if (isChecked) {
         $(this).next().addClass("checked");
         $(this).prop("checked", true);
     }
-    $(this).on("change", function() {
+    $(this).on("change", function () {
         const checkboxLabel = $(this).next();
         checkboxLabel.toggleClass("checked");
     });
@@ -52,3 +52,4 @@ const copyText = (text) => {
         showAlertBox("Copied to clipboard", "success");
     });
 };
+

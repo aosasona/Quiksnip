@@ -122,6 +122,20 @@ class SnippetsController
 	}
 
 
+	public static function deleteSnippet(string $slug): ?string
+	{
+		try {
+			$snippet = new Snippet();
+			$snippet->id = $snippet->selectOne("SELECT `id` FROM `snippets` WHERE `slug` = ?", [$slug])["id"];
+			if (!$snippet->id) throw new HTTPException("Snippet not found.", 404);
+			$snippet->delete();
+			return null;
+		} catch (\Exception $e) {
+			return "Something went wrong. Please try again later.";
+		}
+	}
+
+
 	/*
  	 * @return array
  	 */

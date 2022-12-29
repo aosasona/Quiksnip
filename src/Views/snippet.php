@@ -46,7 +46,7 @@ $languages = $GLOBALS["languages"];
                 <span>Explore</span>
             </a>
         </div>
-
+        
         <form class="flex flex-col mt-4 gap-6" method="POST">
             <p id="language" class="hidden"><?= $s_data["lang"] ?></p>
             <div class="flex items-center gap-3">
@@ -97,33 +97,17 @@ $languages = $GLOBALS["languages"];
 
 	<?php if ($owns_snippet) : ?>
         <section class="lg:col-span-2 space-y-6">
+			<?php require __DIR__ . "/components/events_stream.php" ?>
+            <hr class="border-neutral-800"/>
 			<?php require __DIR__ . "/components/session_url.php" ?>
-
-            <div class="w-full h-[35vh] overflow-hidden bg-dark rounded-lg">
-                <div class="border-b border-b-neutral-800 py-3">
-                    <h4 class="text-sm text-neutral-500 text-center">Events</h4>
-                </div>
-                <div class="h-full overflow-scroll pt-4 pb-12">
-					<?php if (count($s_logs) == 0) : ?>
-                        <div class="text-center text-red-500 py-10">
-                            <i class="fas fa-info-circle text-2xl"></i>
-                            <p class="text-xs mt-1">No events to show</p>
-                        </div>
-					<?php else : ?>
-						<?php foreach ($s_logs as $log) : ?>
-                            <div class="flex flex-col mb-4 px-3">
-                                <p class="text-xs"><span class="bg-green-400 text-[10px] text-neutral-900 rounded px-2 py-1 mr-2"><?= $log["event"] ?></span><?= $log["created_at"] ?></p>
-                            </div>
-						<?php endforeach; ?>
-					<?php endif; ?>
-                </div>
-            </div>
+            <hr class="border-neutral-800"/>
+            <form method="POST" class="space-y-2">
+                <h3 class="text-lg font-bold m-0 p-0">Delete Snippet</h3>
+                <input type="text" name="confirm_text" placeholder="Type 'DELETE' to confirm" class="w-full">
+                <button type="submit" name="delete_snippet" class="w-full btn-danger">Delete Snippet</button>
+            </form>
         </section>
 	<?php endif; ?>
-
-    <section>
-        <h1 class="text-xl lg:text-2xl text-neutral-700 font-semibold px-1 mb-4">Comments</h1>
-    </section>
 </main>
 
 

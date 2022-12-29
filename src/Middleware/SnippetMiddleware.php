@@ -68,6 +68,18 @@ class SnippetMiddleware
 				$req->append("error", $error);
 				return;
 			}
+		} elseif (isset($_POST["delete_snippet"])) {
+			$confirm_text = $_POST["confirm_text"] ?? "";
+			if ($confirm_text !== "DELETE") {
+				$req->append("error", "Please type DELETE to confirm deletion");
+				return;
+			}
+			$error = SnippetsController::deleteSnippet($slug);
+			if ($error) {
+				$req->append("error", $error);
+				return;
+			}
+			$res->redirect("/explore");
 		}
 	}
 }
