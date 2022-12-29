@@ -11,7 +11,11 @@ module.exports = {
                 sm: "90vw",
             }
         },
-        extend: {},
+        extend: {
+            colors: {
+                "dark": "#171717CC",
+            }
+        },
     },
     plugins: [],
 }

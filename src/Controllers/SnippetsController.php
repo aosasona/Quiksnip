@@ -34,7 +34,7 @@ class SnippetsController
 
 			Validator::checkNullFields($req->body(), ["title", "lang", "content"]);
 			Validator::validateMinLength($req->body()["title"], "Title", 4);
-			Validator::validateMinLength($req->body()["content"], "Snippet", 10);
+			Validator::validateMinLength($req->body()["content"], "Snippet code", 10);
 
 			$snippet = new Snippet();
 			$snippet->title = $req->body("title");
@@ -64,16 +64,60 @@ class SnippetsController
 			$res->redirect($uri);
 		} catch (HTTPException $e) {
 			$_SESSION["temp_snippet"] = $req->body() + [
-				"temp_time" => Misc::generateTimestampMilliseconds(),
-				"error" => $e->getMessage(),
-			];
+					"temp_time" => Misc::generateTimestampMilliseconds(),
+					"error" => $e->getMessage(),
+				];
 			$res->redirect("/new");
 		} catch (\Exception $e) {
 			$_SESSION["temp_snippet"] = $req->body() + [
-				"temp_time" => Misc::generateTimestampMilliseconds(),
-				"error" => "Something went wrong. Please try again later.",
-			];
+					"temp_time" => Misc::generateTimestampMilliseconds(),
+					"error" => "Something went wrong. Please try again later.",
+				];
 			$res->redirect("/new");
+		}
+	}
+
+
+	/**
+	 */
+	public static function updateContent(int $id, string $content): string | null
+	{
+		try {
+
+			$is_guest = Auth::isGuest();
+			$post_data = $_POST;
+
+			Validator::checkNullFields($post_data, ["content"]);
+			Validator::validateMinLength($post_data["content"], "Snippet code", 10);
+
+			if ($is_guest) {
+				throw new HTTPException("You are not allowed to edit this snippet.", 403);
+			}
+
+			$old_snippet = (new Snippet())->findOne($id);
+			if (!$old_snippet) throw new HTTPException("Snippet not found.", 404);
+			if (!$old_snippet["allow_edit"]) throw new HTTPException("You are not allowed to edit this snippet.", 403);
+
+			$snippet = new Snippet();
+			$snippet->id = $id;
+			$snippet->content = $post_data["content"];
+			$snippet->update();
+
+			$data = json_encode([
+				"id" => $snippet->id,
+				"slug" => $old_snippet["slug"],
+				"is_invited" => (bool)isset($_SESSION["_key"]),
+				"previous_content" => $old_snippet["content"],
+				"created_at" => Misc::formatDateTime(),
+			]);
+
+			Logger::logEvent($snippet->id, Logger::EDITED, $data);
+
+			return null;
+		} catch (HTTPException $e) {
+			return $e->getMessage();
+		} catch (\Exception $e) {
+			return "Something went wrong. Please try again later.";
 		}
 	}
 
@@ -110,18 +154,7 @@ class SnippetsController
 			$replacement_array["search_query"] = "%$search_query%";
 		}
 
-		if ($snippets_count > 0) {
-			$data = $snippets->selectMany("SELECT * FROM `snippets` ${where_statement} ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}", $replacement_array);
-			$total_pages = ceil($snippets_count / $page_size);
-			$data = [
-				"snippets" => $data,
-				"total_pages" => $total_pages,
-				"current_page" => $page,
-			];
-		} else {
-			$data = [];
-		}
-		return $data;
+		return self::fetchSnippetsData($snippets_count, $snippets, $where_statement, $page_size, $offset, $replacement_array, $page);
 	}
 
 
@@ -169,6 +202,23 @@ class SnippetsController
 			$replacement_array["lang"] = $lang;
 		}
 
+		return self::fetchSnippetsData($snippets_count, $snippets, $where_statement, $page_size, $offset, $replacement_array, $page);
+	}
+
+
+	/**
+	 * @param  int        $snippets_count
+	 * @param  Snippet    $snippets
+	 * @param  string     $where_statement
+	 * @param  int        $page_size
+	 * @param  float|int  $offset
+	 * @param  array      $replacement_array
+	 * @param  int        $page
+	 *
+	 * @return array
+	 */
+	public static function fetchSnippetsData(int $snippets_count, Snippet $snippets, string $where_statement, int $page_size, float | int $offset, array $replacement_array, int $page): array
+	{
 		if ($snippets_count > 0) {
 			$data = $snippets->selectMany("SELECT * FROM `snippets` ${where_statement} ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}", $replacement_array);
 			$total_pages = ceil($snippets_count / $page_size);

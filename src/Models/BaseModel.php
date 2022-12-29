@@ -131,15 +131,19 @@ abstract class BaseModel
 	{
 		$query = "UPDATE {$this->table} SET ";
 		$params = [];
+		$params["id"] = $this->id;
+		$query_array = [];
 
 		foreach ($this as $key => $value) {
-			if ($key === "db" || $key === "table") {
-				continue;
-			}
+			if ($key === "db" || $key === "table" || $key === "id") continue;
 
-			$query .= "`{$key}` = :{$key}, ";
-			$params[":{$key}"] = $value;
+			if (isset($value) && $value !== "") {
+				$query_array[] = "`{$key}` = :{$key}";
+				$params[":{$key}"] = $value;
+			}
 		}
+
+		$query .= implode(", ", $query_array);
 
 		$query = rtrim($query, ", ");
 		$query .= " WHERE `id` = :id";

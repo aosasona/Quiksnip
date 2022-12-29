@@ -13,6 +13,7 @@ class Logger
 	public const SHARED = "shared";
 	public const CREATED = "created";
 	public const VIEWED = "viewed";
+	public const EDITED = "edited";
 	public const GENERATED_SESSION_URL = "generated_session_url";
 	public const UPVOTED = "upvoted";
 	public const DOWNVOTED = "downvoted";
