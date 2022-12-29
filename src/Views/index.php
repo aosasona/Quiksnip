@@ -45,9 +45,9 @@ Loader::startLayout("Quiksnip");
             <div class="feature-card-icon">
                 <i class="fa-solid fa-arrow-pointer icon"></i>
             </div>
-            <h3>Track activity</h3>
+            <h3>Edit snips</h3>
             <p>
-                View detailed logs of all the edits made to your snippets (if you sent a link to someone, you can see what they did and when they accessed it).
+                You can share your snippets with other users and collaborate on them by giving them editing privileges. This allows for the collective contribution and improvement of the snippets.
             </p>
         </div>
         <!--        <div class="feature-card col-">-->
