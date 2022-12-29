@@ -97,6 +97,10 @@ $languages = $GLOBALS["languages"];
 				</div>
 			</form>
 		<?php endif; ?>
+
+		<div>
+			<?php ?>
+		</div>
 	</section>
 </main>
 

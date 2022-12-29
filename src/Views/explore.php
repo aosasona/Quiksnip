@@ -27,6 +27,7 @@ Loader::startLayout("Explore");
 	<div class="mb-12">
 		<?php include_once __DIR__ . "/components/explore_snippets.php"; ?>
 	</div>
+	<?php require __DIR__ . "/../Views/components/pagination.php"; ?>
 </section>
 
 <?php

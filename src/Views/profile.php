@@ -1,5 +1,7 @@
 <?php
 
+namespace Quiksnip\Web\Views;
+
 use Quiksnip\Web\Controllers\SnippetsController;
 use Quiksnip\Web\Utils\Loader;
 
@@ -7,31 +9,63 @@ $user = \Quiksnip\Web\Services\Auth::getSessionUser();
 $is_guest = isset($_SESSION["is_guest"]) && $_SESSION["is_guest"] === true;
 
 if (!$is_guest) {
+	$page = $_GET["page"] ?? 1;
+	$q_lang = $_GET["lang"] ?? null;
 	$stats = SnippetsController::collectStats($user["email"]);
+	$data = SnippetsController::getUserSnippets($user["id"], $page, $q_lang);
+	$snippets = $data["snippets"];
 }
 
-Loader::startLayout("Explore");
+$page_title = "profile";
+
+require_once __DIR__ . "/../Utils/constants.php";
+
+Loader::startLayout("Profile");
 ?>
 <main class="container w-full flex flex-col lg:flex-row-reverse gap-6 mx-auto mt-[12vh] lg:mt-[14vh]">
-    <section class="w-full lg:w-[30%] h-auto self-start">
+	<section class="w-full lg:w-[30%] h-auto self-start">
 		<?php include_once __DIR__ . "/components/profile_card.php"; ?>
-    </section>
-    <section class="w-full lg:w-[65%] h-auto self-start" x-data="{ tab: 1 }">
-        <div class="w-full flex items-center gap-3 border-b border-b-neutral-800 py-2">
-            <button :class="tab === 1 && 'bg-green-400 text-neutral-900 font-medium'" class="tab-button" @click="tab = 1">
-                About Me
-            </button>
-            <button :class="tab === 2 && 'bg-green-400 text-neutral-900 font-medium'" class="tab-button" @click="tab = 2">
-                My Snippets
-            </button>
-        </div>
-        <div class="text-center text-xs text-neutral-500 font-mono py-28" x-show="tab === 1" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
-            <p>You'll be able to edit your profile soon!</p>
-        </div>
-        <div class="text-center text-xs text-neutral-500 font-mono py-28" x-show="tab === 2" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
-            <p>You'll be able to see your snippets here soon!</p>
-        </div>
-    </section>
+	</section>
+	<?php if (!$is_guest) : ?>
+		<section class="w-full lg:w-[65%] h-auto self-start">
+			<h1 class="text-2xl lg:text-3xl text-neutral-600 font-semibold px-1 mb-4">My Snippets</h1>
+			<div class="text-center text-xs text-neutral-500 font-mono">
+				<?php
+				/** @var $snippets
+				 * @var $languages
+				 */
+				if (count($snippets) > 0) : ?>
+					<div class="grid grid-cols-1 gap-3 mb-6">
+						<?php foreach ($snippets as $snippet) : ?>
+							<div class="snippet-card">
+								<a href="/s/<?= $snippet['slug'] ?>" class="title text-left">
+									<?= ucfirst($snippet['title']) ?>
+								</a>
+								<div class="flex justify-between items-center">
+									<p class="text-[10px] text-neutral-600"><?= \Quiksnip\Web\Utils\Misc::timeAgo($snippet["created_at"]) ?></p>
+									<a class="outline-none hover:no-underline" href="?lang=<?= $snippet["lang"] ?>">
+										<p class="w-max text-[8px] lg:text-[10px] font-medium bg-opacity-80 rounded px-1.5 py-1" style="background-color: <?= $languages[strtolower($snippet["lang"])]["bg"] ?>;
+                                color: <?= $languages[strtolower($snippet["lang"])]["text"] ?>">
+											<span class="tracking-wider uppercase"><?= $snippet['lang'] ?></span>
+										</p>
+									</a>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					</div>
+					<?php require __DIR__ . "/../Views/components/pagination.php"; ?>
+				<?php else : ?>
+					<div class="flex flex-col items-center justify-center h-[35vh] border border-neutral-900 mt-5 rounded">
+						<h2 class="text-sm lg:text-xl font-medium text-red-400">No snippets... 🥲</h2>
+					</div>
+				<?php endif; ?>
+			</div>
+		</section>
+	<?php else : ?>
+		<section class="w-full lg:w-[65%] h-[30vh] flex items-center justify-center">
+			<p class="text-xs text-neutral-600 font-mono">You're logged in as a guest and can't make any changes.</p>
+		</section>
+	<?php endif; ?>
 </main>
 <?php
 Loader::endLayout();

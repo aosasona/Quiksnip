@@ -148,4 +148,38 @@ class SnippetsController
 			return null;
 		}
 	}
+
+
+	public static function getUserSnippets(int $user_id, int $page = 1, string | null $lang = null): array
+	{
+		$snippets = new Snippet();
+		$page_size = 25;
+		$offset = ($page - 1) * $page_size;
+		$snippets_count = $snippets->count();
+		if ($offset > $snippets_count) {
+			$offset = 0;
+		}
+
+		$replacement_array = [];
+		$where_statement = "WHERE `owner_id` = :user_id";
+		$replacement_array["user_id"] = $user_id;
+
+		if ($lang) {
+			$where_statement .= " AND lang = :lang";
+			$replacement_array["lang"] = $lang;
+		}
+
+		if ($snippets_count > 0) {
+			$data = $snippets->selectMany("SELECT * FROM `snippets` ${where_statement} ORDER BY `created_at` DESC LIMIT {$page_size} OFFSET {$offset}", $replacement_array);
+			$total_pages = ceil($snippets_count / $page_size);
+			$data = [
+				"snippets" => $data,
+				"total_pages" => $total_pages,
+				"current_page" => $page,
+			];
+		} else {
+			$data = [];
+		}
+		return $data;
+	}
 }
