@@ -180,7 +180,7 @@ textarea[name="whitelist"] {
 
 /* Editor -  */
 .CodeMirror {
-    @apply min-h-[80vh] md:min-h-[60vh] xl:min-h-[50vh] max-h-[90vh] md:max-h-[80vh] xl:max-h-[80vh] h-auto bg-neutral-900 bg-opacity-80 text-neutral-200 cursor-text leading-6 !important;
+    @apply min-h-[80vh] max-h-[80vh] md:min-h-[60vh] xl:min-h-[50vh] md:max-h-[80vh] xl:max-h-[80vh] bg-neutral-900 bg-opacity-80 text-neutral-200 cursor-text leading-6 !important;
 }
 
 .CodeMirror-gutters {

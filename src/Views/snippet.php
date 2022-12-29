@@ -25,6 +25,7 @@ $owns_snippet = $user["id"] === $s_data["owner_id"] && $s_data["owner_id"] !== 0
 
 $GLOBALS["slug"] = $s_data["slug"];
 
+
 $title = "[" . strtoupper($s_data["lang"]) . "] - " . $s_data["title"];
 $desc = "`" . strtolower($s_data["title"]) . "` code snippet by " . strtolower($s_data["u_username"]) . " on Quiksnip";
 
@@ -46,7 +47,7 @@ $languages = $GLOBALS["languages"];
                 <span>Explore</span>
             </a>
         </div>
-        
+
         <form class="flex flex-col mt-4 gap-6" method="POST">
             <p id="language" class="hidden"><?= $s_data["lang"] ?></p>
             <div class="flex items-center gap-3">

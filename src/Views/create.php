@@ -41,7 +41,7 @@ if ($temp_time && $current_timestamp - $temp_time > 10000) {
 
         <div>
             <div class="window-top">
-                <input type="text" name="title" id="title" value="<?= $title ?>" title="Snippet's description" placeholder="convert xml file to json" minlength="10" maxlength="75" required/>
+                <input type="text" name="title" id="title" value="<?= $title ?>" title="Snippet's description" placeholder="snippet's name/title" minlength="10" maxlength="75" required/>
                 <select name="lang" id="language" title="Snippet's language" class="w-full" required>
 					<?php
 					foreach ($languages as $key => $value) {

@@ -85,6 +85,7 @@ class SnippetsController
 		try {
 
 			$is_guest = Auth::isGuest();
+			$user_id = self::getOwnerId();
 			$post_data = $_POST;
 
 			Validator::checkNullFields($post_data, ["content"]);
@@ -96,7 +97,7 @@ class SnippetsController
 
 			$old_snippet = (new Snippet())->findOne($id);
 			if (!$old_snippet) throw new HTTPException("Snippet not found.", 404);
-			if (!$old_snippet["allow_edit"]) throw new HTTPException("You are not allowed to edit this snippet.", 403);
+			if (!$old_snippet["allow_edit"] && $user_id !== $old_snippet["owner_id"]) throw new HTTPException("You are not allowed to edit this snippet.", 403);
 
 			$snippet = new Snippet();
 			$snippet->id = $id;

@@ -22,7 +22,7 @@ Loader::startLayout("Quiksnip");
 
     <img src="assets/images/hero.svg" alt="hero" class="w-[90%] lg:w-4/5 2xl:w-3/5 mx-auto my-12 lg:my-24" id="hero-image"/>
 
-    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 mb-8">
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10 mb-8">
         <div class="feature-card">
             <div class="feature-card-icon">
                 <i class="fa-solid fa-lock-open icon"></i>

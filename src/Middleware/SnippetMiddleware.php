@@ -81,5 +81,10 @@ class SnippetMiddleware
 			}
 			$res->redirect("/explore");
 		}
+
+		// Refresh snippet data
+		$snippet_sub = new Snippet();
+		$snippet_data_sub = $snippet_sub->selectOne("SELECT `p`.*, `u`.`name` AS `u_name`, `u`.`username` AS `u_username`, `u`.`profile_image` AS `u_image`, `u`.`github_url` AS `u_link` FROM `snippets` p LEFT JOIN `users` u ON `p`.`owner_id` = `u`.`id` WHERE slug = :slug", ["slug" => $slug]);
+		$req->append("snip_data", $snippet_data_sub);
 	}
 }
