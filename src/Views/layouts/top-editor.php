@@ -63,7 +63,7 @@ $meta_image = '//www.quiksnip.dev/meta/' . $slug;
 </head>
 
 <body>
-<nav class="fixed top-0 flex items-center justify-between w-screen bg-black bg-opacity-50 backdrop-blur-lg border-b border-b-neutral-800 px-5 py-6 z-[999]">
+<nav class="fixed top-0 flex items-center justify-between w-screen bg-black bg-opacity-50 backdrop-blur-lg border-b border-b-neutral-800 p-5 z-[9999]">
     <a href="<?= $is_logged_in ? '/explore' : '/' ?>" class="flex items-center gap-2 text-green-400 text-xl">
         <img src="/assets/images/Logo.svg" alt="logo" class="w-8 lg:w-10 aspect-square"/>
         <h2 class="font-bold tracking-wide">
@@ -76,9 +76,13 @@ $meta_image = '//www.quiksnip.dev/meta/' . $slug;
         </a>
 		<?php if ($is_logged_in) : ?>
             <a href="/profile" class="text-neutral-300 text-xs lg:text-sm font-medium block">
-                <i class="fa-regular fa-circle-user text-xl lg:text-2xl"></i>
+				<?php if (isset($user["profile_image"]) && $user["profile_image"] !== ""): ?>
+                    <img src="<?= $user["profile_image"] ?>" alt="avatar" class="w-7 aspect-square rounded-full object-cover"/>
+				<?php else: ?>
+                    <i class="fa-regular fa-circle-user text-xl lg:text-2xl"></i>
+				<?php endif; ?>
             </a>
 		<?php endif; ?>
     </div>
 </nav>
-<main class="container w-full 2xl:max-w-7xl flex flex-col lg:flex-row gap-6 mx-auto mt-[13vh] lg:mt-[14vh]">
+<main class="container w-full 2xl:max-w-7xl flex flex-col lg:flex-row gap-6 mx-auto mt-[12vh] lg:mt-[13vh]">

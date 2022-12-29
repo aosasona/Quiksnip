@@ -28,13 +28,13 @@ class AuthMiddleware
 			return;
 		}
 
-		if (isset($_GET["session_key"])) {
+		if (isset($_GET["_key"])) {
 			$_SESSION["is_guest"] = true;
-			$_SESSION["auth_token"] = $_GET["session_key"];
+			$_SESSION["auth_token"] = $_GET["_key"];
 			$_SESSION["user"] = [
 				"id" => 0,
-				"name" => "guest",
-				"bio" => "guest",
+				"name" => "Elevated Guest",
+				"bio" => "",
 				"username" => "guest",
 				"email" => "guest",
 				"profile_image" => "",
