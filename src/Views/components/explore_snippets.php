@@ -18,7 +18,12 @@
     </a>
 </div>
 
-<form action="/explore" method="GET" class="flex gap-2 mt-3">
+<?php $search_target = "/explore".http_build_query([
+    "user" => $q_username ?? null,
+    "lang" => $q_lang ?? null
+]); ?>
+
+<form action="<?=$search_target ?>" method="GET" class="flex gap-2 mt-3">
     <input type="search" value="<?= $q_search ?? "" ?>" name="q" placeholder="Search"/>
     <button type="submit" class="bg-green-400 hover:bg-green-600 text-neutral-900 px-5 rounded-lg">
         <i class="fa-solid fa-search"></i>
