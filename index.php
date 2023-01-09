@@ -1,10 +1,10 @@
 <?php
 
-// ini_set("display_errors", 0);
-// ini_set("display_startup_errors", 0);
-// ini_set("error_reporting", 0);
-// ini_set("log_errors", 1);
-// ini_set("error_log", "/var/log/apache2/error.log");
+ini_set("display_errors", 0);
+ini_set("display_startup_errors", 0);
+ini_set("error_reporting", 0);
+ini_set("log_errors", 1);
+ini_set("error_log", "/var/log/apache2/error.log");
 
 
 require_once __DIR__ . "/vendor/autoload.php";
@@ -38,8 +38,8 @@ try {
 		exit;
 	}
 
-	// $ip_address = $_SERVER["X_FORWARDED_FOR"] ?? $_SERVER["HTTP_X_FORWARDED_FOR"] ?? $_SERVER["HTTP_CLIENT_IP"] ?? $_SERVER["HTTP_X_REAL_IP"] ?? $_SERVER["REMOTE_ADDR"];
-	// RateLimiter::checkRateLimitAndThrow($ip_address, 10, (int)$_ENV["MAX_REQUESTS"] ?? 250);
+	$ip_address = $_SERVER["X_FORWARDED_FOR"] ?? $_SERVER["HTTP_X_FORWARDED_FOR"] ?? $_SERVER["HTTP_CLIENT_IP"] ?? $_SERVER["HTTP_X_REAL_IP"] ?? $_SERVER["REMOTE_ADDR"];
+	RateLimiter::checkRateLimitAndThrow($ip_address, 10, (int)$_ENV["MAX_REQUESTS"] ?? 250);
 
 	$router = new Router(__DIR__ . "/src", "");
 
@@ -128,7 +128,6 @@ try {
 		var_dump($e);
 		exit;
 	}
-	var_dump($e);
 	require_once __DIR__ . "/src/500.php";
 	exit;
 }
