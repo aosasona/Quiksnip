@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 volumes:
   data:
@@ -20,7 +20,6 @@ services:
     env_file:
       - ./.env
     restart: always
-
 
   mysql:
     container_name: mysql

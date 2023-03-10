@@ -33,8 +33,8 @@ try {
 	$db = new Quiksnip\Web\Database\Database();
 	$db->migrate();
 
-	// $ip_address = $_SERVER["X_FORWARDED_FOR"] ?? $_SERVER["HTTP_X_FORWARDED_FOR"] ?? $_SERVER["HTTP_CLIENT_IP"] ?? $_SERVER["HTTP_X_REAL_IP"] ?? $_SERVER["REMOTE_ADDR"];
-	// RateLimiter::checkRateLimitAndThrow($ip_address, 10, (int)$_ENV["MAX_REQUESTS"] ?? 250);
+	$ip_address = $_SERVER["X_FORWARDED_FOR"] ?? $_SERVER["HTTP_X_FORWARDED_FOR"] ?? $_SERVER["HTTP_CLIENT_IP"] ?? $_SERVER["HTTP_X_REAL_IP"] ?? $_SERVER["REMOTE_ADDR"];
+	RateLimiter::checkRateLimitAndThrow($ip_address, 10, (int)$_ENV["MAX_REQUESTS"] ?? 250);
 
 	$router = new Router(__DIR__ . "/src", "");
 
