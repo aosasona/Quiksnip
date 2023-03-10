@@ -20,6 +20,7 @@ $querystring = http_build_query([
 $url = "https://og.wyte.space/api/v1/images/quiksnip/preview?{$querystring}";
 
 $image = file_get_contents($url);
+header('Content-Type: image/jpeg');
 echo $image;
 
 exit;
