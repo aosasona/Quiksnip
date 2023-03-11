@@ -11,10 +11,12 @@ $slug = $GLOBALS["slug"] ?? "";
 $meta_image = '//www.quiksnip.dev/meta/' . $slug;
 
 if (isset($GLOBALS["s_data"]) && $GLOBALS["s_data"]) {
-
+    $s_data = $GLOBALS["s_data"];
+    $page_title = ucfirst($s_data["title"] ?? "");
     if (!isset($s_data["u_username"])) $s_data["u_username"] = "guest";
     $querystring = http_build_query([
-        "vars" => "title:{$s_data['title']},username:{$s_data['u_username']}"
+        "size" => "small",
+        "vars" => "title:{$page_title},username:{$s_data['u_username']},image:{$s_data['u_image']},lang:{$s_data['lang']}"
     ]);
 
     $meta_image = "https://og.wyte.space/api/v1/images/quiksnip/preview?{$querystring}";
