@@ -10,6 +10,15 @@ $is_guest = $GLOBALS["is_guest"] = isset($_SESSION["is_guest"]) && $_SESSION["is
 $slug = $GLOBALS["slug"] ?? "";
 $meta_image = '//www.quiksnip.dev/meta/' . $slug;
 
+if (isset($GLOBALS["s_data"]) && $GLOBALS["s_data"]) {
+
+    if (!isset($s_data["u_username"])) $s_data["u_username"] = "guest";
+    $querystring = http_build_query([
+        "vars" => "title:{$s_data['title']},username:{$s_data['u_username']}"
+    ]);
+
+    $meta_image = "https://og.wyte.space/api/v1/images/quiksnip/preview?{$querystring}";
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -44,45 +53,45 @@ $meta_image = '//www.quiksnip.dev/meta/' . $slug;
     <script src="/assets/js/codemirror/addon/edit/matchbrackets.js"></script>
     <!--  Codemirror  -->
 
-	<?php
-	/**
-	 * @var array $languages
-	 */
-	require(__DIR__ . "/../../Utils/constants.php");
+    <?php
+    /**
+     * @var array $languages
+     */
+    require(__DIR__ . "/../../Utils/constants.php");
 
-	$GLOBALS["languages"] = $languages;
-	foreach (array_keys($languages) as $lang) {
-		echo "<script src=\"/assets/js/codemirror/mode/{$lang}/{$lang}.js\"></script>" . PHP_EOL;
-	}
+    $GLOBALS["languages"] = $languages;
+    foreach (array_keys($languages) as $lang) {
+        echo "<script src=\"/assets/js/codemirror/mode/{$lang}/{$lang}.js\"></script>" . PHP_EOL;
+    }
 
-	?>
+    ?>
 
     <title>
-		<?= $title ?>
+        <?= $title ?>
     </title>
 </head>
 
 <body>
-<nav class="fixed top-0 flex items-center justify-between w-screen bg-black bg-opacity-50 backdrop-blur-lg border-b border-b-neutral-800 p-5 z-[9999]">
-    <a href="<?= $is_logged_in ? '/explore' : '/' ?>" class="flex items-center gap-2 text-green-400 text-xl">
-        <img src="/assets/images/Logo.svg" alt="logo" class="w-8 lg:w-10 aspect-square"/>
-        <h2 class="font-bold tracking-wide">
-            QuikSnip
-        </h2>
-    </a>
-    <div class="flex items-center gap-5 lg:gap-8 px-2">
-        <a href="/explore" class="text-neutral-300 text-xs lg:text-sm font-medium block">
-            <i class="fa-solid fa-magnifying-glass text-lg lg:text-xl"></i>
+    <nav class="fixed top-0 flex items-center justify-between w-screen bg-black bg-opacity-50 backdrop-blur-lg border-b border-b-neutral-800 p-5 z-[9999]">
+        <a href="<?= $is_logged_in ? '/explore' : '/' ?>" class="flex items-center gap-2 text-green-400 text-xl">
+            <img src="/assets/images/Logo.svg" alt="logo" class="w-8 lg:w-10 aspect-square" />
+            <h2 class="font-bold tracking-wide">
+                QuikSnip
+            </h2>
         </a>
-		<?php if ($is_logged_in) : ?>
-            <a href="/profile" class="text-neutral-300 text-xs lg:text-sm font-medium block">
-				<?php if (isset($user["profile_image"]) && $user["profile_image"] !== ""): ?>
-                    <img src="<?= $user["profile_image"] ?>" alt="avatar" class="w-7 aspect-square rounded-full object-cover"/>
-				<?php else: ?>
-                    <i class="fa-regular fa-circle-user text-xl lg:text-2xl"></i>
-				<?php endif; ?>
+        <div class="flex items-center gap-5 lg:gap-8 px-2">
+            <a href="/explore" class="text-neutral-300 text-xs lg:text-sm font-medium block">
+                <i class="fa-solid fa-magnifying-glass text-lg lg:text-xl"></i>
             </a>
-		<?php endif; ?>
-    </div>
-</nav>
-<main class="container w-full 2xl:max-w-7xl flex flex-col lg:flex-row gap-6 mx-auto mt-[12vh] lg:mt-[13vh]">
+            <?php if ($is_logged_in) : ?>
+                <a href="/profile" class="text-neutral-300 text-xs lg:text-sm font-medium block">
+                    <?php if (isset($user["profile_image"]) && $user["profile_image"] !== "") : ?>
+                        <img src="<?= $user["profile_image"] ?>" alt="avatar" class="w-7 aspect-square rounded-full object-cover" />
+                    <?php else : ?>
+                        <i class="fa-regular fa-circle-user text-xl lg:text-2xl"></i>
+                    <?php endif; ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    </nav>
+    <main class="container w-full 2xl:max-w-7xl flex flex-col lg:flex-row gap-6 mx-auto mt-[12vh] lg:mt-[13vh]">
